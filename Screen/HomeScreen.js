@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginTop: 20,
-    paddingHorizontal: 20, // 调整两边的留白
+    paddingHorizontal: 20,
   },
   noGoals: {
     fontSize: 16,
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   hoursTouchable: {
-    marginBottom: 10, // 调整为与猫图片之间的距离
+    marginBottom: 10,
     alignItems: "center",
   },
   hours: {
