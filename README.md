@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # PetConnect
 
 ## Introduction
@@ -14,6 +13,3 @@
 
 - I completed the design and development of the HomeScreen.
 - I also completed the tab navigation part of the main page, and the drawer navigation part which needs further optimization.
-=======
-  4352-Team18
->>>>>>> ddaa06e6fd3a39e71fda2b1591f3917ad69fee86
