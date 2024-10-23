@@ -1,13 +1,13 @@
 import React from "react";
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
-import { useGoals } from "../context/GoalContext"; // 引入 GoalContext
+import { useGoals } from "../context/GoalContext";
 
 export default function GoalsMessage({ onPress }) {
-  const { goals } = useGoals(); // 从全局状态中获取 goals
+  const { goals } = useGoals();
 
   return (
     <TouchableOpacity onPress={onPress}>
-      <Text style={styles.message}>
+      <Text style={[styles.message]}>
         {goals.length > 0 ? "Upcoming Goals" : "No Upcoming Goals"}
       </Text>
     </TouchableOpacity>

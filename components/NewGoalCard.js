@@ -10,10 +10,10 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 
 export default function NewGoalCard({ onPress }) {
   return (
-    <TouchableOpacity style={styles.card} onPress={onPress}>
-      <View style={styles.iconTextWrapper}>
+    <TouchableOpacity style={[styles.card]} onPress={onPress}>
+      <View style={[styles.iconTextWrapper]}>
         <Icon name="plus-circle" size={24} color="#333" style={styles.icon} />
-        <Text style={styles.text}>Add a goal for Kim Family</Text>
+        <Text style={[styles.text]}>Add a goal for Kim Family</Text>
       </View>
     </TouchableOpacity>
   );

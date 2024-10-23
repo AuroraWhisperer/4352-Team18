@@ -3,22 +3,22 @@ import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
 
 export default function ExistingGoalCard({ goal, time, diamonds }) {
   return (
-    <View style={styles.card}>
-      <View style={styles.leftSide}>
-        <Text style={styles.goalText} numberOfLines={3} ellipsizeMode="tail">
+    <View style={[styles.card]}>
+      <View style={[styles.leftSide]}>
+        <Text style={[styles.goalText]} numberOfLines={3} ellipsizeMode="tail">
           {goal}
         </Text>
       </View>
 
-      <View style={styles.rightSide}>
-        <Text style={styles.timeText}>{time} hr</Text>
-        <View style={styles.diamondsContainer}>
+      <View style={[styles.rightSide]}>
+        <Text style={[styles.timeText]}>{time} hr</Text>
+        <View style={[styles.diamondsContainer]}>
           <Image
             source={require("../assets/images/diamond.png")} 
-            style={styles.diamondImage}
+            style={[styles.diamondImage]}
             resizeMode="contain"
           />
-          <Text style={styles.diamondsText}>{diamonds}</Text>
+          <Text style={[styles.diamondsText]}>{diamonds}</Text>
         </View>
       </View>
     </View>

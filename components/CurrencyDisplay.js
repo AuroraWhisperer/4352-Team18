@@ -3,12 +3,12 @@ import { View, Text, Image, StyleSheet } from "react-native";
 
 export default function CurrencyDisplay({ value = 100 }) {
   return (
-    <View style={styles.currency}>
+    <View style={[styles.currency]}>
       <Image
         source={require("../assets/images/diamond.png")}
-        style={styles.diamond}
+        style={[styles.diamond]}
       />
-      <Text style={styles.currencyText}>{value}</Text>
+      <Text style={[styles.currencyText]}>{value}</Text>
     </View>
   );
 }
