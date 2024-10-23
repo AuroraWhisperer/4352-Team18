@@ -1,4 +1,5 @@
 import React from "react";
+import { useFonts } from "expo-font";
 import {
   StyleSheet,
   Text,
@@ -10,6 +11,14 @@ import {
 } from "react-native";
 
 export default function StartScreen({ navigation }) {
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  if (!fontsLoaded) {
+    return undefined;
+  }
+
   return (
     <SafeAreaView style={[styles.container]}>
       <View style={[styles.content]}>
@@ -23,7 +32,7 @@ export default function StartScreen({ navigation }) {
 
       <TouchableOpacity
         style={styles.startButton}
-        onPress={() => navigation.navigate("HomeScreen")}
+        onPress={() => navigation.navigate("StartPage")}
       >
         <Text style={styles.startText}>START</Text>
       </TouchableOpacity>

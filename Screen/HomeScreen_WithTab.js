@@ -18,7 +18,6 @@ export default function HomeScreen() {
   return (
     <Drawer.Navigator>
       <Drawer.Screen name="Home Tab" component={Home} />
-      {/* Add more screens inside DrawerNavigator if needed */}
     </Drawer.Navigator>
   );
 }
