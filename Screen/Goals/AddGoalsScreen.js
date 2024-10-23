@@ -2,41 +2,43 @@ import {
   Text,
   StyleSheet,
   View,
-  SafeAreaView,
+  ScrollView,
   Dimensions,
   Image,
-  ScrollView,
-  Button,
   Alert,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
-import CurrencyDisplay from "../components/CurrencyDisplay";
-import HoursDisplay from "../components/HoursDisplay";
-import AddGoalCard from "../components/AddGoalCard";
+import { useGoals } from "../../context/GoalContext";
+import CurrencyDisplay from "../../components/CurrencyDisplay";
+import HoursDisplay from "../../components/HoursDisplay";
+import AddGoalCard from "../../components/AddGoalCard";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function AddGoalsScreen({ navigation }) {
+  const { addGoal } = useGoals();
   const [goal, setGoal] = useState("");
   const [time, setTime] = useState("");
   const [diamonds, setDiamonds] = useState("");
 
-const handleSubmit = () => {
-  console.log("goal:", goal, "time:", time, "diamonds:", diamonds);
-  if (!goal) {
-    Alert.alert("Error", "Please fill out the goal field.");
-  } else if (!time) {
-    Alert.alert("Error", "Please fill out the time field.");
-  } else if (!diamonds) {
-    Alert.alert("Error", "Please fill out the diamonds field.");
-  } else {
-    navigation.navigate("Goals", {
-      newGoal: { goal, time, diamonds },
-    });
-    console.log("Submitted data: ", { goal, time, diamonds });
-  }
-};
+  const handleSubmit = () => {
+    console.log("goal:", goal, "time:", time, "diamonds:", diamonds);
+    if (!goal) {
+      Alert.alert("Error", "Please fill out the goal field.");
+    } else if (!time) {
+      Alert.alert("Error", "Please fill out the time field.");
+    } else if (!diamonds) {
+      Alert.alert("Error", "Please fill out the diamonds field.");
+    } else {
+      const newGoal = { goal, time, diamonds };
 
+      addGoal(newGoal);
+
+      navigation.navigate("Goals", { newGoal });
+
+      console.log("Submitted data: ", newGoal);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -77,7 +79,7 @@ const handleSubmit = () => {
 
         <View style={styles.scenery}>
           <Image
-            source={require("../assets/images/GoalScreenBottomImage.png")}
+            source={require("../../assets/images/GoalScreenBottomImage.png")}
             style={styles.sceneryImage}
             resizeMode="stretch"
           />

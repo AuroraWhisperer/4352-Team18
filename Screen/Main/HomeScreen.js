@@ -9,8 +9,9 @@ import {
   Alert,
   Image,
 } from "react-native";
-import CurrencyDisplay from "../components/CurrencyDisplay";
-import HoursDisplay from "../components/HoursDisplay";
+import CurrencyDisplay from "../../components/CurrencyDisplay";
+import HoursDisplay from "../../components/HoursDisplay";
+import GoalsMessage from "../../components/GoalsMessage"; // 引入 GoalsMessage 组件
 
 export default function HomeScreen() {
   return (
@@ -29,9 +30,12 @@ export default function HomeScreen() {
       </View>
 
       <View style={[styles.rowContainer]}>
-        <TouchableOpacity>
-          <Text style={[styles.noGoals]}>No Upcoming Goals</Text>
-        </TouchableOpacity>
+        <GoalsMessage
+          onPress={() => {
+            console.log("No goals button pressed");
+            Alert.alert("No upcoming goals");
+          }}
+        />
 
         <CurrencyDisplay value={100} />
       </View>
@@ -42,7 +46,7 @@ export default function HomeScreen() {
 
           <View style={[styles.petContainer]}>
             <Image
-              source={require("../assets/images/cat.png")}
+              source={require("../../assets/images/cat.png")}
               style={[styles.pet]}
               resizeMode="stretch"
             />
@@ -92,11 +96,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 20,
     paddingHorizontal: 20,
-  },
-  noGoals: {
-    fontSize: 16,
-    textDecorationLine: "underline",
-    fontWeight: "500",
   },
   content: {
     flex: 1,

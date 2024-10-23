@@ -7,44 +7,39 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import React, { useState, useEffect } from "react";
-import CurrencyDisplay from "../components/CurrencyDisplay";
-import HoursDisplay from "../components/HoursDisplay";
-import NewGoalCard from "../components/NewGoalCard";
-import ExistingGoalCard from "../components/ExistingGoalCard";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import React from "react";
+import CurrencyDisplay from "../../components/CurrencyDisplay";
+import HoursDisplay from "../../components/HoursDisplay";
+import NewGoalCard from "../../components/NewGoalCard";
+import ExistingGoalCard from "../../components/ExistingGoalCard";
+import { useNavigation } from "@react-navigation/native";
+import { useGoals } from "../../context/GoalContext";
 
 export default function GoalsScreen() {
-  const [goals, setGoals] = useState([]);
   const navigation = useNavigation();
-  const route = useRoute();
-
-  useEffect(() => {
-    if (route.params?.newGoal) {
-      console.log("Received data: ", route.params.newGoal);
-      setGoals((prevGoals) => [...prevGoals, route.params.newGoal]);
-      navigation.setParams({ newGoal: null });
-    }
-  }, [route.params?.newGoal]);
+  const { goals } = useGoals();
 
   return (
-    <View style={styles.container}>
-      <View style={styles.contentWrapper}>
-        <View style={styles.scrollViewWrapper}>
-          <ScrollView contentContainerStyle={styles.scrollContent}>
-            <View style={styles.header}>
+    <View style={[styles.container]}>
+      <View style={[styles.contentWrapper]}>
+        <View style={[styles.scrollViewWrapper]}>
+          <ScrollView contentContainerStyle={[styles.scrollContent]}>
+            <View style={[styles.header]}>
               <CurrencyDisplay value={100} />
             </View>
 
-            <View style={styles.content}>
-              <HoursDisplay hours={0} />
+            <View style={[styles.content]}>
+              <HoursDisplay
+                hours={0}
+                style={{ marginTop: 40, marginBottom: 30 }}
+              />
 
               {goals.map((goal, index) => (
                 <ExistingGoalCard
-                  key={index}
-                  goal={goal.goal}
-                  time={goal.time}
-                  diamonds={goal.diamonds}
+                  key={[index]}
+                  goal={[goal.goal]}
+                  time={[goal.time]}
+                  diamonds={[goal.diamonds]}
                 />
               ))}
 
@@ -52,17 +47,17 @@ export default function GoalsScreen() {
                 onPress={() => navigation.navigate("AddGoalsScreen")}
               />
             </View>
-            <View style={styles.extraSpace}></View>
+            <View style={[styles.extraSpace]}></View>
           </ScrollView>
         </View>
 
-        <View style={styles.fixedBottom}>
+        <View style={[styles.fixedBottom]}>
           <Image
-            source={require("../assets/images/GoalScreenBottomImage.png")}
-            style={styles.sceneryImage}
+            source={require("../../assets/images/GoalScreenBottomImage.png")}
+            style={[styles.sceneryImage]}
             resizeMode="stretch"
           />
-          <View style={styles.bottomArea}></View>
+          <View style={[styles.bottomArea]}></View>
         </View>
       </View>
     </View>
@@ -79,7 +74,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   scrollViewWrapper: {
-    height: Dimensions.get("window").height - 131, 
+    height: Dimensions.get("window").height - 131,
   },
   scrollContent: {
     flexGrow: 1,
@@ -90,7 +85,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
     width: "100%",
-    paddingTop: Dimensions.get("window").height * 0.06,
+    paddingTop: Dimensions.get("window").height * 0.08,
     paddingRight: Dimensions.get("window").width * 0.05,
   },
   content: {

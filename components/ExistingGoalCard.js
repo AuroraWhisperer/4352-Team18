@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Dimensions, Image } from "react-native"; // 引入 Image 组件
+import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
 
 export default function ExistingGoalCard({ goal, time, diamonds }) {
   return (
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   diamondsContainer: {
-    marginTop: Dimensions.get("window").height * 0.02,
+    marginTop: Dimensions.get("window").height * 0.015,
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#fff",
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   diamondImage: {
-    width: 18, // 设置图标大小
+    width: 18,
     height: 18,
   },
   diamondsText: {
