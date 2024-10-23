@@ -14,3 +14,4 @@
 - I completed the design and development of the HomeScreen.
 - I completed the tab navigation part of the main page, and the drawer navigation part which needs further optimization.
 - I completed a workflow prototype for a simple task.
+- I Completed Start Screen
