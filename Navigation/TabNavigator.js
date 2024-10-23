@@ -9,7 +9,6 @@ import ProfileScreen from "../Screen/ProfileScreen";
 
 const Tab = createMaterialTopTabNavigator();
 
-// Tab Navigator Setup
 function TabNavigator() {
   return (
     <Tab.Navigator
@@ -87,5 +86,4 @@ function TabNavigator() {
   );
 }
 
-// Drawer Navigator Setup
 export default TabNavigator;
