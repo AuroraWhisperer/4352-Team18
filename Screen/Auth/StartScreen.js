@@ -24,17 +24,17 @@ export default function StartScreen({ navigation }) {
       <View style={[styles.content]}>
         <Image
           source={require("../../assets/images/StartScreenImage.png")}
-          style={styles.image}
+          style={[styles.image]}
         />
 
         <Text style={[styles.title]}>Hello!</Text>
       </View>
 
       <TouchableOpacity
-        style={styles.startButton}
+        style={[styles.startButton]}
         onPress={() => navigation.navigate("StartPage")}
       >
-        <Text style={styles.startText}>START</Text>
+        <Text style={[styles.startText]}>START</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );

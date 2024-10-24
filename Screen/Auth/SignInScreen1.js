@@ -49,9 +49,9 @@ export default function StartPage({ navigation }) {
 
       <KeyboardAvoidingView behavior="padding">
         <View>
-          <Text style={styles.inputText}>Username: </Text>
+          <Text style={[styles.inputText]}>Username: </Text>
           <TextInput
-            style={styles.inputButton}
+            style={[styles.inputButton]}
             placeholder="Enter your username"
             value={username}
             onChangeText={setUsername}
@@ -59,10 +59,10 @@ export default function StartPage({ navigation }) {
         </View>
 
         <View>
-          <Text style={styles.inputText}>Password: </Text>
+          <Text style={[styles.inputText]}>Password: </Text>
           <TextInput
             secureTextEntry={true}
-            style={styles.inputButton}
+            style={[styles.inputButton]}
             placeholder="Enter your password"
             value={password}
             onChangeText={setPassword}
@@ -71,18 +71,18 @@ export default function StartPage({ navigation }) {
       </KeyboardAvoidingView>
 
       <TouchableOpacity
-        style={styles.signButton}
+        style={[styles.signButton]}
         disabled={signInDisabled}
         onPress={() => navigation.navigate("HomeScreen")}
       >
-        <Text style={styles.signText}>Sign In</Text>
+        <Text style={[styles.signText]}>Sign In</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={styles.forgotPasswordButton}
+        style={[styles.forgotPasswordButton]}
         //onPress={() => navigation.navigate("StartPage")}
       >
-        <Text style={styles.forgotPasswordText}>Forgot password?</Text>
+        <Text style={[styles.forgotPasswordText]}>Forgot password?</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );

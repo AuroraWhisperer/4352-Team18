@@ -40,24 +40,24 @@ export default function StartPage({ navigation }) {
       </View>
 
       <TouchableOpacity
-        style={styles.signButton}
+        style={[styles.signButton]}
         onPress={() => navigation.navigate("SignInScreen1")}
       >
-        <Text style={styles.signText}>Sign In</Text>
+        <Text style={[styles.signText]}>Sign In</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={styles.signButton}
+        style={[styles.signButton]}
         //onPress={() => navigation.navigate("StartPage")}
       >
-        <Text style={styles.signText}>Sign Up For Family</Text>
+        <Text style={[styles.signText]}>Sign Up For Family</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={styles.familyCodeButton}
+        style={[styles.familyCodeButton]}
         //onPress={() => navigation.navigate("StartPage")}
       >
-        <Text style={styles.familyCodeText}>Have a family code?</Text>
+        <Text style={[styles.familyCodeText]}>Have a family code?</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );

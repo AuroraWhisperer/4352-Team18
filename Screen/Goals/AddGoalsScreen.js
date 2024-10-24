@@ -41,31 +41,31 @@ export default function AddGoalsScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View style={styles.header}>
+    <View style={[styles.container]}>
+      <ScrollView contentContainerStyle={[styles.scrollContent]}>
+        <View style={[styles.header]}>
           <TouchableOpacity
-            style={styles.backButton}
+            style={[styles.backButton]}
             onPress={() => navigation.goBack()}
           >
             <Ionicons
               name="arrow-back"
               size={18}
               color="white"
-              style={styles.backIcon}
+              style={[styles.backIcon]}
             />
-            <Text style={styles.backButtonText}>Back</Text>
+            <Text style={[styles.backButtonText]}>Back</Text>
           </TouchableOpacity>
 
           <CurrencyDisplay value={100} />
         </View>
 
-        <View style={styles.content}>
+        <View style={[styles.content]}>
           <HoursDisplay hours={0} />
 
-          <View style={styles.cardWrapper}>
+          <View style={[styles.cardWrapper]}>
             <AddGoalCard
-              style={styles.card}
+              style={[styles.card]}
               onSubmit={handleSubmit}
               setGoal={setGoal}
               setTime={setTime}
@@ -80,12 +80,12 @@ export default function AddGoalsScreen({ navigation }) {
         <View style={styles.scenery}>
           <Image
             source={require("../../assets/images/GoalScreenBottomImage.png")}
-            style={styles.sceneryImage}
+            style={[styles.sceneryImage]}
             resizeMode="stretch"
           />
         </View>
 
-        <View style={styles.bottomArea}></View>
+        <View style={[styles.bottomArea]}></View>
       </ScrollView>
     </View>
   );
