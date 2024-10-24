@@ -1,5 +1,5 @@
 import React from "react";
-import { useFonts } from 'expo-font';
+import { useFonts } from "expo-font";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import HomeScreen from "../Screen/Main/HomeScreen";
@@ -26,7 +26,7 @@ function TabNavigator() {
           borderWidth: 0,
         },
         tabBarLabelStyle: {
-          fontFamily: 'MarkoOne-Regular',
+          fontFamily: "MarkoOne-Regular",
           fontSize: 10,
         },
         tabBarActiveTintColor: "white",
@@ -55,7 +55,7 @@ function TabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Goals"
+        name="GoalsTab"
         component={GoalsScreen}
         options={{
           title: "Goals",

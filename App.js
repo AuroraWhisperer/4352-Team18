@@ -7,6 +7,7 @@ import AddGoalsScreen from "./Screen/Goals/AddGoalsScreen";
 import { AppProvider } from "./context/AppContext";
 import SignInScreen1 from "./Screen/Auth/SignInScreen1";
 import StartPage from "./Screen/Auth/StartPage";
+import GoalsScreen from "./Screen/Main/GoalsScreen.js";
 
 const Stack = createStackNavigator();
 
@@ -38,6 +39,11 @@ export default function App() {
           <Stack.Screen
             name="AddGoalsScreen"
             component={AddGoalsScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="GoalsStack"
+            component={TabNavigator}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

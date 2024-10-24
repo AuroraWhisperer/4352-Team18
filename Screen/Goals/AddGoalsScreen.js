@@ -34,7 +34,7 @@ export default function AddGoalsScreen({ navigation }) {
 
       addGoal(newGoal);
 
-      navigation.navigate("Goals", { newGoal });
+      navigation.navigate("GoalsTab", { newGoal });
 
       console.log("Submitted data: ", newGoal);
     }

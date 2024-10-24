@@ -20,7 +20,6 @@ export default function StartPage({ navigation }) {
   });
 
   const { username, setUsername } = useApp();
-
   const [password, setPassword] = useState("");
 
   const signInDisabled = !username || !password;
@@ -41,23 +40,29 @@ export default function StartPage({ navigation }) {
         />
       </TouchableOpacity>
 
-      <View style={[styles.content]}>
-        <Image
-          source={require("../../assets/images/StartScreenImage.png")}
-          style={styles.image}
-        />
-
-        <Text style={[styles.title]}>PetConnect</Text>
-      </View>
 
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 200 : 200}
+        style={styles.imageKeyboardView}
+      >
+        <View style={[styles.content]}>
+          <Image
+            source={require("../../assets/images/StartScreenImage.png")}
+            style={styles.image}
+          />
+          <Text style={[styles.title]}>PetConnect</Text>
+        </View>
+      </KeyboardAvoidingView>
+
+
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 20 : 20}
         style={styles.keyboardView}
       >
         <View>
           <Text style={[styles.inputText]}>Username: </Text>
-
           <TextInput
             style={[styles.inputButton]}
             placeholder="Enter your username"
@@ -68,7 +73,6 @@ export default function StartPage({ navigation }) {
 
         <View>
           <Text style={[styles.inputText]}>Password: </Text>
-
           <TextInput
             secureTextEntry={true}
             style={[styles.inputButton]}
@@ -87,10 +91,7 @@ export default function StartPage({ navigation }) {
         <Text style={[styles.signText]}>Sign In</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity
-        style={[styles.forgotPasswordButton]}
-        // onPress={() => navigation.navigate("HomeScreen")}
-      >
+      <TouchableOpacity style={[styles.forgotPasswordButton]}>
         <Text style={[styles.forgotPasswordText]}>Forgot password?</Text>
       </TouchableOpacity>
     </SafeAreaView>
@@ -112,7 +113,6 @@ const styles = StyleSheet.create({
     left: Dimensions.get("window").width * 0.08,
   },
   content: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     paddingTop: Dimensions.get("window").height * 0.1,
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 20,
     paddingVertical: 15,
-    paddingHorizontal: 30,
+    paddingHorizontal: 20,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
@@ -153,6 +153,7 @@ const styles = StyleSheet.create({
     color: "#333",
     marginRight: 230,
     marginBottom: 8,
+    width: "80%",
   },
   signButton: {
     backgroundColor: "#fff",
@@ -184,5 +185,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: Dimensions.get("window").width * 0.8,
     paddingHorizontal: 30,
+  },
+  imageKeyboardView: {
+    flex: 1,
+    justifyContent: "center",
+    width: Dimensions.get("window").width * 0.8,
+    paddingHorizontal: 30,
+    marginBottom: 50, 
   },
 });

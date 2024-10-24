@@ -12,7 +12,7 @@ export default function GoalsMessage({ onPress }) {
       Alert.alert("No Upcoming Goals", "You have no upcoming goals.", [
         {
           text: "Add Goal",
-          onPress: () => navigation.navigate("GoalsScreen"),
+          onPress: () => navigation.navigate("GoalsTab"),
         },
       ]);
     } else {
