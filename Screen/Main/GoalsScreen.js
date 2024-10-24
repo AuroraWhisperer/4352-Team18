@@ -13,11 +13,11 @@ import HoursDisplay from "../../components/HoursDisplay";
 import NewGoalCard from "../../components/NewGoalCard";
 import ExistingGoalCard from "../../components/ExistingGoalCard";
 import { useNavigation } from "@react-navigation/native";
-import { useGoals } from "../../context/GoalContext";
+import { useApp } from "../../context/AppContext";
 
 export default function GoalsScreen() {
   const navigation = useNavigation();
-  const { goals } = useGoals();
+  const { goals } = useApp();
 
   return (
     <View style={[styles.container]}>

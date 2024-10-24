@@ -10,27 +10,30 @@ import {
   Image,
   Dimensions,
   KeyboardAvoidingView,
+  Platform,
 } from "react-native";
+import { useApp } from "../../context/AppContext.js";
 
 export default function StartPage({ navigation }) {
   const [fontsLoaded] = useFonts({
     "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
   });
 
-  if (!fontsLoaded) {
-    return undefined;
-  }
+  const { username, setUsername } = useApp();
 
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const signInDisabled = !username || !password;
 
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <SafeAreaView style={[styles.container]}>
       <TouchableOpacity
-        Style={[styles.backContent]}
-        onPress={() => navigation.navigate("StartPage")}
+        style={[styles.backContent]}
+        onPress={() => navigation.goBack()}
       >
         <Image
           source={require("../../assets/images/backButton.png")}
@@ -47,9 +50,14 @@ export default function StartPage({ navigation }) {
         <Text style={[styles.title]}>PetConnect</Text>
       </View>
 
-      <KeyboardAvoidingView behavior="padding">
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
+        style={styles.keyboardView}
+      >
         <View>
           <Text style={[styles.inputText]}>Username: </Text>
+
           <TextInput
             style={[styles.inputButton]}
             placeholder="Enter your username"
@@ -60,6 +68,7 @@ export default function StartPage({ navigation }) {
 
         <View>
           <Text style={[styles.inputText]}>Password: </Text>
+
           <TextInput
             secureTextEntry={true}
             style={[styles.inputButton]}
@@ -80,7 +89,7 @@ export default function StartPage({ navigation }) {
 
       <TouchableOpacity
         style={[styles.forgotPasswordButton]}
-        //onPress={() => navigation.navigate("StartPage")}
+        // onPress={() => navigation.navigate("HomeScreen")}
       >
         <Text style={[styles.forgotPasswordText]}>Forgot password?</Text>
       </TouchableOpacity>
@@ -98,6 +107,9 @@ const styles = StyleSheet.create({
   backContent: {
     flexDirection: "row",
     alignItems: "center",
+    position: "absolute",
+    top: Dimensions.get("window").height * 0.07,
+    left: Dimensions.get("window").width * 0.08,
   },
   content: {
     flex: 1,
@@ -125,7 +137,7 @@ const styles = StyleSheet.create({
   inputButton: {
     backgroundColor: "#fff",
     borderRadius: 20,
-    paddingVertical: 13,
+    paddingVertical: 15,
     paddingHorizontal: 30,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -166,5 +178,11 @@ const styles = StyleSheet.create({
   forgotPasswordText: {
     textDecorationLine: "underline",
     fontFamily: "MarkoOne-Regular",
+  },
+  keyboardView: {
+    flex: 1,
+    justifyContent: "center",
+    width: Dimensions.get("window").width * 0.8,
+    paddingHorizontal: 30,
   },
 });

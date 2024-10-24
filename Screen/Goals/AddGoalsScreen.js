@@ -9,14 +9,14 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
-import { useGoals } from "../../context/GoalContext";
+import { useApp } from "../../context/AppContext";
 import CurrencyDisplay from "../../components/CurrencyDisplay";
 import HoursDisplay from "../../components/HoursDisplay";
 import AddGoalCard from "../../components/AddGoalCard";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function AddGoalsScreen({ navigation }) {
-  const { addGoal } = useGoals();
+  const { addGoal } = useApp();
   const [goal, setGoal] = useState("");
   const [time, setTime] = useState("");
   const [diamonds, setDiamonds] = useState("");

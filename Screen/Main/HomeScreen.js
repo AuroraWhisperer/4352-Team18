@@ -11,9 +11,14 @@ import {
 } from "react-native";
 import CurrencyDisplay from "../../components/CurrencyDisplay";
 import HoursDisplay from "../../components/HoursDisplay";
-import GoalsMessage from "../../components/GoalsMessage"; // 引入 GoalsMessage 组件
+import GoalsMessage from "../../components/GoalsMessage";
+import ExistingGoalCard from "../../components/ExistingGoalCard";
+import { useApp } from "../../context/AppContext";
 
 export default function HomeScreen() {
+  const { goals } = useApp();
+  const lastGoal = goals.length > 0 ? goals[goals.length - 1] : null;
+
   return (
     <SafeAreaView style={[styles.container]}>
       <View style={[styles.header]}>
@@ -38,6 +43,16 @@ export default function HomeScreen() {
         />
 
         <CurrencyDisplay value={100} />
+      </View>
+
+      <View style={[styles.existingGoal]}>
+        {lastGoal ? (
+          <ExistingGoalCard
+            goal={lastGoal.goal}
+            time={lastGoal.time}
+            diamonds={lastGoal.diamonds}
+          />
+        ) : null}
       </View>
 
       <View style={[styles.content]}>
@@ -96,6 +111,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 20,
     paddingHorizontal: 20,
+  },
+  existingGoal: {
+    top: Dimensions.get('window').height * 0.04,
+    justifyContent: "center",
+    alignItems: "center",
   },
   content: {
     flex: 1,

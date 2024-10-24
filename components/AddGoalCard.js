@@ -1,5 +1,5 @@
 import React from "react";
-import { useFonts } from 'expo-font';
+import { useFonts } from "expo-font";
 import {
   View,
   TextInput,
@@ -8,7 +8,9 @@ import {
   StyleSheet,
   Dimensions,
   Alert,
+  Image,
 } from "react-native";
+
 
 export default function AddGoalCard({
   onSubmit,
@@ -20,22 +22,19 @@ export default function AddGoalCard({
   diamonds,
 }) {
   const handleTimeChange = (text) => {
-    if (/^\d*$/.test(text) && text.length <= 5) {
+    if (/^\d{0,4}(\.\d{0,2})?$/.test(text)) {
       setTime(text);
-    } else if (text.length > 5) {
-      Alert.alert("Invalid input", "Time cannot exceed 5 digits.");
+      const timeValue = parseFloat(text);
+      if (!isNaN(timeValue)) {
+        setDiamonds(Math.floor(timeValue * 40));
+      } else {
+        setDiamonds("");
+      }
     } else {
-      Alert.alert("Invalid input", "Please enter only numbers for time.");
-    }
-  };
-
-  const handleDiamondsChange = (text) => {
-    if (/^\d*$/.test(text) && text.length <= 4) {
-      setDiamonds(text);
-    } else if (text.length > 4) {
-      Alert.alert("Invalid input", "Diamonds cannot exceed 4 digits.");
-    } else {
-      Alert.alert("Invalid input", "Please enter only numbers for diamonds.");
+      Alert.alert(
+        "Invalid input",
+        "Please enter a valid number with up to 4 digits and 2 decimal places."
+      );
     }
   };
 
@@ -60,14 +59,10 @@ export default function AddGoalCard({
         placeholderTextColor="#888"
       />
 
-      <TextInput
-        style={[styles.input]}
-        placeholder="Enter diamonds"
-        value={diamonds}
-        keyboardType="numeric"
-        onChangeText={handleDiamondsChange}
-        placeholderTextColor="#888"
-      />
+      <View style={styles.diamondsContainer}>
+        <Image source={require("../assets/images/diamond.png")} style={styles.diamondIcon} />
+        <Text style={[styles.diamondsText]}>Diamonds: {diamonds}</Text>
+      </View>
 
       <TouchableOpacity style={[styles.submitButton]} onPress={onSubmit}>
         <Text style={[styles.submitButtonText]}>Submit</Text>
@@ -96,7 +91,7 @@ const styles = StyleSheet.create({
     padding: 12,
     marginBottom: 20,
     color: "#333",
-    fontFamily: 'MarkoOne-Regular',
+    fontFamily: "MarkoOne-Regular",
     fontSize: 16,
     textAlignVertical: "top",
     minHeight: 60,
@@ -109,10 +104,25 @@ const styles = StyleSheet.create({
     padding: 12,
     marginBottom: 20,
     color: "#333",
-    fontFamily: 'MarkoOne-Regular',
+    fontFamily: "MarkoOne-Regular",
     fontSize: 16,
   },
-
+  diamondsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 20,
+    justifyContent: "center",
+  },
+  diamondIcon: {
+    width: 24,
+    height: 24,
+    marginRight: 8,
+  },
+  diamondsText: {
+    fontSize: 18,
+    color: "#333",
+    fontFamily: "MarkoOne-Regular",
+  },
   submitButton: {
     backgroundColor: "#42A5F5",
     paddingVertical: 12,
@@ -124,6 +134,6 @@ const styles = StyleSheet.create({
   submitButtonText: {
     color: "#fff",
     fontSize: 18,
-    fontFamily: 'MarkoOne-Regular',
+    fontFamily: "MarkoOne-Regular",
   },
 });

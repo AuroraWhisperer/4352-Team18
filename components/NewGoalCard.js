@@ -1,5 +1,4 @@
 import React from "react";
-import { useFonts } from 'expo-font';
 import {
   View,
   Text,
@@ -8,13 +7,17 @@ import {
   Dimensions,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
+import { useApp } from "../context/AppContext.js";
 
 export default function NewGoalCard({ onPress }) {
+
+  const { username } = useApp();
+
   return (
     <TouchableOpacity style={[styles.card]} onPress={onPress}>
       <View style={[styles.iconTextWrapper]}>
         <Icon name="plus-circle" size={24} color="#333" style={styles.icon} />
-        <Text style={[styles.text]}>Add a goal for Kim Family</Text>
+        <Text style={[styles.text]}>Add a goal for {username} Family</Text>
       </View>
     </TouchableOpacity>
   );
@@ -44,8 +47,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   text: {
-    fontFamily: 'MarkoOne-Regular',
     fontSize: 18,
+    fontFamily: "MarkoOne-Regular",
     fontWeight: "bold",
     color: "#333",
   },
