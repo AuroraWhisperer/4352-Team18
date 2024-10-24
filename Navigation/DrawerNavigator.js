@@ -1,4 +1,5 @@
 import React from "react";
+import { useFonts } from 'expo-font';
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import HomeScreen from "../Screen/HomeScreen";
 import CustomHeaderTitle from "./CustomHeaderTitle";

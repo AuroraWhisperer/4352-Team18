@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   goalText: {
+    fontFamily: 'MarkoOne-Regular',
     fontSize: 18,
     fontWeight: "bold",
     color: "#333",
@@ -57,6 +58,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   timeText: {
+    fontFamily: 'MarkoOne-Regular',
     fontSize: 14,
     color: "#777",
     marginBottom: 5,
@@ -80,6 +82,7 @@ const styles = StyleSheet.create({
     height: 18,
   },
   diamondsText: {
+    fontFamily: 'MarkoOne-Regular',
     fontSize: 16,
     color: "#333",
     marginLeft: 5,

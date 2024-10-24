@@ -1,4 +1,5 @@
 import React from "react";
+import { useFonts } from 'expo-font';
 import { View, Text, Image, StyleSheet } from "react-native";
 
 export default function CurrencyDisplay({ value = 100 }) {
@@ -28,6 +29,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   currencyText: {
+    fontFamily: 'MarkoOne-Regular',
     marginLeft: 15,
     fontSize: 16,
     marginRight: 5,

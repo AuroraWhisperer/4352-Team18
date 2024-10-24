@@ -1,4 +1,5 @@
 import React from "react";
+import { useFonts } from 'expo-font';
 import {
   View,
   Text,
@@ -43,7 +44,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   text: {
-    fontSize: 20,
+    fontFamily: 'MarkoOne-Regular',
+    fontSize: 18,
     fontWeight: "bold",
     color: "#333",
   },
