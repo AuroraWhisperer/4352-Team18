@@ -1,4 +1,5 @@
 import React from "react";
+import { useFonts } from 'expo-font';
 import {
   View,
   TextInput,
@@ -95,6 +96,7 @@ const styles = StyleSheet.create({
     padding: 12,
     marginBottom: 20,
     color: "#333",
+    fontFamily: 'MarkoOne-Regular',
     fontSize: 16,
     textAlignVertical: "top",
     minHeight: 60,
@@ -107,6 +109,7 @@ const styles = StyleSheet.create({
     padding: 12,
     marginBottom: 20,
     color: "#333",
+    fontFamily: 'MarkoOne-Regular',
     fontSize: 16,
   },
 
@@ -121,6 +124,6 @@ const styles = StyleSheet.create({
   submitButtonText: {
     color: "#fff",
     fontSize: 18,
-    fontWeight: "bold",
+    fontFamily: 'MarkoOne-Regular',
   },
 });
