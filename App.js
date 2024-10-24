@@ -1,7 +1,7 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import StartScreen from "./Screen/StartScreen";
+import StartScreen from "./Screen/Auth/StartScreen";
 import TabNavigator from "./Navigation/TabNavigator";
 import AddGoalsScreen from "./Screen/Goals/AddGoalsScreen";
 import { GoalProvider } from "./context/GoalContext";

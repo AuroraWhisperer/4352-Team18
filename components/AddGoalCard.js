@@ -59,14 +59,14 @@ export default function AddGoalCard({
         placeholderTextColor="#888"
       />
 
-      <TextInput
+      {/* <TextInput
         style={[styles.input]}
         placeholder="Enter diamonds"
         value={diamonds}
         keyboardType="numeric"
         onChangeText={handleDiamondsChange}
         placeholderTextColor="#888"
-      />
+      /> */}
 
       <TouchableOpacity style={[styles.submitButton]} onPress={onSubmit}>
         <Text style={[styles.submitButtonText]}>Submit</Text>
