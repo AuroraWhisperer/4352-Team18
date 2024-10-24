@@ -2,11 +2,11 @@ import React from "react";
 import { useFonts } from 'expo-font';
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import HomeScreen from "../Screen/HomeScreen";
-import PocketScreen from "../Screen/PocketScreen";
-import GoalsScreen from "../Screen/GoalsScreen";
-import ShopScreen from "../Screen/ShopScreen";
-import ProfileScreen from "../Screen/ProfileScreen";
+import HomeScreen from "../Screen/Main/HomeScreen";
+import PocketScreen from "../Screen/Main/PocketScreen";
+import GoalsScreen from "../Screen/Main/GoalsScreen";
+import ShopScreen from "../Screen/Main/ShopScreen";
+import ProfileScreen from "../Screen/Main/ProfileScreen";
 
 const Tab = createMaterialTopTabNavigator();
 
