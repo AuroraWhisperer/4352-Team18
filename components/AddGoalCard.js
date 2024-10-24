@@ -39,9 +39,9 @@ export default function AddGoalCard({
   };
 
   return (
-    <View style={styles.card}>
+    <View style={[styles.card]}>
       <TextInput
-        style={styles.multilineInput}
+        style={[styles.multilineInput]}
         placeholder="Enter your goal"
         value={goal}
         onChangeText={(text) => setGoal(text)}
@@ -51,7 +51,7 @@ export default function AddGoalCard({
       />
 
       <TextInput
-        style={styles.input}
+        style={[styles.input]}
         placeholder="Enter time (in hours)"
         value={time}
         keyboardType="numeric"
@@ -60,7 +60,7 @@ export default function AddGoalCard({
       />
 
       <TextInput
-        style={styles.input}
+        style={[styles.input]}
         placeholder="Enter diamonds"
         value={diamonds}
         keyboardType="numeric"
@@ -68,8 +68,8 @@ export default function AddGoalCard({
         placeholderTextColor="#888"
       />
 
-      <TouchableOpacity style={styles.submitButton} onPress={onSubmit}>
-        <Text style={styles.submitButtonText}>Submit</Text>
+      <TouchableOpacity style={[styles.submitButton]} onPress={onSubmit}>
+        <Text style={[styles.submitButtonText]}>Submit</Text>
       </TouchableOpacity>
     </View>
   );
