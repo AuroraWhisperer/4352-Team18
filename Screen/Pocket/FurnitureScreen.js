@@ -8,16 +8,8 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import ClothesScreen from "../Pocket/ClothesScreen";
-import AccessoriesScreen from "../Pocket/AccessoriesScreen";
-import FoodScreen from "../Pocket/FoodScreen";
-import ToysScreen from "../Pocket/ToysScreen";
-import FurnitureScreen from "../Pocket/FurnitureScreen";
 
-const Tab = createMaterialTopTabNavigator();
-
-export default function PocketScreen() {
+export default function FurnitureScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -107,7 +99,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginVertical: 20,
     marginTop: Dimensions.get("window").height * 0.15,
-    marginBottom: Dimensions.get("window").height * 0.15
+    marginBottom: Dimensions.get("window").height * 0.15,
   },
   callToAction: {
     fontSize: 18,

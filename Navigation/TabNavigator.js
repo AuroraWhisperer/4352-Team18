@@ -53,6 +53,7 @@ function TabNavigator() {
           tabBarIcon: ({ color }) => (
             <Ionicons name="shield" size={26} color={color} />
           ),
+          tabBarStyle: { backgroundColor: "#9C8B71", height: 80 },
         }}
       />
       <Tab.Screen

@@ -47,6 +47,12 @@ export const AuthProvider = ({ children }) => {
       if (adminData) {
         const admin = JSON.parse(adminData);
         if (admin.username === username && admin.password === password) {
+          setUsername(username);
+          const userData = await AsyncStorage.getItem(`data_${username}`);
+          if (userData) {
+            const { petname } = JSON.parse(userData);
+            setPetname(petname || "");
+          }
           return true;
         }
       }
@@ -56,6 +62,20 @@ export const AuthProvider = ({ children }) => {
       return false;
     }
   };
+
+  const saveUserData = async (username, data) => {
+    try {
+      await AsyncStorage.setItem(`data_${username}`, JSON.stringify(data));
+    } catch (error) {
+      console.error("Failed to save user data:", error);
+    }
+  };
+
+  const updatePetname = (newPetname) => {
+    setPetname(newPetname);
+    saveUserData(username, { petname: newPetname });
+  };
+
 
   const handleUserLogin = (username, password) => {
     const user = users.find(
@@ -90,6 +110,7 @@ export const AuthProvider = ({ children }) => {
         clearAsyncStorage,
         petname,
         setPetname,
+        setPetname: updatePetname,
       }}
     >
       {children}

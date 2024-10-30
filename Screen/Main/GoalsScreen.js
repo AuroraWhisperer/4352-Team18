@@ -17,7 +17,12 @@ import { useMain } from "../../context/MainContext";
 
 export default function GoalsScreen() {
   const navigation = useNavigation();
-  const { goals } = useMain();
+  const { goals, setGoals } = useMain();
+
+  const handleDeleteGoal = (goalText) => {
+    const updatedGoals = goals.filter((goal) => goal.goal !== goalText);
+    setGoals(updatedGoals);
+  };
 
   return (
     <View style={[styles.container]}>
@@ -43,6 +48,7 @@ export default function GoalsScreen() {
                     goal={[goal.goal]}
                     time={[goal.time]}
                     diamonds={[goal.diamonds]}
+                    onDelete={() => handleDeleteGoal(goal.goal)}
                   />
                 ))}
 

@@ -48,6 +48,25 @@ export default function PocketScreen() {
           </TouchableOpacity>
         </View>
       </View>
+
+      <View style={styles.swipeableTabsContainer}>
+        <Tab.Navigator
+          initialRouteName="Clothes"
+          screenOptions={{
+            tabBarActiveTintColor: "#333",
+            tabBarInactiveTintColor: "#888",
+            tabBarLabelStyle: { fontSize: 16, fontWeight: "bold" },
+            tabBarIndicatorStyle: { backgroundColor: "#333" },
+            tabBarStyle: { backgroundColor: "#F7E4C6" },
+          }}
+        >
+          <Tab.Screen name="Clothes" component={ClothesScreen} />
+          <Tab.Screen name="Accessories" component={AccessoriesScreen} />
+          <Tab.Screen name="Food" component={FoodScreen} />
+          <Tab.Screen name="Toys" component={ToysScreen} />
+          <Tab.Screen name="Furniture" component={FurnitureScreen} />
+        </Tab.Navigator>
+      </View>
     </SafeAreaView>
   );
 }
@@ -78,8 +97,6 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   bottomSection: {
-    flex: 1,
-    justifyContent: "flex-end",
     alignItems: "center",
   },
   tabsContainer: {
@@ -102,12 +119,16 @@ const styles = StyleSheet.create({
     borderBottomColor: "#333",
     paddingBottom: 5,
   },
+  swipeableTabsContainer: {
+    flex: 1, // Takes up remaining screen space
+    width: "100%",
+    marginTop: 20,
+  },
   centerContent: {
     alignItems: "center",
     justifyContent: "center",
     marginVertical: 20,
-    marginTop: Dimensions.get("window").height * 0.15,
-    marginBottom: Dimensions.get("window").height * 0.15
+    marginTop: Dimensions.get("window").height * 0.05,
   },
   callToAction: {
     fontSize: 18,

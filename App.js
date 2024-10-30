@@ -16,66 +16,14 @@ const Stack = createStackNavigator();
 
 // this code is for debug specfic page
 
-// export default function App() {
-//   return (
-//     <AppProvider>
-//       <NavigationContainer>
-//         <Stack.Navigator>
-//           <Stack.Screen
-//             name="ProfileScreen"
-//             component={TabNavigator}
-//             options={{ headerShown: false }}
-//           />
-//         </Stack.Navigator>
-//       </NavigationContainer>
-//     </AppProvider>
-//   );
-// }
-
 export default function App() {
-
   return (
     <AppProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="StartScreen">
+        <Stack.Navigator>
           <Stack.Screen
-            name="StartScreen"
-            component={StartScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="StartPage"
-            component={StartPage}
-            options={{ headerShown: false, headerBackTitleVisible: false }}
-          />
-          <Stack.Screen
-            name="SignInScreen1"
-            component={SignInScreen1}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="HomeScreen"
+            name="PocketScreen"
             component={TabNavigator}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="AddGoalsScreen"
-            component={AddGoalsScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="GoalsStack"
-            component={TabNavigator}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="PetDetails"
-            component={PetDetailsScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="PostGoalsScreen"
-            component={PostGoalsScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
@@ -83,3 +31,55 @@ export default function App() {
     </AppProvider>
   );
 }
+
+// export default function App() {
+
+//   return (
+//     <AppProvider>
+//       <NavigationContainer>
+//         <Stack.Navigator initialRouteName="StartScreen">
+//           <Stack.Screen
+//             name="StartScreen"
+//             component={StartScreen}
+//             options={{ headerShown: false }}
+//           />
+//           <Stack.Screen
+//             name="StartPage"
+//             component={StartPage}
+//             options={{ headerShown: false, headerBackTitleVisible: false }}
+//           />
+//           <Stack.Screen
+//             name="SignInScreen1"
+//             component={SignInScreen1}
+//             options={{ headerShown: false }}
+//           />
+//           <Stack.Screen
+//             name="HomeScreen"
+//             component={TabNavigator}
+//             options={{ headerShown: false }}
+//           />
+//           <Stack.Screen
+//             name="AddGoalsScreen"
+//             component={AddGoalsScreen}
+//             options={{ headerShown: false }}
+//           />
+//           <Stack.Screen
+//             name="GoalsStack"
+//             component={TabNavigator}
+//             options={{ headerShown: false }}
+//           />
+//           <Stack.Screen
+//             name="PetDetails"
+//             component={PetDetailsScreen}
+//             options={{ headerShown: false }}
+//           />
+//           <Stack.Screen
+//             name="PostGoalsScreen"
+//             component={PostGoalsScreen}
+//             options={{ headerShown: false }}
+//           />
+//         </Stack.Navigator>
+//       </NavigationContainer>
+//     </AppProvider>
+//   );
+// }

@@ -18,10 +18,12 @@ export default function ImagePickerComponent({ imageUri, setImageUri }) {
 
   useEffect(() => {
     const getPermissions = async () => {
-      const cameraStatus = await ImagePicker.getCameraPermissionsAsync();
-      const mediaStatus = await ImagePicker.getMediaLibraryPermissionsAsync();
-      setCameraPermission(cameraStatus.granted);
-      setMediaLibraryPermission(mediaStatus.granted);
+      const { status: cameraStatus } =
+        await ImagePicker.requestCameraPermissionsAsync();
+      const { status: mediaStatus } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      setCameraPermission(cameraStatus === "granted");
+      setMediaLibraryPermission(mediaStatus === "granted");
     };
     getPermissions();
   }, []);

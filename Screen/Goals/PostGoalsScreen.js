@@ -53,7 +53,7 @@ export default function PostGoalsScreen({ navigation, route }) {
       await saveDiaryContent(goal, diaryContent);
       await saveImageUri(goal, imageUri);
 
-      if (isFirstSave) {
+      if (isFirstSave && diaryContent.trim() !== "") {
         addDiamondsToTotal(diamonds);
         setIsFirstSave(false);
       }

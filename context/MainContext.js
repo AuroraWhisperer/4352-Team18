@@ -1,15 +1,17 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAuth } from "./AuthContext.js";
 
 export const MainContext = createContext();
 
 export const MainProvider = ({ children }) => {
+  const { username } = useAuth();
   const [goals, setGoals] = useState([]);
   const [goal, setGoal] = useState([]);
   const [time, setTime] = useState(0);
   const [diamonds, setDiamonds] = useState(0);
 
-  const [totalDiamonds, setTotalDiamonds] = useState(0);
+  const [totalDiamonds, setTotalDiamonds] = useState(100);
   const [totalTime, setTotalTime] = useState(0);
 
   const addGoal = (newGoal) => {
@@ -17,29 +19,51 @@ export const MainProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const loadGoals = async () => {
+    const loadUserData = async () => {
       try {
-        const storedGoals = await AsyncStorage.getItem("goals");
+        const storedGoals = await AsyncStorage.getItem(`goals_${username}`);
         if (storedGoals) {
           setGoals(JSON.parse(storedGoals));
         }
+
+        const storedDiamonds = await AsyncStorage.getItem(
+          `diamonds_${username}`
+        );
+        setTotalDiamonds(storedDiamonds ? JSON.parse(storedDiamonds) : 100);
+
+        const storedTime = await AsyncStorage.getItem(`time_${username}`);
+        setTotalTime(storedTime ? JSON.parse(storedTime) : 0);
       } catch (error) {
-        console.error("Failed to load goals from AsyncStorage:", error);
+        console.error("Failed to load user data from AsyncStorage:", error);
       }
     };
-    loadGoals();
-  }, []);
+
+    if (username) loadUserData();
+  }, [username]);
 
   useEffect(() => {
-    const saveGoals = async () => {
+    const saveUserData = async () => {
       try {
-        await AsyncStorage.setItem("goals", JSON.stringify(goals));
+        if (username) {
+          await AsyncStorage.setItem(
+            `goals_${username}`,
+            JSON.stringify(goals)
+          );
+          await AsyncStorage.setItem(
+            `diamonds_${username}`,
+            JSON.stringify(totalDiamonds)
+          );
+          await AsyncStorage.setItem(
+            `time_${username}`,
+            JSON.stringify(totalTime)
+          );
+        }
       } catch (error) {
-        console.error("Failed to save goals to AsyncStorage:", error);
+        console.error("Failed to save user data to AsyncStorage:", error);
       }
     };
-    if (goals.length > 0) saveGoals();
-  }, [goals]);
+    saveUserData();
+  }, [goals, totalDiamonds, totalTime, username]);
 
   const addDiamondsToTotal = (newDiamonds) => {
     setTotalDiamonds((prevTotal) => prevTotal + newDiamonds);
@@ -54,6 +78,7 @@ export const MainProvider = ({ children }) => {
       value={{
         goals,
         addGoal,
+        setGoals,
         goal,
         setGoal,
         diamonds,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   View,
   Text,
@@ -6,35 +6,117 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
+  Animated,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { Swipeable } from "react-native-gesture-handler";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function ExistingGoalCard({ goal, time, diamonds }) {
+let openSwipeableRef = null;
+
+export default function ExistingGoalCard({ goal, time, diamonds, onDelete }) {
   const navigation = useNavigation();
+  const swipeableRef = useRef(null);
+
+  const deleteRelatedData = async (goal) => {
+    const diaryKey = `diaryContent_${goal}`;
+    const imageKey = `imageUri_${goal}`;
+    try {
+      await AsyncStorage.removeItem(diaryKey);
+      await AsyncStorage.removeItem(imageKey);
+      console.log("Related data deleted successfully.");
+    } catch (error) {
+      console.log("Failed to delete related data:", error);
+    }
+  };
+
+  const renderRightActions = (progress, dragX) => {
+    const scale = dragX.interpolate({
+      inputRange: [-100, 0],
+      outputRange: [1, 0.5],
+      extrapolate: "clamp",
+    });
+
+    return (
+      <TouchableOpacity onPress={handleDeleteConfirmation}>
+        <Animated.View
+          style={[styles.deleteButton, { transform: [{ scale }] }]}
+        >
+          <Text style={styles.deleteButtonText}>Delete</Text>
+        </Animated.View>
+      </TouchableOpacity>
+    );
+  };
+
+  const handleDeleteConfirmation = () => {
+    Alert.alert(
+      "Confirm Deletion",
+      "Are you sure you want to delete this goal",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+          onPress: () => {
+            swipeableRef.current?.close();
+          },
+        },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => handleDelete(),
+        },
+      ]
+    );
+  };
+
+  const handleDelete = async () => {
+    await deleteRelatedData(goal);
+    onDelete();
+
+    swipeableRef.current?.close();
+  };
+
+  const handleSwipeOpen = () => {
+    if (openSwipeableRef && openSwipeableRef !== swipeableRef.current) {
+      openSwipeableRef.close();
+    }
+    openSwipeableRef = swipeableRef.current;
+  };
 
   return (
-    <TouchableOpacity
-      style={[styles.card]}
-      onPress={() => navigation.navigate("PostGoalsScreen", { goal })}
+    <Swipeable
+      ref={swipeableRef}
+      renderRightActions={renderRightActions}
+      onSwipeableOpen={handleSwipeOpen}
     >
-      <View style={[styles.leftSide]}>
-        <Text style={[styles.goalText]} numberOfLines={3} ellipsizeMode="tail">
-          {goal}
-        </Text>
-      </View>
-
-      <View style={[styles.rightSide]}>
-        <Text style={[styles.timeText]}>{time} hr</Text>
-        <View style={[styles.diamondsContainer]}>
-          <Image
-            source={require("../../assets/images/diamond.png")}
-            style={[styles.diamondImage]}
-            resizeMode="contain"
-          />
-          <Text style={[styles.diamondsText]}>{diamonds}</Text>
+      <TouchableOpacity
+        style={[styles.card]}
+        onPress={() => navigation.navigate("PostGoalsScreen", { goal })}
+      >
+        <View style={[styles.leftSide]}>
+          <Text
+            style={[styles.goalText]}
+            numberOfLines={3}
+            ellipsizeMode="tail"
+          >
+            {goal}
+          </Text>
         </View>
-      </View>
-    </TouchableOpacity>
+
+        <View style={[styles.rightSide]}>
+          <Text style={[styles.timeText]}>{time} hr</Text>
+          <View style={[styles.diamondsContainer]}>
+            <Image
+              source={require("../../assets/images/diamond.png")}
+              style={[styles.diamondImage]}
+              resizeMode="contain"
+            />
+            <Text style={[styles.diamondsText]}>{diamonds}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    </Swipeable>
   );
 }
 
@@ -99,5 +181,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#333",
     marginLeft: 5,
+  },
+  deleteButton: {
+    backgroundColor: "#FF3B30",
+    justifyContent: "center",
+    alignItems: "center",
+    width: 80,
+    height: "100%",
+    borderRadius: 15,
+  },
+  deleteButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
   },
 });
