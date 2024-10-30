@@ -1,3 +1,4 @@
+// old code
 import React, { createContext, useContext, useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -16,8 +17,6 @@ export const AppProvider = ({ children }) => {
 
   const [username, setUsername] = useState("");
   const [users, setUsers] = useState([]);
-
-  const [petname, setPetname] = useState("");
 
   const addGoal = (newGoal) => {
     setGoals((prevGoals) => [...prevGoals, newGoal]);

@@ -15,6 +15,7 @@ function TabNavigator() {
     <Tab.Navigator
       tabBarPosition="bottom"
       screenOptions={{
+        swipeEnabled: false,
         tabBarStyle: {
           position: "absolute",
           bottom: 0,

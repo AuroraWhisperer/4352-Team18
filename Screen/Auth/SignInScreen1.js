@@ -15,14 +15,15 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
-import { useApp } from "../../context/AppContext.js";
+import { useAuth } from "../../context/AuthContext";
 
 export default function SignInScreen1({ navigation }) {
   const [fontsLoaded] = useFonts({
     "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
   });
 
-  const { username, setUsername, handleAdminLogin, handleUserLogin } = useApp();
+  const { username, setUsername, handleAdminLogin, handleUserLogin } =
+    useAuth();
   const [password, setPassword] = useState("");
 
   const signInDisabled = !username || !password;

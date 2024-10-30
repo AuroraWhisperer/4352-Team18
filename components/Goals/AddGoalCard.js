@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useApp } from "../../context/AppContext";
+import { useMain } from "../../context/MainContext";
 import {
   View,
   TextInput,
@@ -12,7 +12,7 @@ import {
 } from "react-native";
 
 export default function AddGoalCard({ onSubmit }) {
-  const { goal, setGoal, time, setTime, diamonds, setDiamonds } = useApp();
+  const { goal, setGoal, time, setTime, diamonds, setDiamonds } = useMain();
 
   useEffect(() => {
     setGoal("");

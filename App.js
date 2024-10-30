@@ -4,7 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import StartScreen from "./Screen/Auth/StartScreen";
 import TabNavigator from "./Navigation/TabNavigator";
 import AddGoalsScreen from "./Screen/Goals/AddGoalsScreen";
-import { AppProvider } from "./context/AppContext";
+import { AppProvider } from "./context/AppProvider";
 import SignInScreen1 from "./Screen/Auth/SignInScreen1";
 import StartPage from "./Screen/Auth/StartPage";
 import GoalsScreen from "./Screen/Main/GoalsScreen.js";
@@ -33,18 +33,6 @@ const Stack = createStackNavigator();
 // }
 
 export default function App() {
-  // this code is for clean the storage
-    // useEffect(() => {
-    //   const clearStorage = async () => {
-    //     try {
-    //       await AsyncStorage.clear();
-    //       console.log("Storage cleared on app start");
-    //     } catch (error) {
-    //       console.log("Failed to clear storage:", error);
-    //     }
-    //   };
-    //   clearStorage();
-    // }, []);
 
   return (
     <AppProvider>

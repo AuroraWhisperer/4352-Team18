@@ -1,10 +1,10 @@
 import React from "react";
 import { Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
-import { useApp } from "../../context/AppContext";
+import { useMain } from "../../context/MainContext";
 import { useNavigation } from "@react-navigation/native";
 
 export default function GoalsMessage({ onPress }) {
-  const { goals } = useApp();
+  const { goals } = useMain();
   const navigation = useNavigation();
 
   const handlePress = () => {

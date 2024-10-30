@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { useApp } from "../../context/AppContext";
+import { useMain } from "../../context/MainContext";
 
 export default function TaskComponent({ initialDiamonds }) {
   const [diamonds, setDiamonds] = useState(initialDiamonds);
-  const { addToTotalDiamonds } = useApp();
+  const { addToTotalDiamonds } = useMain();
 
   const completeTask = () => {
     addToTotalDiamonds(diamonds);

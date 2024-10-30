@@ -9,15 +9,23 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React, { useState } from "react";
-import { useApp } from "../../context/AppContext";
+import { useMain } from "../../context/MainContext";
 import TotalDiamonds from "../../components/Display/TotalDiamonds";
 import HoursDisplay from "../../components/Display/HoursDisplay";
 import AddGoalCard from "../../components/Goals/AddGoalCard";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function AddGoalsScreen({ navigation }) {
-  const { addGoal, goals, goal, setGoal, time, setTime, diamonds, setDiamonds } =
-    useApp();
+  const {
+    addGoal,
+    goals,
+    goal,
+    setGoal,
+    time,
+    setTime,
+    diamonds,
+    setDiamonds,
+  } = useMain();
 
   const handleSubmit = () => {
     console.log("goal:", goal, "time:", time, "diamonds:", diamonds);

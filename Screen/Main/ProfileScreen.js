@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { useApp } from "../../context/AppContext.js";
+import { useAuth } from "../../context/AuthContext.js";
 
 export default function ProfileScreen({ navigation }) {
   const handleSettingsPress = () => {
@@ -17,7 +17,7 @@ export default function ProfileScreen({ navigation }) {
     // navigation.navigate("SettingsScreen");
   };
 
-  const { username } = useApp();
+  const { username } = useAuth();
 
   return (
     <SafeAreaView style={styles.container}>

@@ -11,7 +11,7 @@ import {
   Platform,
   Alert,
 } from "react-native";
-import { useApp } from "../../context/AppContext";
+import { useAuth } from "../../context/AuthContext";
 
 export default function StartPage({ navigation }) {
   const [fontsLoaded] = useFonts({
@@ -22,7 +22,7 @@ export default function StartPage({ navigation }) {
     return undefined;
   }
 
-  const { clearAsyncStorage } = useApp();
+  const { clearAsyncStorage } = useAuth();
 
   const handleClearStoragePress = () => {
     Alert.alert(

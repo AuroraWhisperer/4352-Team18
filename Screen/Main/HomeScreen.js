@@ -13,11 +13,11 @@ import TotalDiamonds from "../../components/Display/TotalDiamonds";
 import HoursDisplay from "../../components/Display/HoursDisplay";
 import GoalsMessage from "../../components/Display/GoalsMessage";
 import HomeScreenCard from "../../components/Goals/HomeScreenCard";
-import { useApp } from "../../context/AppContext";
+import { useMain } from "../../context/MainContext";
 import { useNavigation } from "@react-navigation/native";
 
 export default function HomeScreen() {
-  const { goals } = useApp();
+  const { goals } = useMain();
   const lastGoal = goals.length > 0 ? goals[goals.length - 1] : null;
   const navigation = useNavigation();
 

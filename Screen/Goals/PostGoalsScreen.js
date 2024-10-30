@@ -17,7 +17,7 @@ import {
   saveImageUri,
   loadImageUri,
 } from "../../context/diaryStorage";
-import { useApp } from "../../context/AppContext";
+import { useMain } from "../../context/MainContext";
 import ImagePickerComponent from "../../components/Camera/ImagePickerComponent";
 
 export default function PostGoalsScreen({ navigation, route }) {
@@ -25,7 +25,7 @@ export default function PostGoalsScreen({ navigation, route }) {
   const [currentGoal, setCurrentGoal] = useState(goal);
   const [diamonds, setDiamonds] = useState(10);
   const [diaryContent, setDiaryContent] = useState("");
-  const { totalDiamonds, addDiamondsToTotal } = useApp();
+  const { totalDiamonds, addDiamondsToTotal } = useMain();
   const [isFirstSave, setIsFirstSave] = useState(false);
   const [imageUri, setImageUri] = useState(null);
 

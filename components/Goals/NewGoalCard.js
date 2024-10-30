@@ -7,11 +7,11 @@ import {
   Dimensions,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
-import { useApp } from "../../context/AppContext.js";
+import { useAuth } from "../../context/AuthContext";
 
 export default function NewGoalCard({ onPress }) {
 
-  const { username } = useApp();
+  const { username } = useAuth();
 
   return (
     <TouchableOpacity style={[styles.card]} onPress={onPress}>

@@ -1,9 +1,9 @@
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
-import { useApp } from "../../context/AppContext";
+import { useMain } from "../../context/MainContext";
 
 export default function CurrentTaskDiamonds({ style, textStyle, imageStyle }) {
-  const { totalDiamonds } = useApp();
+  const { totalDiamonds } = useMain();
 
   return (
     <View style={[styles.currency, style]}>
