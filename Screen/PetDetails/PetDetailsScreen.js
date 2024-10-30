@@ -1,0 +1,146 @@
+import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  SafeAreaView,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
+import Star from "../../components/Display/Star";
+import { useNavigation } from "@react-navigation/native";
+
+export default function PetDetailsScreen() {
+  const navigation = useNavigation();
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <TouchableOpacity
+          style={styles.backContent}
+          onPress={() => navigation.goBack()}
+        >
+          <Image
+            source={require("../../assets/images/backButton.png")}
+            style={styles.backImage}
+          />
+        </TouchableOpacity>
+
+        <View style={styles.imageContainer}>
+          <Image
+            source={require("../../assets/images/PetDetailsTopImage.png")}
+            style={styles.petImage}
+          />
+        </View>
+        <Text style={styles.title}>Welcome to {"\n"}Luna's house!</Text>
+        <View style={styles.infoCard}>
+          <Text style={styles.infoText}>Name: Luna</Text>
+          <Text style={styles.infoText}>Gender: Female</Text>
+          <Text style={styles.infoText}>Age: 3</Text>
+        </View>
+        <Text style={styles.conditionTitle}>RATING:</Text>
+        <View style={styles.starContainer}>
+          <Star filled={true} />
+          <Star filled={true} />
+          <Star filled={true} />
+          <Star filled={false} />
+          <Star filled={false} />
+        </View>
+        <Text style={styles.conditionTitle}>CONDITION:</Text>
+        <View style={styles.conditionContainer}>
+          <View style={styles.conditionItem}>
+            <Star filled={true} />
+            <Text style={styles.conditionText}>HAPPY</Text>
+          </View>
+
+          <View style={styles.conditionItem}>
+            <Star filled={false} />
+            <Text style={styles.conditionText}>HUNGRY</Text>
+          </View>
+
+          <View style={styles.conditionItem}>
+            <Star filled={true} />
+            <Text style={styles.conditionText}>HEALTHY</Text>
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#FFE9D4",
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: "flex-start",
+    alignItems: "center",
+    padding: 20,
+  },
+  backContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    position: "absolute",
+    top: Dimensions.get("window").height * 0.08,
+    left: Dimensions.get("window").width * 0.08,
+  },
+  backImage: {
+    width: 24,
+    height: 24,
+  },
+  imageContainer: {
+    marginTop: Dimensions.get("window").height * 0.1,
+    marginBottom: Dimensions.get("window").height * 0.03,
+  },
+  petImage: {
+    width: Dimensions.get("window").width * 0.4,
+    height: Dimensions.get("window").width * 0.4,
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginVertical: 20,
+  },
+  infoCard: {
+    backgroundColor: "white",
+    borderRadius: 10,
+    padding: 20,
+    alignItems: "center",
+    marginVertical: 10,
+    width: "90%",
+  },
+  infoText: {
+    fontSize: 16,
+    marginVertical: 5,
+  },
+  conditionTitle: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginTop: 20,
+    textAlign: "center",
+  },
+  starContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginVertical: 10,
+  },
+  conditionContainer: {
+    marginTop: 10,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",
+  },
+  conditionItem: {
+    alignItems: "center",
+  },
+  conditionText: {
+    marginTop: 5,
+    fontSize: 18,
+  },
+});
