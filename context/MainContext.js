@@ -66,7 +66,8 @@ export const MainProvider = ({ children }) => {
   }, [goals, totalDiamonds, totalTime, username]);
 
   const addDiamondsToTotal = (newDiamonds) => {
-    setTotalDiamonds((prevTotal) => prevTotal + newDiamonds);
+    const numericDiamonds = Number(newDiamonds);
+    setTotalDiamonds((prevTotal) => prevTotal + numericDiamonds);
   };
 
   const addTimeToTotal = (newTime) => {

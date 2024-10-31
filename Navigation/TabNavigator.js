@@ -7,6 +7,7 @@ import PocketScreen from "../Screen/Main/PocketScreen";
 import GoalsScreen from "../Screen/Main/GoalsScreen";
 import ShopScreen from "../Screen/Main/ShopScreen";
 import ProfileScreen from "../Screen/Main/ProfileScreen";
+import NestedTabNavigator from "./NestedTabNavigator";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -67,7 +68,7 @@ function TabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Shop"
+        name="ShopTab"
         component={ShopScreen}
         options={{
           title: "Shop",

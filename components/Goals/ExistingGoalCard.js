@@ -92,7 +92,12 @@ export default function ExistingGoalCard({ goal, time, diamonds, onDelete }) {
     >
       <TouchableOpacity
         style={[styles.card]}
-        onPress={() => navigation.navigate("PostGoalsScreen", { goal })}
+        onPress={() => {
+          navigation.navigate("PostGoalsScreen", {
+            goal,
+            cardDiamonds: Number(diamonds[0]),
+          })
+        }}
       >
         <View style={[styles.leftSide]}>
           <Text
@@ -103,7 +108,6 @@ export default function ExistingGoalCard({ goal, time, diamonds, onDelete }) {
             {goal}
           </Text>
         </View>
-
         <View style={[styles.rightSide]}>
           <Text style={[styles.timeText]}>{time} hr</Text>
           <View style={[styles.diamondsContainer]}>

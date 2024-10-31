@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useFonts } from "expo-font";
 import {
   StyleSheet,
@@ -25,6 +25,7 @@ export default function SignInScreen1({ navigation }) {
   const { username, setUsername, handleAdminLogin, handleUserLogin } =
     useAuth();
   const [password, setPassword] = useState("");
+  const passwordInputRef = useRef(null);
 
   const signInDisabled = !username || !password;
 
@@ -94,7 +95,9 @@ export default function SignInScreen1({ navigation }) {
               onChangeText={setUsername}
               returnKeyType="next"
               onSubmitEditing={() => {
-                if (!signInDisabled) {
+                if (!password) {
+                  passwordInputRef.current && passwordInputRef.current.focus();
+                } else if (!signInDisabled) {
                   handleSignIn();
                 }
               }}
@@ -104,6 +107,7 @@ export default function SignInScreen1({ navigation }) {
           <View>
             <Text style={[styles.inputText]}>Password: </Text>
             <TextInput
+              ref={passwordInputRef}
               secureTextEntry={true}
               style={[styles.inputButton]}
               placeholder="Enter your password"

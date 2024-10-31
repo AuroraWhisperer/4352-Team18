@@ -76,7 +76,6 @@ export const AuthProvider = ({ children }) => {
     saveUserData(username, { petname: newPetname });
   };
 
-
   const handleUserLogin = (username, password) => {
     const user = users.find(
       (user) => user.username === username && user.password === password
@@ -84,8 +83,15 @@ export const AuthProvider = ({ children }) => {
     return !!user;
   };
 
-  const registerUser = (newUser) => {
-    setUsers((prevUsers) => [...prevUsers, newUser]);
+  const registerUser = async (newUser) => {
+    try {
+      const userKey = `user_${newUser.username}`;
+      await AsyncStorage.setItem(userKey, JSON.stringify(newUser));
+      setUsers((prevUsers) => [...prevUsers, newUser]);
+      console.log("User registered successfully");
+    } catch (error) {
+      console.error("Failed to register user:", error);
+    }
   };
 
   const clearAsyncStorage = async () => {

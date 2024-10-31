@@ -21,13 +21,14 @@ import { useMain } from "../../context/MainContext";
 import ImagePickerComponent from "../../components/Camera/ImagePickerComponent";
 
 export default function PostGoalsScreen({ navigation, route }) {
-  const { goal } = route.params;
+  const { goal, cardDiamonds } = route.params;
   const [currentGoal, setCurrentGoal] = useState(goal);
   const [diamonds, setDiamonds] = useState(10);
   const [diaryContent, setDiaryContent] = useState("");
   const { totalDiamonds, addDiamondsToTotal } = useMain();
   const [isFirstSave, setIsFirstSave] = useState(false);
   const [imageUri, setImageUri] = useState(null);
+  const [wasPhotoInitiallyAdded, setWasPhotoInitiallyAdded] = useState(false);
 
   useEffect(() => {
     const fetchContent = async () => {
@@ -43,6 +44,7 @@ export default function PostGoalsScreen({ navigation, route }) {
 
       if (uri) {
         setImageUri(uri);
+        setWasPhotoInitiallyAdded(true);
       }
     };
     fetchContent();
@@ -56,6 +58,11 @@ export default function PostGoalsScreen({ navigation, route }) {
       if (isFirstSave && diaryContent.trim() !== "") {
         addDiamondsToTotal(diamonds);
         setIsFirstSave(false);
+      }
+
+      if (imageUri && !wasPhotoInitiallyAdded) {
+        addDiamondsToTotal(Number(cardDiamonds));
+        setWasPhotoInitiallyAdded(true);
       }
 
       navigation.goBack();
