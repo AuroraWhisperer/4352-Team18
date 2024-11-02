@@ -1,9 +1,12 @@
 import React, { createContext, useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+// Create ShopItems context
 export const ShopItems = createContext();
 
+// ShopItemsProvider component to provide shop-related data and functions
 export const ShopItemsProvider = ({ children }) => {
+  // State variables for each category of purchased items
   const [purchasedClothesItems, setPurchasedClothesItems] = useState([]);
   const [purchasedAccessoriesItems, setPurchasedAccessoriesItems] = useState(
     []
@@ -12,9 +15,11 @@ export const ShopItemsProvider = ({ children }) => {
   const [purchasedFurnitureItems, setPurchasedFurnitureItems] = useState([]);
   const [purchasedToysItems, setPurchasedToysItems] = useState([]);
 
+  // Load purchased items from AsyncStorage on component mount
   useEffect(() => {
     const loadPurchasedItems = async () => {
       try {
+        // Retrieve stored items for each category
         const storedClothes = await AsyncStorage.getItem(
           "purchasedClothesItems"
         );
@@ -27,6 +32,7 @@ export const ShopItemsProvider = ({ children }) => {
         );
         const storedToys = await AsyncStorage.getItem("purchasedToysItems");
 
+        // Parse and set state if data exists in AsyncStorage
         if (storedClothes) setPurchasedClothesItems(JSON.parse(storedClothes));
         if (storedAccessories)
           setPurchasedAccessoriesItems(JSON.parse(storedAccessories));
@@ -41,6 +47,7 @@ export const ShopItemsProvider = ({ children }) => {
     loadPurchasedItems();
   }, []);
 
+  // Function to add a new purchased item to the appropriate category
   const addPurchasedItem = async (item, category) => {
     switch (category) {
       case "clothes":
@@ -95,6 +102,7 @@ export const ShopItemsProvider = ({ children }) => {
   };
 
   return (
+    // Provide values and functions to the ShopItems context for use across the app
     <ShopItems.Provider
       value={{
         purchasedClothesItems,

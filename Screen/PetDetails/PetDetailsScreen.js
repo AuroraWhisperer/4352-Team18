@@ -18,6 +18,7 @@ export default function PetDetailsScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
+        {/* Back button to return to previous screen */}
         <TouchableOpacity
           style={styles.backContent}
           onPress={() => navigation.goBack()}
@@ -28,18 +29,23 @@ export default function PetDetailsScreen() {
           />
         </TouchableOpacity>
 
+        {/* Pet image */}
         <View style={styles.imageContainer}>
           <Image
             source={require("../../assets/images/PetDetailsTopImage.png")}
             style={styles.petImage}
           />
         </View>
+
+        {/* Pet information */}
         <Text style={styles.title}>Welcome to {"\n"}Luna's house!</Text>
         <View style={styles.infoCard}>
           <Text style={styles.infoText}>Name: Luna</Text>
           <Text style={styles.infoText}>Gender: Female</Text>
           <Text style={styles.infoText}>Age: 3</Text>
         </View>
+
+        {/* Pet rating section */}
         <Text style={styles.conditionTitle}>RATING:</Text>
         <View style={styles.starContainer}>
           <Star filled={true} />
@@ -48,6 +54,8 @@ export default function PetDetailsScreen() {
           <Star filled={false} />
           <Star filled={false} />
         </View>
+
+        {/* Pet condition section */}
         <Text style={styles.conditionTitle}>CONDITION:</Text>
         <View style={styles.conditionContainer}>
           <View style={styles.conditionItem}>

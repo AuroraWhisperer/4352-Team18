@@ -6,6 +6,7 @@ export default function TaskComponent({ initialDiamonds }) {
   const [diamonds, setDiamonds] = useState(initialDiamonds);
   const { addToTotalDiamonds } = useMain();
 
+  // Function to handle task completion
   const completeTask = () => {
     addToTotalDiamonds(diamonds);
     setDiamonds(0);
@@ -22,10 +23,6 @@ export default function TaskComponent({ initialDiamonds }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-
-  },
-  button: {
-
-  },
+  container: {},
+  button: {},
 });

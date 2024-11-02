@@ -14,12 +14,14 @@ import {
 export default function AddGoalCard({ onSubmit }) {
   const { goal, setGoal, time, setTime, diamonds, setDiamonds } = useMain();
 
+  // Initialize the form fields when the component mounts
   useEffect(() => {
     setGoal("");
     setTime("");
     setDiamonds("");
   }, []);
 
+  // Handle time input change and calculate diamonds based on time
   const handleTimeChange = (text) => {
     if (/^\d{0,4}(\.\d{0,2})?$/.test(text)) {
       setTime(text);
@@ -37,6 +39,7 @@ export default function AddGoalCard({ onSubmit }) {
     }
   };
 
+  // Handle form submission
   const handleSubmit = () => {
     onSubmit();
     setGoal("");
@@ -46,6 +49,7 @@ export default function AddGoalCard({ onSubmit }) {
 
   return (
     <View style={[styles.card]}>
+      {/* Input field for entering the goal description */}
       <TextInput
         style={[styles.multilineInput]}
         placeholder="Enter your goal"
@@ -56,6 +60,7 @@ export default function AddGoalCard({ onSubmit }) {
         numberOfLines={2}
       />
 
+      {/* Input field for entering time in hours */}
       <TextInput
         style={[styles.input]}
         placeholder="Enter time (in hours)"
@@ -65,6 +70,7 @@ export default function AddGoalCard({ onSubmit }) {
         placeholderTextColor="#888"
       />
 
+      {/* Display calculated diamonds based on entered time */}
       <View style={styles.diamondsContainer}>
         <Image
           source={require("../../assets/images/diamond.png")}
@@ -73,6 +79,7 @@ export default function AddGoalCard({ onSubmit }) {
         <Text style={[styles.diamondsText]}>Diamonds: {diamonds}</Text>
       </View>
 
+      {/* Submit button to add the goal */}
       <TouchableOpacity style={[styles.submitButton]} onPress={handleSubmit}>
         <Text style={[styles.submitButtonText]}>Submit</Text>
       </TouchableOpacity>

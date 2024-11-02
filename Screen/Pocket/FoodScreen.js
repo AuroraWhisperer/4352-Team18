@@ -5,10 +5,12 @@ import CallToAction from "../../components/Display/CallToAction";
 import Food from "../../components/Display/PocketProducts/Food";
 
 export default function FoodScreen() {
+  // Access purchased food items from the ShopItems context
   const { purchasedFoodItems } = useContext(ShopItems);
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* Conditionally render either the Food component or CallToAction */}
       {purchasedFoodItems && purchasedFoodItems.length > 0 ? (
         <Food />
       ) : (

@@ -14,16 +14,19 @@ import {
 import { useAuth } from "../../context/AuthContext";
 
 export default function StartPage({ navigation }) {
+  // Load custom fonts using expo-font
   const [fontsLoaded] = useFonts({
     "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
   });
 
+  // If fonts are not loaded, return undefined to show loading state
   if (!fontsLoaded) {
     return undefined;
   }
 
   const { clearAsyncStorage } = useAuth();
 
+  // Show confirmation alert before clearing local storage
   const handleClearStoragePress = () => {
     Alert.alert(
       "Clear Storage",
@@ -38,6 +41,7 @@ export default function StartPage({ navigation }) {
 
   return (
     <SafeAreaView style={[styles.container]}>
+      {/* Back button to return to the previous screen */}
       <TouchableOpacity
         style={[styles.backContent]}
         onPress={() => navigation.goBack()}
@@ -48,6 +52,7 @@ export default function StartPage({ navigation }) {
         />
       </TouchableOpacity>
 
+      {/* Button to clear local storage */}
       <TouchableOpacity
         style={styles.clearButton}
         onPress={handleClearStoragePress}
@@ -55,6 +60,7 @@ export default function StartPage({ navigation }) {
         <Text style={styles.clearButtonText}>Clear Local Storage</Text>
       </TouchableOpacity>
 
+      {/* App logo and title */}
       <View style={[styles.content]}>
         <Image
           source={require("../../assets/images/StartScreenImage.png")}
@@ -64,6 +70,7 @@ export default function StartPage({ navigation }) {
         <Text style={[styles.title]}>PetConnect</Text>
       </View>
 
+      {/* Sign In button */}
       <TouchableOpacity
         style={[styles.signButton]}
         onPress={() => navigation.navigate("SignInScreen1")}
@@ -71,10 +78,12 @@ export default function StartPage({ navigation }) {
         <Text style={[styles.signText]}>Sign In</Text>
       </TouchableOpacity>
 
+      {/* Sign Up button */}
       <TouchableOpacity style={[styles.signButton]}>
         <Text style={[styles.signText]}>Sign Up For Family</Text>
       </TouchableOpacity>
 
+      {/* Button for entering a family code */}
       <TouchableOpacity style={[styles.familyCodeButton]}>
         <Text style={[styles.familyCodeText]}>Have a family code?</Text>
       </TouchableOpacity>

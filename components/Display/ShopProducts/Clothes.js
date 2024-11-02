@@ -11,6 +11,7 @@ import {
 import { useMain } from "../../../context/MainContext";
 import { ShopItems } from "../../../context/ShopItems";
 
+// Array of product items with details
 const products = [
   {
     id: "1",
@@ -83,10 +84,12 @@ export default function Clothes() {
   const numColumns = 3;
   const filledProducts = [...products];
 
+  // Add empty items to fill grid, ensuring each row is complete
   while (filledProducts.length % numColumns !== 0) {
     filledProducts.push({ id: `empty-${filledProducts.length}`, empty: true });
   }
 
+  // Function to handle item purchase on press
   const handlePress = (item) => {
     if (totalDiamonds >= item.price) {
       Alert.alert("Confirm Purchase", `Do you want to get this item?`, [
@@ -111,6 +114,7 @@ export default function Clothes() {
     }
   };
 
+  // Render each item in the grid
   const renderItem = ({ item }) => {
     if (item.empty) {
       return <View style={[styles.productContainer, styles.emptyProduct]} />;
@@ -132,6 +136,7 @@ export default function Clothes() {
     );
   };
 
+  // Container for the FlatList
   return (
     <View style={styles.container}>
       <FlatList

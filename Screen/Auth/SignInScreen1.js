@@ -18,17 +18,21 @@ import {
 import { useAuth } from "../../context/AuthContext";
 
 export default function SignInScreen1({ navigation }) {
+  // Load the custom font using the expo-font hook
   const [fontsLoaded] = useFonts({
     "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
   });
 
+  // Access authentication functions and state from AuthContext
   const { username, setUsername, handleAdminLogin, handleUserLogin } =
     useAuth();
   const [password, setPassword] = useState("");
   const passwordInputRef = useRef(null);
 
+  // Disable sign-in button if username or password is empty
   const signInDisabled = !username || !password;
 
+  // Handle sign-in when the button is pressed
   const handleSignIn = async () => {
     const isAdmin = await handleAdminLogin(username, password);
     if (isAdmin) {
@@ -50,6 +54,7 @@ export default function SignInScreen1({ navigation }) {
     }
   };
 
+  // Display loading state if fonts aren't loaded
   if (!fontsLoaded) {
     return null;
   }
@@ -67,6 +72,7 @@ export default function SignInScreen1({ navigation }) {
           />
         </TouchableOpacity>
 
+        {/* Display logo and title */}
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           keyboardVerticalOffset={Platform.OS === "ios" ? 200 : 200}
@@ -81,11 +87,13 @@ export default function SignInScreen1({ navigation }) {
           </View>
         </KeyboardAvoidingView>
 
+        {/* Username and password input fields */}
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           keyboardVerticalOffset={Platform.OS === "ios" ? 20 : 20}
           style={styles.keyboardView}
         >
+          {/* Username input */}
           <View>
             <Text style={[styles.inputText]}>Username: </Text>
             <TextInput
@@ -104,6 +112,7 @@ export default function SignInScreen1({ navigation }) {
             />
           </View>
 
+          {/* Password input */}
           <View>
             <Text style={[styles.inputText]}>Password: </Text>
             <TextInput
@@ -123,6 +132,7 @@ export default function SignInScreen1({ navigation }) {
           </View>
         </KeyboardAvoidingView>
 
+        {/* Sign-in button */}
         <TouchableOpacity
           style={[styles.signButton]}
           disabled={signInDisabled}
@@ -131,6 +141,7 @@ export default function SignInScreen1({ navigation }) {
           <Text style={[styles.signText]}>Sign In</Text>
         </TouchableOpacity>
 
+        {/* Forgot password link */}
         <TouchableOpacity style={[styles.forgotPasswordButton]}>
           <Text style={[styles.forgotPasswordText]}>Forgot password?</Text>
         </TouchableOpacity>

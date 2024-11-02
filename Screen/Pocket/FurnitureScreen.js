@@ -5,10 +5,12 @@ import CallToAction from "../../components/Display/CallToAction";
 import Furniture from "../../components/Display/PocketProducts/Furniture";
 
 export default function FurnitureScreen() {
+  // Retrieve purchased furniture items from the ShopItems context
   const { purchasedFurnitureItems } = useContext(ShopItems);
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* Conditionally render the Furniture component or CallToAction */}
       {purchasedFurnitureItems && purchasedFurnitureItems.length > 0 ? (
         <Furniture />
       ) : (

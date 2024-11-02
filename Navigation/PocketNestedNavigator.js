@@ -20,6 +20,7 @@ const PocketNestedNavigator = () => (
       tabBarStyle: { backgroundColor: "#F7E4C6" },
     }}
   >
+    {/* Define each screen in the tab navigator with the header hidden */}
     <PocketTab.Screen
       name="Clothes"
       component={ClothesScreen}

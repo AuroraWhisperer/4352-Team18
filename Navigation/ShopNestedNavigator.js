@@ -18,6 +18,7 @@ const ShopNestedNavigator = () => (
       tabBarStyle: { backgroundColor: "#F7E4C6" },
     }}
   >
+    {/* Define each screen in the shop tab navigator with header hidden */}
     <ShopTab.Screen
       name="Clothes"
       component={ClothesScreen}

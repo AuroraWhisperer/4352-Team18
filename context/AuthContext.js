@@ -5,9 +5,11 @@ import { CommonActions, useNavigation } from "@react-navigation/native";
 
 export const AuthContext = createContext();
 
+// AuthProvider component to provide authentication context to the app
 export const AuthProvider = ({ children }) => {
   const navigation = useNavigation();
 
+  // State variables to manage user information and application data
   const [username, setUsername] = useState("");
   const [users, setUsers] = useState([]);
   const [petname, setPetname] = useState("");
@@ -29,14 +31,17 @@ export const AuthProvider = ({ children }) => {
 
   const [refreshKey, setRefreshKey] = useState(0);
 
+  // Initialize admin accounts in AsyncStorage
   useEffect(() => {
     const initAdminAccounts = async () => {
       try {
+        // Remove existing admin accounts
         await AsyncStorage.removeItem("user_katie");
         await AsyncStorage.removeItem("user_mikayla");
         await AsyncStorage.removeItem("user_tom");
         await AsyncStorage.removeItem("user_hamzah");
 
+        // Define new admin accounts
         const adminAccounts = [
           { username: "katie", password: "katie" },
           { username: "mikayla", password: "mikayla" },
@@ -44,6 +49,7 @@ export const AuthProvider = ({ children }) => {
           { username: "hamzah", password: "hamzah" },
         ];
 
+        // Store each admin account in AsyncStorage
         for (const account of adminAccounts) {
           await AsyncStorage.setItem(
             `user_${account.username}`,
@@ -60,6 +66,7 @@ export const AuthProvider = ({ children }) => {
     initAdminAccounts();
   }, []);
 
+  // Handle admin login by validating against stored data
   const handleAdminLogin = async (username, password) => {
     try {
       const prefixedUsername = `user_${username}`;
@@ -84,6 +91,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Handle user logout, clearing session data
   const handleLogout = async () => {
     try {
       setUsername("");
@@ -96,6 +104,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Save user-specific data to AsyncStorage
   const saveUserData = async (username, data) => {
     try {
       await AsyncStorage.setItem(`data_${username}`, JSON.stringify(data));
@@ -104,11 +113,13 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Update pet name in state and save it in AsyncStorage
   const updatePetname = (newPetname) => {
     setPetname(newPetname);
     saveUserData(username, { petname: newPetname });
   };
 
+  // Handle regular user login by checking against in-memory user list
   const handleUserLogin = (username, password) => {
     const user = users.find(
       (user) => user.username === username && user.password === password
@@ -116,6 +127,7 @@ export const AuthProvider = ({ children }) => {
     return !!user;
   };
 
+  // Register a new user and store them in AsyncStorage
   const registerUser = async (newUser) => {
     try {
       const userKey = `user_${newUser.username}`;
@@ -127,6 +139,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Clear all non-user-specific data from AsyncStorage
   const clearAsyncStorage = async () => {
     try {
       const keys = await AsyncStorage.getAllKeys();
@@ -139,50 +152,52 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // const clearAsyncStorage = async () => {
-  //   try {
-  //     const keys = await AsyncStorage.getAllKeys();
-  //     console.log("All keys in AsyncStorage before clearing:", keys);
+  /* // old version of clear program
+  const clearAsyncStorage = async () => {
+    try {
+      const keys = await AsyncStorage.getAllKeys();
+      console.log("All keys in AsyncStorage before clearing:", keys);
 
-  //     const keysToKeep = [
-  //       "user_tom",
-  //       "user_hamzah",
-  //       "user_katie",
-  //       "user_mikayla",
-  //     ];
+      const keysToKeep = [
+        "user_tom",
+        "user_hamzah",
+        "user_katie",
+        "user_mikayla",
+      ];
 
-  //     const keysToRemove = keys.filter((key) => !keysToKeep.includes(key));
-  //     console.log("Keys to be removed:", keysToRemove);
+      const keysToRemove = keys.filter((key) => !keysToKeep.includes(key));
+      console.log("Keys to be removed:", keysToRemove);
 
-  //     await AsyncStorage.multiRemove(keysToRemove);
-  //     console.log("Selected data cleared from AsyncStorage");
+      await AsyncStorage.multiRemove(keysToRemove);
+      console.log("Selected data cleared from AsyncStorage");
 
-  //     setGoals([]);
-  //     setHistoryGoals([]);
-  //     setTotalDiamonds(100);
-  //     setTime(0);
-  //     setGoal([]);
-  //     setDiamonds(0);
-  //     setTotalTime(0);
-  //     setPurchasedClothesItems([]);
-  //     setPurchasedAccessoriesItems([]);
-  //     setPurchasedFoodItems([]);
-  //     setPurchasedFurnitureItems([]);
-  //     setPurchasedToysItems([]);
+      setGoals([]);
+      setHistoryGoals([]);
+      setTotalDiamonds(100);
+      setTime(0);
+      setGoal([]);
+      setDiamonds(0);
+      setTotalTime(0);
+      setPurchasedClothesItems([]);
+      setPurchasedAccessoriesItems([]);
+      setPurchasedFoodItems([]);
+      setPurchasedFurnitureItems([]);
+      setPurchasedToysItems([]);
 
-  //     const remainingKeys = await AsyncStorage.getAllKeys();
-  //     console.log(
-  //       "Remaining keys in AsyncStorage after clearing:",
-  //       remainingKeys
-  //     );
+      const remainingKeys = await AsyncStorage.getAllKeys();
+      console.log(
+        "Remaining keys in AsyncStorage after clearing:",
+        remainingKeys
+      );
 
-  //     // setRefreshKey((prevKey) => prevKey + 1);
-  //     DevSettings.reload();
-  //   } catch (error) {
-  //     console.error("Failed to clear data:", error);
-  //   }
-  // };
+      // setRefreshKey((prevKey) => prevKey + 1);
+      DevSettings.reload();
+    } catch (error) {
+      console.error("Failed to clear data:", error);
+    }
+  }; */
 
+  // Reset app navigation to the StartScreen
   const resetApp = () => {
     navigation.dispatch(
       CommonActions.reset({
@@ -193,6 +208,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
+    // Provide values and functions to the AuthContext for use across the app
     <AuthContext.Provider
       value={{
         username,
@@ -213,4 +229,5 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
+// Custom hook for accessing AuthContext
 export const useAuth = () => useContext(AuthContext);

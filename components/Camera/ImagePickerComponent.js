@@ -12,10 +12,12 @@ import {
 import * as ImagePicker from "expo-image-picker";
 
 export default function ImagePickerComponent({ imageUri, setImageUri }) {
+  // State to hold camera and gallery permissions
   const [cameraPermission, setCameraPermission] = useState(null);
   const [mediaLibraryPermission, setMediaLibraryPermission] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // Request permissions for camera and gallery access
   useEffect(() => {
     const getPermissions = async () => {
       const { status: cameraStatus } =
@@ -28,6 +30,7 @@ export default function ImagePickerComponent({ imageUri, setImageUri }) {
     getPermissions();
   }, []);
 
+  // Function to choose image source (camera or gallery)
   const chooseImageSource = () => {
     const options = ["Using the camera", "Select from photo gallery", "Cancel"];
     const cancelButtonIndex = 2;
@@ -60,6 +63,7 @@ export default function ImagePickerComponent({ imageUri, setImageUri }) {
     }
   };
 
+  // Function to open the camera and capture an image
   const openCamera = async () => {
     if (cameraPermission === false) {
       Alert.alert("Requires camera privileges");
@@ -71,6 +75,8 @@ export default function ImagePickerComponent({ imageUri, setImageUri }) {
     });
     setLoading(false);
     // console.log("Camera result:", result);
+
+    // Check if an image was taken and set the URI
     if (
       result &&
       !result.canceled &&
@@ -82,6 +88,7 @@ export default function ImagePickerComponent({ imageUri, setImageUri }) {
     }
   };
 
+  // Function to open the photo gallery to select an image
   const openImageLibrary = async () => {
     if (mediaLibraryPermission === false) {
       Alert.alert("Requires access to the photo gallery");
@@ -93,6 +100,8 @@ export default function ImagePickerComponent({ imageUri, setImageUri }) {
     });
     setLoading(false);
     // console.log("Library result:", result);
+
+    // Check if an image was selected and set the URI
     if (
       result &&
       !result.canceled &&
@@ -104,6 +113,7 @@ export default function ImagePickerComponent({ imageUri, setImageUri }) {
     }
   };
 
+  // Render TouchableOpacity to choose image source
   return (
     <TouchableOpacity onPress={chooseImageSource}>
       {loading ? (

@@ -7,8 +7,10 @@ export default function GoalsMessage({ onPress }) {
   const { goals } = useMain();
   const navigation = useNavigation();
 
+  // Effect hook to watch for changes in the goals array
   useEffect(() => {}, [goals]);
 
+  // Function to handle button press
   const handlePress = () => {
     if (goals.length === 0) {
       Alert.alert("No Upcoming Goals", "You have no upcoming goals.", [
@@ -22,6 +24,7 @@ export default function GoalsMessage({ onPress }) {
     }
   };
 
+  // TouchableOpacity to make the message clickable, triggers handlePress on press
   return (
     <TouchableOpacity onPress={handlePress}>
       <Text style={[styles.message]}>

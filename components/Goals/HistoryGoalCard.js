@@ -13,6 +13,7 @@ export default function HistoryGoalCard({ goal, time, diamonds }) {
   const navigation = useNavigation();
 
   return (
+    // Touchable component that navigates to HistoryPostScreen when pressed
     <TouchableOpacity
       style={[styles.card]}
       onPress={() => {
@@ -22,11 +23,14 @@ export default function HistoryGoalCard({ goal, time, diamonds }) {
         });
       }}
     >
+      {/* Left side of the card for displaying goal text */}
       <View style={[styles.leftSide]}>
         <Text style={[styles.goalText]} numberOfLines={3} ellipsizeMode="tail">
           {goal}
         </Text>
       </View>
+
+      {/* Right side of the card for displaying time and diamonds */}
       <View style={[styles.rightSide]}>
         <Text style={[styles.timeText]}>{time} hr</Text>
         <View style={[styles.diamondsContainer]}>

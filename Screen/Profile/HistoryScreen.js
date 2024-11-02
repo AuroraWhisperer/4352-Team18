@@ -19,12 +19,14 @@ export default function HistoryScreen({ navigation }) {
     navigation.goBack();
   };
 
+  // Load history goals every time the screen gains focus
   useFocusEffect(
     useCallback(() => {
       loadHistoryGoals();
     }, [])
   );
 
+  // Render each history goal card in the FlatList
   const renderGoalCard = ({ item }) => (
     <HistoryGoalCard
       goal={item.goal}
@@ -35,6 +37,7 @@ export default function HistoryScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+      {/* Back button to navigate to the previous screen */}
       <TouchableOpacity style={styles.backButton} onPress={handleBackPress}>
         <Icon name="arrow-back-outline" size={28} color="#333" />
       </TouchableOpacity>
@@ -42,6 +45,7 @@ export default function HistoryScreen({ navigation }) {
       <Text style={styles.title}>History Screen</Text>
 
       <View style={styles.cardsContainer}>
+        {/* If there are history goals, display them in a FlatList; otherwise, show a message */}
         {historyGoals && historyGoals.length > 0 ? (
           <FlatList
             data={[...historyGoals].reverse()}

@@ -12,18 +12,22 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useAuth } from "../../context/AuthContext.js";
 
 export default function ProfileScreen({ navigation }) {
+  // Function to navigate to the settings screen
   const handleSettingsPress = () => {
     navigation.navigate("SettingsScreen");
   };
 
+  // Function to navigate to the history screen
   const handleHistoryPress = () => {
     navigation.navigate("HistoryScreen");
   };
 
+  // Destructure username from AuthContext to display the user's family name
   const { username } = useAuth();
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* Settings button in the top-right corner */}
       <TouchableOpacity
         style={styles.settingsButton}
         onPress={handleSettingsPress}
@@ -31,6 +35,7 @@ export default function ProfileScreen({ navigation }) {
         <Icon name="settings-outline" size={34} color="#333" />
       </TouchableOpacity>
 
+      {/* Main content area with title and image */}
       <View style={styles.content}>
         <Text style={styles.title}>PetConnect</Text>
 
@@ -40,10 +45,12 @@ export default function ProfileScreen({ navigation }) {
         />
       </View>
 
+      {/* Display user's family name */}
       <View style={[styles.TextWrapper]}>
         <Text style={[styles.text]}>{username} Family</Text>
       </View>
 
+      {/* Card to view history, navigates to the HistoryScreen on press */}
       <TouchableOpacity style={styles.historyCard} onPress={handleHistoryPress}>
         <View style={styles.historyContent}>
           <Icon

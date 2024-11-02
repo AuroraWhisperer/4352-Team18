@@ -19,6 +19,7 @@ export default function GoalsScreen() {
   const navigation = useNavigation();
   const { goals, setGoals } = useMain();
 
+  // Function to delete a goal
   const handleDeleteGoal = (goalText) => {
     const updatedGoals = goals.filter((goal) => goal.goal !== goalText);
     setGoals(updatedGoals);
@@ -27,6 +28,7 @@ export default function GoalsScreen() {
   return (
     <View style={[styles.container]}>
       <View style={[styles.contentWrapper]}>
+        {/* Scrollable content area */}
         <View style={[styles.scrollViewWrapper]}>
           <ScrollView contentContainerStyle={[styles.scrollContent]}>
             <View style={[styles.header]}>
@@ -39,6 +41,7 @@ export default function GoalsScreen() {
                 style={{ marginTop: 40, marginBottom: 30 }}
               />
 
+              {/* Display each goal in reverse order */}
               {goals
                 .slice()
                 .reverse()
@@ -52,6 +55,7 @@ export default function GoalsScreen() {
                   />
                 ))}
 
+              {/* Button to add a new goal */}
               <NewGoalCard
                 onPress={() => navigation.navigate("AddGoalsScreen")}
               />
@@ -60,6 +64,7 @@ export default function GoalsScreen() {
           </ScrollView>
         </View>
 
+        {/* Fixed background image and bottom area */}
         <View style={[styles.fixedBottom]}>
           <Image
             source={require("../../assets/images/GoalScreenBottomImage.png")}

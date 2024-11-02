@@ -5,10 +5,12 @@ import CallToAction from "../../components/Display/CallToAction";
 import Clothes from "../../components/Display/PocketProducts/Clothes";
 
 export default function ClothesScreen() {
+  // Access purchased clothes from the ShopItems context
   const { purchasedClothesItems } = useContext(ShopItems);
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* Conditionally render either the Clothes component or CallToAction */}
       {purchasedClothesItems && purchasedClothesItems.length > 0 ? (
         <Clothes />
       ) : (

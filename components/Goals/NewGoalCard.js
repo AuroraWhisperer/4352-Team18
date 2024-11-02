@@ -14,6 +14,7 @@ export default function NewGoalCard({ onPress }) {
   const { username } = useAuth();
 
   return (
+    // Touchable card that triggers the onPress function when pressed
     <TouchableOpacity style={[styles.card]} onPress={onPress}>
       <View style={[styles.iconTextWrapper]}>
         <Icon name="plus-circle" size={24} color="#333" style={styles.icon} />

@@ -1,6 +1,14 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, Dimensions, SafeAreaView } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  SafeAreaView,
+} from "react-native";
 
+// PocketHeader component that displays a welcome message and an image at the top of the screen
 const PocketHeader = () => {
   return (
     <SafeAreaView style={styles.headerContainer}>

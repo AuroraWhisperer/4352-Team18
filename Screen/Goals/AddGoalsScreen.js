@@ -16,6 +16,7 @@ import AddGoalCard from "../../components/Goals/AddGoalCard";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function AddGoalsScreen({ navigation }) {
+  // Extract states and methods from MainContext
   const {
     addGoal,
     goals,
@@ -27,11 +28,14 @@ export default function AddGoalsScreen({ navigation }) {
     setDiamonds,
   } = useMain();
 
+  // Function to handle goal submission
   const handleSubmit = () => {
     console.log("goal:", goal, "time:", time, "diamonds:", diamonds);
 
+    // Check if the goal already exists in the goals list
     const goalExists = goals.some((g) => g.goal === goal);
 
+    // Validate inputs and display alerts if any field is missing or if the goal is a duplicate
     if (!goal) {
       Alert.alert("Error", "Please fill out the goal field.");
     } else if (!time) {
@@ -44,7 +48,7 @@ export default function AddGoalsScreen({ navigation }) {
         "This goal already exists. Please enter a unique goal."
       );
     } else {
-      // If the goal is unique, add it
+      // If the goal is unique, add it and navigate back to the GoalsTab
       const newGoal = { goal, time, diamonds };
       addGoal(newGoal);
       navigation.navigate("GoalsTab", { newGoal });
@@ -55,6 +59,7 @@ export default function AddGoalsScreen({ navigation }) {
   return (
     <View style={[styles.container]}>
       <ScrollView contentContainerStyle={[styles.scrollContent]}>
+        {/* Header with back button and diamond count */}
         <View style={[styles.header]}>
           <TouchableOpacity
             style={[styles.backButton]}
@@ -72,6 +77,7 @@ export default function AddGoalsScreen({ navigation }) {
           <TotalDiamonds value={100} />
         </View>
 
+        {/* Main content area with HoursDisplay and AddGoalCard */}
         <View style={[styles.content]}>
           <HoursDisplay hours={0} />
 
@@ -89,6 +95,7 @@ export default function AddGoalsScreen({ navigation }) {
           </View>
         </View>
 
+        {/* Background scenery image at the bottom */}
         <View style={styles.scenery}>
           <Image
             source={require("../../assets/images/GoalScreenBottomImage.png")}

@@ -22,12 +22,14 @@ export default function HomeScreen() {
   const navigation = useNavigation();
   const [hasGoals, setHasGoals] = useState(goals.length > 0);
 
+  // Update `hasGoals` whenever `goals` changes
   useEffect(() => {
     setHasGoals(goals.length > 0);
   }, [goals]);
 
   return (
     <SafeAreaView style={[styles.container]}>
+      {/* Header with menu button and greeting */}
       <View style={[styles.header]}>
         <TouchableOpacity
           style={[styles.menuContainer]}
@@ -41,6 +43,7 @@ export default function HomeScreen() {
         <Text style={[styles.title]}>Welcome to {"\n"}Luna's home!</Text>
       </View>
 
+      {/* Row containing GoalsMessage and TotalDiamonds */}
       <View style={[styles.rowContainer]}>
         <GoalsMessage
           onPress={() => {
@@ -52,6 +55,7 @@ export default function HomeScreen() {
         <TotalDiamonds value={100} />
       </View>
 
+      {/* Display the last goal card if it exists */}
       <View style={[styles.existingGoal]}>
         {lastGoal ? (
           <HomeScreenCard
@@ -62,6 +66,7 @@ export default function HomeScreen() {
         ) : null}
       </View>
 
+      {/* Main content area including hours display and pet image */}
       <View style={[styles.content]}>
         <View style={[styles.petAndHoursContainer]}>
           <HoursDisplay hours={0} />

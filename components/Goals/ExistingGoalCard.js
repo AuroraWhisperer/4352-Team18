@@ -13,12 +13,14 @@ import { useNavigation } from "@react-navigation/native";
 import { Swipeable } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+// Track the currently open swipeable item to close it if another is opened
 let openSwipeableRef = null;
 
 export default function ExistingGoalCard({ goal, time, diamonds, onDelete }) {
   const navigation = useNavigation();
   const swipeableRef = useRef(null);
 
+  // Function to delete data related to a specific goal from AsyncStorage
   const deleteRelatedData = async (goal) => {
     const diaryKey = `diaryContent_${goal}`;
     const imageKey = `imageUri_${goal}`;
@@ -31,6 +33,7 @@ export default function ExistingGoalCard({ goal, time, diamonds, onDelete }) {
     }
   };
 
+  // Render the delete button that appears on swipe
   const renderRightActions = (progress, dragX) => {
     const scale = dragX.interpolate({
       inputRange: [-100, 0],
@@ -49,6 +52,7 @@ export default function ExistingGoalCard({ goal, time, diamonds, onDelete }) {
     );
   };
 
+  // Confirm deletion with an alert
   const handleDeleteConfirmation = () => {
     Alert.alert(
       "Confirm Deletion",
@@ -70,6 +74,7 @@ export default function ExistingGoalCard({ goal, time, diamonds, onDelete }) {
     );
   };
 
+  // Handle deletion by removing related data and calling the onDelete callback
   const handleDelete = async () => {
     await deleteRelatedData(goal);
     onDelete();
@@ -77,6 +82,7 @@ export default function ExistingGoalCard({ goal, time, diamonds, onDelete }) {
     swipeableRef.current?.close();
   };
 
+  // Close any open swipeable when this one opens
   const handleSwipeOpen = () => {
     if (openSwipeableRef && openSwipeableRef !== swipeableRef.current) {
       openSwipeableRef.close();
@@ -90,13 +96,14 @@ export default function ExistingGoalCard({ goal, time, diamonds, onDelete }) {
       renderRightActions={renderRightActions}
       onSwipeableOpen={handleSwipeOpen}
     >
+      {/* Touchable to navigate to PostGoalsScreen with goal and diamonds info */}
       <TouchableOpacity
         style={[styles.card]}
         onPress={() => {
           navigation.navigate("PostGoalsScreen", {
             goal,
             cardDiamonds: Number(diamonds[0]),
-          })
+          });
         }}
       >
         <View style={[styles.leftSide]}>

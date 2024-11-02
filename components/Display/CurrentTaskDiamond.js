@@ -5,6 +5,7 @@ import { useMain } from "../../context/MainContext";
 export default function CurrentTaskDiamonds({ style, textStyle, imageStyle }) {
   const { totalDiamonds } = useMain();
 
+  // Main container for displaying diamond count with custom styles applied
   return (
     <View style={[styles.currency, style]}>
       <Image

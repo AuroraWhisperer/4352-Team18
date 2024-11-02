@@ -5,9 +5,10 @@ import { ShopItems } from "../../../context/ShopItems";
 export default function Accessories() {
   const { purchasedAccessoriesItems } = useContext(ShopItems);
 
-  const numColumns = 3;
+  const numColumns = 3; // Set the number of columns for the grid
   const filledItems = [...purchasedAccessoriesItems];
 
+  // Ensure the grid is filled, adding placeholder items if needed
   while (filledItems.length % numColumns !== 0) {
     filledItems.push({
       id: `empty-${filledItems.length}-${Math.random()}`,
@@ -15,6 +16,7 @@ export default function Accessories() {
     });
   }
 
+  // Function to render each item in the grid
   const renderItem = ({ item }) => {
     if (item.empty) {
       return <View style={[styles.productContainer, styles.emptyProduct]} />;

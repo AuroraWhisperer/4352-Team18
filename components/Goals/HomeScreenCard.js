@@ -7,22 +7,25 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation } from "@react-navigation/native";
 
 export default function HomeScreenCard({ goal, time, diamonds }) {
   const navigation = useNavigation();
 
+  // Touchable component that navigates to GoalsTab when pressed, passing goal, time, and diamonds as params
   return (
     <TouchableOpacity
       style={[styles.card]}
       onPress={() => navigation.navigate("GoalsTab", { goal, time, diamonds })}
     >
+      {/* Left side of the card to display the goal text */}
       <View style={[styles.leftSide]}>
         <Text style={[styles.goalText]} numberOfLines={4} ellipsizeMode="tail">
           {goal}
         </Text>
       </View>
 
+      {/* Right side of the card to display time and diamonds */}
       <View style={[styles.rightSide]}>
         <Text style={[styles.timeText]}>{time} hr</Text>
         <View style={[styles.diamondsContainer]}>

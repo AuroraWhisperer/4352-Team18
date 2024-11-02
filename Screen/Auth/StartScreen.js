@@ -11,16 +11,19 @@ import {
 } from "react-native";
 
 export default function StartScreen({ navigation }) {
+  // Load custom font using expo-font hook
   const [fontsLoaded] = useFonts({
     "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
   });
 
+  // Return loading state if fonts are not loaded
   if (!fontsLoaded) {
     return undefined;
   }
 
   return (
     <SafeAreaView style={[styles.container]}>
+      {/* Main content area with image and title */}
       <View style={[styles.content]}>
         <Image
           source={require("../../assets/images/StartScreenImage.png")}
@@ -30,6 +33,7 @@ export default function StartScreen({ navigation }) {
         <Text style={[styles.title]}>Hello!</Text>
       </View>
 
+      {/* Start button navigates to StartPage on press */}
       <TouchableOpacity
         style={[styles.startButton]}
         onPress={() => navigation.navigate("StartPage")}
@@ -61,7 +65,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 40,
-    fontFamily: 'MarkoOne-Regular',
+    fontFamily: "MarkoOne-Regular",
     marginTop: 10,
     marginBottom: 20,
   },
@@ -80,7 +84,7 @@ const styles = StyleSheet.create({
   },
   startText: {
     fontSize: 30,
-    fontFamily: 'MarkoOne-Regular',
+    fontFamily: "MarkoOne-Regular",
     color: "#333",
     textAlign: "center",
   },

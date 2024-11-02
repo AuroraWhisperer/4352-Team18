@@ -8,8 +8,10 @@ import PocketProducts from "../../components/Display/PocketProducts";
 const PocketScreen = () => {
   return (
     <View style={{ flex: 1 }}>
+      {/* Header for the PocketScreen */}
       <PocketHeader />
 
+      {/* Nested Tab Navigator for different pocket categories */}
       <PocketNestedNavigator />
     </View>
   );

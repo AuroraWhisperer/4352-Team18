@@ -1,10 +1,17 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 export default function CallToAction({ screenName }) {
   const navigation = useNavigation();
 
+  // Function to return custom message based on the screen name
   const getTextByScreenName = () => {
     switch (screenName) {
       case "ClothesScreen":
@@ -27,6 +34,7 @@ export default function CallToAction({ screenName }) {
     }
   };
 
+  // Centered container to hold call-to-action message and button
   return (
     <View style={styles.centerContent}>
       <Text style={styles.callToAction}>{getTextByScreenName()}</Text>

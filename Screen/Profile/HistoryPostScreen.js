@@ -20,6 +20,7 @@ export default function PostGoalsScreen({ navigation, route }) {
   const [historyDiaryContent, setHistoryDiaryContent] = useState("");
   const [historyImageUri, setHistoryImageUri] = useState(null);
 
+  // Fetches content from storage when component is focused
   const fetchContent = async () => {
     try {
       const content = await loadHistoryDiaryContent(goal);
@@ -37,6 +38,7 @@ export default function PostGoalsScreen({ navigation, route }) {
     }
   };
 
+  // useFocusEffect to trigger data fetch when screen is focused
   useFocusEffect(
     useCallback(() => {
       fetchContent();
@@ -46,6 +48,7 @@ export default function PostGoalsScreen({ navigation, route }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
+        {/* Top navigation with back button */}
         <View style={styles.topNavigation}>
           <TouchableOpacity
             style={styles.backContent}
@@ -58,6 +61,7 @@ export default function PostGoalsScreen({ navigation, route }) {
           </TouchableOpacity>
         </View>
 
+        {/* Image display area */}
         <View style={styles.imagePlaceholderContainer}>
           {historyImageUri ? (
             <Image
@@ -71,6 +75,7 @@ export default function PostGoalsScreen({ navigation, route }) {
           )}
         </View>
 
+        {/* Goal title display */}
         <View style={styles.titleContainer}>
           <View style={styles.titleBackground}>
             <Text
@@ -83,6 +88,7 @@ export default function PostGoalsScreen({ navigation, route }) {
           </View>
         </View>
 
+        {/* Diary content display */}
         <View style={styles.diaryContainer}>
           <View style={styles.diaryHeader}>
             <Text style={styles.diaryText}>Diary</Text>
@@ -92,6 +98,7 @@ export default function PostGoalsScreen({ navigation, route }) {
           </Text>
         </View>
 
+        {/* Bottom scenery decoration */}
         <View style={styles.scenery}>
           <Image
             source={require("../../assets/images/GoalScreenBottomImage.png")}
@@ -100,6 +107,7 @@ export default function PostGoalsScreen({ navigation, route }) {
           />
         </View>
 
+        {/* Decorative bottom area */}
         <View style={styles.bottomArea}></View>
       </View>
     </TouchableWithoutFeedback>

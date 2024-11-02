@@ -4,9 +4,11 @@ import { useAuth } from "./AuthContext.js";
 
 export const MainContext = createContext();
 
+// MainProvider component to provide the main context to the app
 export const MainProvider = ({ children }) => {
   const { username } = useAuth();
 
+  // State variables to manage goals, time, and diamond count
   const [goals, setGoals] = useState([]);
   const [goal, setGoal] = useState([]);
   const [historyGoals, setHistoryGoals] = useState([]);
@@ -17,11 +19,13 @@ export const MainProvider = ({ children }) => {
   const [totalDiamonds, setTotalDiamonds] = useState(100);
   const [totalTime, setTotalTime] = useState(0);
 
+  // Function to add a new goal to current and history goals
   const addGoal = (newGoal) => {
     setGoals((prevGoals) => [...prevGoals, newGoal]);
     setHistoryGoals((prevHistoryGoals) => [...prevHistoryGoals, newGoal]);
   };
 
+  // Load goals from AsyncStorage on component mount
   useEffect(() => {
     const loadGoals = async () => {
       try {
@@ -36,6 +40,7 @@ export const MainProvider = ({ children }) => {
     loadGoals();
   }, []);
 
+  // Save goals to AsyncStorage whenever goals change
   useEffect(() => {
     const saveGoals = async () => {
       try {
@@ -47,6 +52,7 @@ export const MainProvider = ({ children }) => {
     if (goals.length > 0) saveGoals();
   }, [goals]);
 
+  // Load user-specific data (goals, diamonds, time) from AsyncStorage
   useEffect(() => {
     const loadUserData = async () => {
       try {
@@ -79,6 +85,7 @@ export const MainProvider = ({ children }) => {
     if (username) loadUserData();
   }, [username]);
 
+  // Save user-specific data to AsyncStorage whenever it changes
   useEffect(() => {
     const saveUserData = async () => {
       try {
@@ -107,10 +114,12 @@ export const MainProvider = ({ children }) => {
     saveUserData();
   }, [goals, historyGoals, totalDiamonds, totalTime, username]);
 
+  // Function to add a new goal to history goals
   const addToHistoryGoals = (newGoal) => {
     setHistoryGoals((prevHistoryGoals) => [...prevHistoryGoals, newGoal]);
   };
 
+  // Load history goals from AsyncStorage
   const loadHistoryGoals = async () => {
     try {
       const storedHistoryGoals = await AsyncStorage.getItem(
@@ -124,20 +133,24 @@ export const MainProvider = ({ children }) => {
     }
   };
 
+  // Add diamonds to the total diamond count
   const addDiamondsToTotal = (newDiamonds) => {
     const numericDiamonds = Number(newDiamonds);
     setTotalDiamonds((prevTotal) => prevTotal + numericDiamonds);
   };
 
+  // Reduce diamonds from the total diamond count
   const reduceDiamondsFromTotal = (price) => {
     setTotalDiamonds((prevTotal) => prevTotal - price);
   };
 
+  // Add time to the total time
   const addTimeToTotal = (newTime) => {
     setTotalTime((prevTotal) => prevTotal + newTime);
   };
 
   return (
+    // Provide values and functions to the MainContext for use across the app
     <MainContext.Provider
       value={{
         goals,
@@ -165,4 +178,5 @@ export const MainProvider = ({ children }) => {
   );
 };
 
+// Custom hook for accessing MainContext
 export const useMain = () => useContext(MainContext);

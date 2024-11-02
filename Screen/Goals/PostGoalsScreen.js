@@ -25,6 +25,7 @@ import { useMain } from "../../context/MainContext";
 import ImagePickerComponent from "../../components/Camera/ImagePickerComponent";
 
 export default function PostGoalsScreen({ navigation, route }) {
+  // Retrieve goal and diamond count from route params
   const { goal, cardDiamonds } = route.params;
   const [currentGoal, setCurrentGoal] = useState(goal);
   const [diamonds, setDiamonds] = useState(10);
@@ -34,6 +35,7 @@ export default function PostGoalsScreen({ navigation, route }) {
   const [imageUri, setImageUri] = useState(null);
   const [wasPhotoInitiallyAdded, setWasPhotoInitiallyAdded] = useState(false);
 
+  // Load diary content and image URI on component mount
   useEffect(() => {
     const fetchContent = async () => {
       const content = await loadDiaryContent(goal);
@@ -54,19 +56,23 @@ export default function PostGoalsScreen({ navigation, route }) {
     fetchContent();
   }, [goal]);
 
+  // Handle saving of diary content and image
   const handleSave = async () => {
     try {
+      // Save current diary content and image URI to storage
       await saveDiaryContent(goal, diaryContent);
       await saveHistoryDiaryContent(goal, diaryContent);
 
       await saveImageUri(goal, imageUri);
       await saveHistoryImageUri(goal, imageUri);
 
+      // Add diamonds only on the first save with non-empty content
       if (isFirstSave && diaryContent.trim() !== "") {
         addDiamondsToTotal(diamonds);
         setIsFirstSave(false);
       }
 
+      // Add diamonds if a new photo was added
       if (imageUri && !wasPhotoInitiallyAdded) {
         addDiamondsToTotal(Number(cardDiamonds));
         setWasPhotoInitiallyAdded(true);
@@ -79,8 +85,10 @@ export default function PostGoalsScreen({ navigation, route }) {
   };
 
   return (
+    // Dismiss keyboard when tapping outside
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
+        {/* Header with back and save buttons */}
         <View style={styles.topNavigation}>
           <TouchableOpacity
             style={styles.backContent}
@@ -97,10 +105,12 @@ export default function PostGoalsScreen({ navigation, route }) {
           </TouchableOpacity>
         </View>
 
+        {/* Image picker for adding images */}
         <View style={[styles.imagePlaceholderContainer]}>
           <ImagePickerComponent imageUri={imageUri} setImageUri={setImageUri} />
         </View>
 
+        {/* Display goal title */}
         <View style={styles.titleContainer}>
           <View style={styles.titleBackground}>
             <Text
@@ -113,10 +123,12 @@ export default function PostGoalsScreen({ navigation, route }) {
           </View>
         </View>
 
+        {/* Diary input area with diamonds display */}
         <View style={styles.diaryContainer}>
           <View style={styles.diaryHeader}>
             <Text style={styles.diaryText}>Diary</Text>
 
+            {/* Display current diamond count */}
             <View
               style={[
                 styles.currencyContainer,
@@ -136,6 +148,8 @@ export default function PostGoalsScreen({ navigation, route }) {
               </Text>
             </View>
           </View>
+
+          {/* Text input for diary content */}
           <TextInput
             style={styles.diaryInput}
             placeholder="Write something..."
@@ -145,6 +159,7 @@ export default function PostGoalsScreen({ navigation, route }) {
           />
         </View>
 
+        {/* Background scenery image */}
         <View style={styles.scenery}>
           <Image
             source={require("../../assets/images/GoalScreenBottomImage.png")}
