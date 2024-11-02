@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -20,6 +20,11 @@ export default function HomeScreen() {
   const { goals } = useMain();
   const lastGoal = goals.length > 0 ? goals[goals.length - 1] : null;
   const navigation = useNavigation();
+  const [hasGoals, setHasGoals] = useState(goals.length > 0);
+
+  useEffect(() => {
+    setHasGoals(goals.length > 0);
+  }, [goals]);
 
   return (
     <SafeAreaView style={[styles.container]}>

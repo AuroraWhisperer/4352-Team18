@@ -7,7 +7,7 @@ import PocketScreen from "../Screen/Main/PocketScreen";
 import GoalsScreen from "../Screen/Main/GoalsScreen";
 import ShopScreen from "../Screen/Main/ShopScreen";
 import ProfileScreen from "../Screen/Main/ProfileScreen";
-import NestedTabNavigator from "./NestedTabNavigator";
+import PocketNestedNavigator from "./PocketNestedNavigator";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -75,6 +75,7 @@ function TabNavigator() {
           tabBarIcon: ({ color }) => (
             <Ionicons name="basket" size={26} color={color} />
           ),
+          tabBarStyle: { backgroundColor: "#9C8B71", height: 80 },
         }}
       />
       <Tab.Screen

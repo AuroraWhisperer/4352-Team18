@@ -1,13 +1,35 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-const CallToAction = () => {
+export default function CallToAction({ screenName }) {
   const navigation = useNavigation();
+
+  const getTextByScreenName = () => {
+    switch (screenName) {
+      case "ClothesScreen":
+        return "MEOW... \nBUY SOME CLOTHES FOR ME!";
+
+      case "AccessoriesScreen":
+        return "MEOW... \nBUY SOME ACCESSORIES \nFOR ME!";
+
+      case "FoodScreen":
+        return "MEOW... \nI'M SO HUNGRY :(";
+
+      case "ToysScreen":
+        return "MEOW...\nI WANT SOMETHING COMFY!";
+
+      case "FurnitureScreen":
+        return "MEOW... \nI'M SO BORED!";
+
+      default:
+        return "Check out our items!";
+    }
+  };
 
   return (
     <View style={styles.centerContent}>
-      <Text style={styles.callToAction}>MEOW... BUY SOME CLOTHES FOR ME!</Text>
+      <Text style={styles.callToAction}>{getTextByScreenName()}</Text>
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate("ShopTab")}
@@ -16,12 +38,14 @@ const CallToAction = () => {
       </TouchableOpacity>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   centerContent: {
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    // top: Dimensions.get("window").height * 0.02,
   },
   callToAction: {
     fontSize: 18,
@@ -42,5 +66,3 @@ const styles = StyleSheet.create({
     color: "#333",
   },
 });
-
-export default CallToAction;

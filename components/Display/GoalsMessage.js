@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import { useMain } from "../../context/MainContext";
 import { useNavigation } from "@react-navigation/native";
@@ -6,6 +6,8 @@ import { useNavigation } from "@react-navigation/native";
 export default function GoalsMessage({ onPress }) {
   const { goals } = useMain();
   const navigation = useNavigation();
+
+  useEffect(() => {}, [goals]);
 
   const handlePress = () => {
     if (goals.length === 0) {

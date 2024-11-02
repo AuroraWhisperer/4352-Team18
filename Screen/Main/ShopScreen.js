@@ -1,17 +1,19 @@
-import { Text, StyleSheet, View, SafeAreaView } from "react-native";
-import React, { Component } from "react";
+import React from "react";
+import { Text, StyleSheet, View, ScrollView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import ShopNestedNavigator from "../../Navigation/ShopNestedNavigator";
+import ShopHeader from "../Shop/ShopHeader";
 
-export default function ShopScreen() {
+const ShopScreen = () => {
   return (
-    <SafeAreaView style={[styles.container]}>
-      <Text>ShopScreen</Text>
-    </SafeAreaView>
-  );
-}
+    <View style={{ flex: 1 }}>
+      <ShopHeader />
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F7E4C6",
-  },
-});
+      <ShopNestedNavigator />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({});
+
+export default ShopScreen;

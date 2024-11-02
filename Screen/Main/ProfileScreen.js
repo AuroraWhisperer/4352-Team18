@@ -13,8 +13,11 @@ import { useAuth } from "../../context/AuthContext.js";
 
 export default function ProfileScreen({ navigation }) {
   const handleSettingsPress = () => {
-    console.log("Settings button pressed");
-    // navigation.navigate("SettingsScreen");
+    navigation.navigate("SettingsScreen");
+  };
+
+  const handleHistoryPress = () => {
+    navigation.navigate("HistoryScreen");
   };
 
   const { username } = useAuth();
@@ -40,6 +43,19 @@ export default function ProfileScreen({ navigation }) {
       <View style={[styles.TextWrapper]}>
         <Text style={[styles.text]}>{username} Family</Text>
       </View>
+
+      <TouchableOpacity style={styles.historyCard} onPress={handleHistoryPress}>
+        <View style={styles.historyContent}>
+          <Icon
+            name="time-outline"
+            size={24}
+            color="#FFA726"
+            style={styles.icon}
+          />
+          <Text style={styles.historyText}>View History</Text>
+        </View>
+        <Icon name="chevron-forward-outline" size={24} color="#FFA726" />
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
@@ -85,5 +101,34 @@ const styles = StyleSheet.create({
     fontFamily: "MarkoOne-Regular",
     fontWeight: "bold",
     color: "#333",
+  },
+  historyCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    backgroundColor: "#FDF4E7",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#FFA726",
+    top: Dimensions.get("window").height * 0.05,
+    width: "90%",
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+  },
+  historyContent: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  icon: {
+    marginRight: 10,
+  },
+  historyText: {
+    fontSize: 18,
+    color: "#FFA726",
+    fontWeight: "bold",
   },
 });

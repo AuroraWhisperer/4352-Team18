@@ -11,9 +11,11 @@ import StartPage from "./Screen/Auth/StartPage";
 import GoalsScreen from "./Screen/Main/GoalsScreen.js";
 import PetDetailsScreen from "./Screen/PetDetails/PetDetailsScreen.js";
 import PostGoalsScreen from "./Screen/Goals/PostGoalsScreen.js";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import SettingsScreen from "./Screen/Profile/SettingsScreen.js";
+import HistoryScreen from "./Screen/Profile/HistoryScreen.js";
 import PocketScreen from "./Screen/Main/PocketScreen.js";
 import ShopScreen from "./Screen/Main/ShopScreen.js";
+import HistoryPostScreen from "./Screen/Profile/HistoryPostScreen.js";
 
 const Stack = createStackNavigator();
 // const Tab = createBottomTabNavigator();
@@ -26,8 +28,8 @@ const Stack = createStackNavigator();
 //       <NavigationContainer>
 //         <Stack.Navigator>
 //           <Stack.Screen
-//             name="PocketScreen"
-//             component={PocketScreen}
+//             name="ShopScreen"
+//             component={TabNavigator}
 //             options={{ headerShown: false }}
 //           />
 //         </Stack.Navigator>
@@ -36,12 +38,10 @@ const Stack = createStackNavigator();
 //   );
 // }
 
-
-
 export default function App() {
   return (
-    <AppProvider>
-      <NavigationContainer>
+    <NavigationContainer>
+      <AppProvider>
         <Stack.Navigator initialRouteName="StartScreen">
           <Stack.Screen
             name="StartScreen"
@@ -83,13 +83,28 @@ export default function App() {
             component={PostGoalsScreen}
             options={{ headerShown: false }}
           />
+          <Stack.Screen
+            name="SettingsScreen"
+            component={SettingsScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="HistoryScreen"
+            component={HistoryScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="HistoryPostScreen"
+            component={HistoryPostScreen}
+            options={{ headerShown: false }}
+          />
           {/* <Stack.Screen
             name="ShopScreen"
             component={TabNavigator}
             options={{ headerShown: false }}
           /> */}
         </Stack.Navigator>
-      </NavigationContainer>
-    </AppProvider>
+      </AppProvider>
+    </NavigationContainer>
   );
 }

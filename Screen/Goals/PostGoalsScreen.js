@@ -16,6 +16,10 @@ import {
   loadDiaryContent,
   saveImageUri,
   loadImageUri,
+  saveHistoryDiaryContent,
+  loadHistoryDiaryContent,
+  saveHistoryImageUri,
+  loadHistoryImageUri,
 } from "../../context/diaryStorage";
 import { useMain } from "../../context/MainContext";
 import ImagePickerComponent from "../../components/Camera/ImagePickerComponent";
@@ -53,7 +57,10 @@ export default function PostGoalsScreen({ navigation, route }) {
   const handleSave = async () => {
     try {
       await saveDiaryContent(goal, diaryContent);
+      await saveHistoryDiaryContent(goal, diaryContent);
+
       await saveImageUri(goal, imageUri);
+      await saveHistoryImageUri(goal, imageUri);
 
       if (isFirstSave && diaryContent.trim() !== "") {
         addDiamondsToTotal(diamonds);

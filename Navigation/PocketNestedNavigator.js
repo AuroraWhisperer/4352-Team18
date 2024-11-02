@@ -8,13 +8,15 @@ import ToysScreen from "../Screen/Pocket/ToysScreen.js";
 
 const PocketTab = createMaterialTopTabNavigator();
 
-const NestedTabNavigator = () => (
+const PocketNestedNavigator = () => (
   <PocketTab.Navigator
     screenOptions={{
+      swipeEnabled: true,
+      lazy: true,
       tabBarActiveTintColor: "black",
       tabBarInactiveTintColor: "gray",
       tabBarIndicatorStyle: { backgroundColor: "black", height: 2 },
-      tabBarLabelStyle: { fontSize: 12 },
+      tabBarLabelStyle: { fontSize: 10 },
       tabBarStyle: { backgroundColor: "#F7E4C6" },
     }}
   >
@@ -46,4 +48,4 @@ const NestedTabNavigator = () => (
   </PocketTab.Navigator>
 );
 
-export default NestedTabNavigator;
+export default PocketNestedNavigator;
