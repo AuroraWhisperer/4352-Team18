@@ -1,18 +1,22 @@
-import { Text, StyleSheet, View } from "react-native";
-import React, { Component } from "react";
+import React from "react";
+import { Text, StyleSheet, View, ScrollView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import ShopNestedNavigator from "../../Navigation/ShopNestedNavigator";
+import ShopHeader from "../Shop/ShopHeader";
 
-export default function ShopScreen() {
+// Main ShopScreen component
+const ShopScreen = () => {
   return (
-    <View style={[styles.container]}>
-      <Text>ShopScreen</Text>
+    <View style={{ flex: 1 }}>
+      {/* Shop screen header */}
+      <ShopHeader />
+
+      {/* Tab navigator for different shop categories */}
+      <ShopNestedNavigator />
     </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
+const styles = StyleSheet.create({});
+
+export default ShopScreen;

@@ -12,7 +12,10 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "NSCameraUsageDescription": "This app needs access to the camera",
+      "NSPhotoLibraryUsageDescription": "This app needs access to the photo library",
+      "NSPhotoLibraryAddUsageDescription": "This app needs permission to save photos"
     },
     "android": {
       "adaptiveIcon": {
