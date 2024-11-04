@@ -8,24 +8,31 @@ import {
   ScrollView,
 } from "react-native";
 import React from "react";
-import CurrencyDisplay from "../../components/CurrencyDisplay";
-import HoursDisplay from "../../components/HoursDisplay";
-import NewGoalCard from "../../components/NewGoalCard";
-import ExistingGoalCard from "../../components/ExistingGoalCard";
+import TotalDiamonds from "../../components/Display/TotalDiamonds";
+import HoursDisplay from "../../components/Display/HoursDisplay";
+import NewGoalCard from "../../components/Goals/NewGoalCard";
+import ExistingGoalCard from "../../components/Goals/ExistingGoalCard";
 import { useNavigation } from "@react-navigation/native";
-import { useGoals } from "../../context/GoalContext";
+import { useMain } from "../../context/MainContext";
 
 export default function GoalsScreen() {
   const navigation = useNavigation();
-  const { goals } = useGoals();
+  const { goals, setGoals } = useMain();
+
+  // Function to delete a goal
+  const handleDeleteGoal = (goalText) => {
+    const updatedGoals = goals.filter((goal) => goal.goal !== goalText);
+    setGoals(updatedGoals);
+  };
 
   return (
     <View style={[styles.container]}>
       <View style={[styles.contentWrapper]}>
+        {/* Scrollable content area */}
         <View style={[styles.scrollViewWrapper]}>
           <ScrollView contentContainerStyle={[styles.scrollContent]}>
             <View style={[styles.header]}>
-              <CurrencyDisplay value={100} />
+              <TotalDiamonds value={100} />
             </View>
 
             <View style={[styles.content]}>
@@ -34,15 +41,21 @@ export default function GoalsScreen() {
                 style={{ marginTop: 40, marginBottom: 30 }}
               />
 
-              {goals.map((goal, index) => (
-                <ExistingGoalCard
-                  key={[index]}
-                  goal={[goal.goal]}
-                  time={[goal.time]}
-                  diamonds={[goal.diamonds]}
-                />
-              ))}
+              {/* Display each goal in reverse order */}
+              {goals
+                .slice()
+                .reverse()
+                .map((goal, index) => (
+                  <ExistingGoalCard
+                    key={[index]}
+                    goal={[goal.goal]}
+                    time={[goal.time]}
+                    diamonds={[goal.diamonds]}
+                    onDelete={() => handleDeleteGoal(goal.goal)}
+                  />
+                ))}
 
+              {/* Button to add a new goal */}
               <NewGoalCard
                 onPress={() => navigation.navigate("AddGoalsScreen")}
               />
@@ -51,6 +64,7 @@ export default function GoalsScreen() {
           </ScrollView>
         </View>
 
+        {/* Fixed background image and bottom area */}
         <View style={[styles.fixedBottom]}>
           <Image
             source={require("../../assets/images/GoalScreenBottomImage.png")}
