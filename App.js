@@ -13,6 +13,7 @@ import SignUpScreen3 from "./Screen/Auth/SignUpScreen3";
 import SignUpScreen4 from "./Screen/Auth/SignUpScreen4";
 import SignUpScreen5 from "./Screen/Auth/SignUpScreen5";
 import SignUpScreen6 from "./Screen/Auth/SignUpScreen6";
+import FamilyCodeScreen from "./Screen/Auth/FamilyCodeScreen";
 import StartPage from "./Screen/Auth/StartPage";
 import GoalsScreen from "./Screen/Main/GoalsScreen.js";
 import PetDetailsScreen from "./Screen/PetDetails/PetDetailsScreen.js";
@@ -92,6 +93,11 @@ export default function App() {
           <Stack.Screen
             name="SignUpScreen6"
             component={SignUpScreen6}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="FamilyCodeScreen"
+            component={FamilyCodeScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen
