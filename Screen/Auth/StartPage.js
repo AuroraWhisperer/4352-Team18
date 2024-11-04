@@ -79,12 +79,18 @@ export default function StartPage({ navigation }) {
       </TouchableOpacity>
 
       {/* Sign Up button */}
-      <TouchableOpacity style={[styles.signButton]}>
+      <TouchableOpacity 
+        style={[styles.signButton]}
+        onPress={() => navigation.navigate("SignUpScreen")}
+      >
         <Text style={[styles.signText]}>Sign Up For Family</Text>
       </TouchableOpacity>
 
       {/* Button for entering a family code */}
-      <TouchableOpacity style={[styles.familyCodeButton]}>
+      <TouchableOpacity 
+        style={[styles.familyCodeButton]}
+        onPress={() => navigation.navigate("FamilyCodeScreen")}
+      >
         <Text style={[styles.familyCodeText]}>Have a family code?</Text>
       </TouchableOpacity>
     </SafeAreaView>

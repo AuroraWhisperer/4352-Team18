@@ -7,6 +7,13 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AddGoalsScreen from "./Screen/Goals/AddGoalsScreen";
 import { AppProvider } from "./context/AppProvider";
 import SignInScreen1 from "./Screen/Auth/SignInScreen1";
+import SignUpScreen from "./Screen/Auth/SignUpScreen";
+import SignUpScreen2 from "./Screen/Auth/SignUpScreen2";
+import SignUpScreen3 from "./Screen/Auth/SignUpScreen3";
+import SignUpScreen4 from "./Screen/Auth/SignUpScreen4";
+import SignUpScreen5 from "./Screen/Auth/SignUpScreen5";
+import SignUpScreen6 from "./Screen/Auth/SignUpScreen6";
+import FamilyCodeScreen from "./Screen/Auth/FamilyCodeScreen";
 import StartPage from "./Screen/Auth/StartPage";
 import GoalsScreen from "./Screen/Main/GoalsScreen.js";
 import PetDetailsScreen from "./Screen/PetDetails/PetDetailsScreen.js";
@@ -56,6 +63,41 @@ export default function App() {
           <Stack.Screen
             name="SignInScreen1"
             component={SignInScreen1}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="SignUpScreen"
+            component={SignUpScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="SignUpScreen2"
+            component={SignUpScreen2}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="SignUpScreen3"
+            component={SignUpScreen3}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="SignUpScreen4"
+            component={SignUpScreen4}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="SignUpScreen5"
+            component={SignUpScreen5}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="SignUpScreen6"
+            component={SignUpScreen6}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="FamilyCodeScreen"
+            component={FamilyCodeScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen

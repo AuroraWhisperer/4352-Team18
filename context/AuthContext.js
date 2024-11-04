@@ -14,32 +14,15 @@ export const AuthProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   const [petname, setPetname] = useState("");
 
-  const [goals, setGoals] = useState([]);
-  const [historyGoals, setHistoryGoals] = useState([]);
-  const [time, setTime] = useState(0);
-  const [totalDiamonds, setTotalDiamonds] = useState(100);
-  const [goal, setGoal] = useState([]);
-  const [diamonds, setDiamonds] = useState(0);
-  const [totalTime, setTotalTime] = useState(0);
-  const [purchasedClothesItems, setPurchasedClothesItems] = useState([]);
-  const [purchasedAccessoriesItems, setPurchasedAccessoriesItems] = useState(
-    []
-  );
-  const [purchasedFoodItems, setPurchasedFoodItems] = useState([]);
-  const [purchasedFurnitureItems, setPurchasedFurnitureItems] = useState([]);
-  const [purchasedToysItems, setPurchasedToysItems] = useState([]);
-
-  const [refreshKey, setRefreshKey] = useState(0);
-
   // Initialize admin accounts in AsyncStorage
   useEffect(() => {
     const initAdminAccounts = async () => {
       try {
         // Remove existing admin accounts
-        await AsyncStorage.removeItem("user_katie");
-        await AsyncStorage.removeItem("user_mikayla");
-        await AsyncStorage.removeItem("user_tom");
-        await AsyncStorage.removeItem("user_hamzah");
+        await AsyncStorage.removeItem("admin_katie");
+        await AsyncStorage.removeItem("admin_mikayla");
+        await AsyncStorage.removeItem("admin_tom");
+        await AsyncStorage.removeItem("admin_hamzah");
 
         // Define new admin accounts
         const adminAccounts = [
@@ -52,7 +35,7 @@ export const AuthProvider = ({ children }) => {
         // Store each admin account in AsyncStorage
         for (const account of adminAccounts) {
           await AsyncStorage.setItem(
-            `user_${account.username}`,
+            `admin_${account.username}`,
             JSON.stringify(account)
           );
         }
@@ -69,7 +52,7 @@ export const AuthProvider = ({ children }) => {
   // Handle admin login by validating against stored data
   const handleAdminLogin = async (username, password) => {
     try {
-      const prefixedUsername = `user_${username}`;
+      const prefixedUsername = `admin_${username}`;
       const adminData = await AsyncStorage.getItem(prefixedUsername);
 
       if (adminData) {
@@ -143,7 +126,7 @@ export const AuthProvider = ({ children }) => {
   const clearAsyncStorage = async () => {
     try {
       const keys = await AsyncStorage.getAllKeys();
-      const nonUserKeys = keys.filter((key) => !key.startsWith("user_"));
+      const nonUserKeys = keys.filter((key) => !key.startsWith("admin_"));
       await AsyncStorage.multiRemove(nonUserKeys);
       console.log("Non-user data cleared from AsyncStorage");
       DevSettings.reload();

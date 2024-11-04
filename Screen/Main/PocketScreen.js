@@ -3,7 +3,7 @@ import { Text, StyleSheet, View, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import PocketNestedNavigator from "../../Navigation/PocketNestedNavigator";
 import PocketHeader from "../Pocket/PocketHeader";
-import PocketProducts from "../../components/Display/PocketProducts";
+//import PocketProducts from "../../components/Display/PocketProducts";
 
 const PocketScreen = () => {
   return (
