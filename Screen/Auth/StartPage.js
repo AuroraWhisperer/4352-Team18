@@ -87,7 +87,10 @@ export default function StartPage({ navigation }) {
       </TouchableOpacity>
 
       {/* Button for entering a family code */}
-      <TouchableOpacity style={[styles.familyCodeButton]}>
+      <TouchableOpacity 
+        style={[styles.familyCodeButton]}
+        onPress={() => navigation.navigate("FamilyCodeScreen")}
+      >
         <Text style={[styles.familyCodeText]}>Have a family code?</Text>
       </TouchableOpacity>
     </SafeAreaView>
