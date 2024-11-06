@@ -17,9 +17,7 @@ import {
   saveImageUri,
   loadImageUri,
   saveHistoryDiaryContent,
-  loadHistoryDiaryContent,
   saveHistoryImageUri,
-  loadHistoryImageUri,
 } from "../../context/diaryStorage";
 import { useMain } from "../../context/MainContext";
 import { useAuth } from "../../context/AuthContext"; // Import useAuth to get username
@@ -38,37 +36,62 @@ export default function PostGoalsScreen({ navigation, route }) {
   const [isFirstSave, setIsFirstSave] = useState(false);
   const [imageUri, setImageUri] = useState(null);
   const [wasPhotoInitiallyAdded, setWasPhotoInitiallyAdded] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   // Load diary content and image URI on component mount
   useEffect(() => {
     const fetchContent = async () => {
-      const content = await loadDiaryContent(username, goal);
-      const uri = await loadImageUri(username, goal);
-
-      if (content) {
-        setDiaryContent(content);
-        setIsFirstSave(false);
-      } else {
-        setIsFirstSave(true);
+      if (!username || !goal) {
+        console.error("Username or goal is missing");
+        return;
       }
+      console.log("Fetching content for:", username, goal);
 
-      if (uri) {
-        setImageUri(uri);
-        setWasPhotoInitiallyAdded(true);
+      try {
+        const content = await loadDiaryContent(username, goal);
+        const uri = await loadImageUri(username, goal);
+
+        if (content) {
+          setDiaryContent(content);
+          setIsFirstSave(false);
+        } else {
+          setIsFirstSave(true);
+        }
+
+        if (uri) {
+          setImageUri(uri);
+          setWasPhotoInitiallyAdded(true);
+        }
+      } catch (error) {
+        console.error("Failed to fetch content:", error);
       }
     };
+
     fetchContent();
   }, [username, goal]);
 
   // Handle saving of diary content and image
   const handleSave = async () => {
+    if (isSaving) return; // Prevent duplicate saves
+    setIsSaving(true);
+
+    if (!username || !goal) {
+      Alert.alert("Error", "Cannot save. Missing username or goal.");
+      setIsSaving(false);
+      return;
+    }
+
     try {
       // Save current diary content and image URI to storage
+      console.log("Saving diary content for:", username, goal, diaryContent);
       await saveDiaryContent(username, goal, diaryContent);
       await saveHistoryDiaryContent(username, goal, diaryContent);
 
+      console.log("Saving image URI for:", username, goal, imageUri);
       await saveImageUri(username, goal, imageUri);
       await saveHistoryImageUri(username, goal, imageUri);
+
+      console.log("Data saved successfully");
 
       // Add diamonds only on the first save with non-empty content
       if (isFirstSave && diaryContent.trim() !== "") {
@@ -85,6 +108,8 @@ export default function PostGoalsScreen({ navigation, route }) {
       navigation.goBack();
     } catch (error) {
       console.error("Failed to save data:", error);
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -223,13 +248,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: Dimensions.get("window").height * 0.1,
-  },
-  imagePlaceholder: {
-    width: Dimensions.get("window").width * 0.37,
-    height: Dimensions.get("window").width * 0.37,
-    borderWidth: 2,
-    borderColor: "#d3d3d3",
-    borderRadius: 10,
   },
   titleContainer: {
     justifyContent: "center",

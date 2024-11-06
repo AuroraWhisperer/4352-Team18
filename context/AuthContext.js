@@ -70,16 +70,16 @@ export const AuthProvider = ({ children }) => {
           setUsername(username);
           setCurrentUser(admin);
 
-          const userData = await AsyncStorage.getItem(`data_${username}`);
-          const parsedData = userData ? JSON.parse(userData) : {};
-          setPetname(parsedData.petname || "Luna");
+        const userData = await AsyncStorage.getItem(`data_${username}`);
+        const parsedData = userData ? JSON.parse(userData) : {};
 
-          setFamilyName(username);
+        setPetname(parsedData.petname || admin.petname || "Luna");
+        setFamilyName(username);
 
           setIsAdmin(true);
-          // console.log(
-          //   `Admin login successful. Pet name: ${parsedData.petname || "Luna"}`
-          // );
+          console.log(
+            `Admin login successful. Pet name: ${parsedData.petname || "Luna"}`
+          );
           return true;
         }
       }
@@ -117,9 +117,13 @@ export const AuthProvider = ({ children }) => {
   const updatePetname = async (newPetname) => {
     setPetname(newPetname);
     if (username) {
-      const data = { petname: newPetname };
-      await saveUserData(username, data);
-      console.log(`Updated pet name to ${newPetname} for user ${username}`);
+      const userKey = `data_${username}`;
+      const storedData = await AsyncStorage.getItem(userKey);
+      const parsedData = storedData ? JSON.parse(storedData) : {};
+      parsedData.petname = newPetname;
+
+      await saveUserData(username, parsedData);
+      console.log(` ${username} -> ${newPetname}`);
     }
   };
 
@@ -152,18 +156,18 @@ export const AuthProvider = ({ children }) => {
           const storedData = await AsyncStorage.getItem(`data_${username}`);
           const parsedData = storedData ? JSON.parse(storedData) : {};
 
-          setPetname(parsedData.petname || "Luna");
-          setFamilyName(parsedData.familyname || "");
-          setFamilyCode(user.familyCode || parsedData.familyCode || "");
+        setPetname(parsedData.petname || user.petname || "Luna");
+        setFamilyName(parsedData.familyname || "");
+        setFamilyCode(user.familyCode || parsedData.familyCode || "");
 
-          // console.log(
-          //   `User login successful. Pet name: ${parsedData.petname || "Luna"}`
-          // );
           console.log(
-            `User login successful. Family code: ${
-              user.familyCode || parsedData.familyCode
-            }`
+            `User login successful. Pet name: ${parsedData.petname || "Luna"}`
           );
+          // console.log(
+          //   `User login successful. Family code: ${
+          //     user.familyCode || parsedData.familyCode
+          //   }`
+          // );
           return true;
         }
       }

@@ -194,7 +194,6 @@ const styles = StyleSheet.create({
     padding: 15,
     width: Dimensions.get("window").width * 0.8,
     alignSelf: "center",
-    // marginTop: Dimensions.get
   },
   diaryHeader: {
     flexDirection: "row",

@@ -23,6 +23,12 @@ export const ShopItemsProvider = ({ children }) => {
     const loadPurchasedItems = async () => {
       try {
         if (username) {
+          setPurchasedClothesItems([]);
+          setPurchasedAccessoriesItems([]);
+          setPurchasedFoodItems([]);
+          setPurchasedFurnitureItems([]);
+          setPurchasedToysItems([]);
+
           // Retrieve stored items for each category with username prefix
           const storedClothes = await AsyncStorage.getItem(
             `purchasedClothesItems_${username}`

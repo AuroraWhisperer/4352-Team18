@@ -52,20 +52,20 @@ export default function SignUpScreen({ navigation }) {
   const emailRef = useRef();
 
   const handleSignUp = async () => {
-    if (username.length < 3) {
-      alert("Username must be at least 3 characters in length");
-      return;
-    }
+    // if (username.length < 3) {
+    //   alert("Username must be at least 3 characters in length");
+    //   return;
+    // }
 
-    if (password.length < 6) {
-      alert("Password must be at least 6 characters long");
-      return;
-    }
+    // if (password.length < 6) {
+    //   alert("Password must be at least 6 characters long");
+    //   return;
+    // }
 
-    if (!validateEmail(email)) {
-      Alert.alert("Error", "Please enter a valid email address.");
-      return;
-    }
+    // if (!validateEmail(email)) {
+    //   Alert.alert("Error", "Please enter a valid email address.");
+    //   return;
+    // }
 
     const newUser = { username, password, email };
     console.log("Attempting to register user:", newUser);
@@ -85,7 +85,7 @@ export default function SignUpScreen({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       {/* <ScrollView> */}
-      <SafeAreaView style={[styles.container]}>
+      <ScrollView contentContainerStyle={[styles.container]}>
         <TouchableOpacity
           style={[styles.backContent]}
           onPress={() => navigation.navigate("StartPage")}
@@ -179,7 +179,7 @@ export default function SignUpScreen({ navigation }) {
         <TouchableOpacity style={[styles.nextButton]} onPress={handleSignUp}>
           <Text style={[styles.nextText]}>Next</Text>
         </TouchableOpacity>
-      </SafeAreaView>
+      </ScrollView>
       {/* </ScrollView> */}
     </TouchableWithoutFeedback>
   );

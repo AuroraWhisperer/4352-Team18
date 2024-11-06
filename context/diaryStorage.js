@@ -1,9 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useAuth } from "./AuthContext.js";
 
 // Saving Diary Content for Goals
-export const saveDiaryContent = async (goal, content) => {
-  const { username } = useAuth();
+export const saveDiaryContent = async (username, goal, content) => {
   const storageKey = `diaryContent_${username}_${goal}`;
   try {
     await AsyncStorage.setItem(storageKey, content);
@@ -14,8 +12,7 @@ export const saveDiaryContent = async (goal, content) => {
 };
 
 // Loading Diary Content for Goals
-export const loadDiaryContent = async (goal) => {
-  const { username } = useAuth();
+export const loadDiaryContent = async (username, goal) => {
   const storageKey = `diaryContent_${username}_${goal}`;
   try {
     const savedContent = await AsyncStorage.getItem(storageKey);
@@ -27,8 +24,7 @@ export const loadDiaryContent = async (goal) => {
 };
 
 // Saving Image URI for Goals
-export const saveImageUri = async (goal, imageUri) => {
-  const { username } = useAuth();
+export const saveImageUri = async (username, goal, imageUri) => {
   const storageKey = `imageUri_${username}_${goal}`;
   try {
     await AsyncStorage.setItem(storageKey, imageUri);
@@ -39,8 +35,7 @@ export const saveImageUri = async (goal, imageUri) => {
 };
 
 // Loading Image URI for Goals
-export const loadImageUri = async (goal) => {
-  const { username } = useAuth();
+export const loadImageUri = async (username, goal) => {
   const storageKey = `imageUri_${username}_${goal}`;
   try {
     const savedUri = await AsyncStorage.getItem(storageKey);
@@ -51,13 +46,11 @@ export const loadImageUri = async (goal) => {
   }
 };
 
-// ================================
 // New Functions for History Storage
-// ================================
 
 // Saving Diary Content for History
-export const saveHistoryDiaryContent = async (goal, content) => {
-  const storageKey = `historyDiaryContent_${goal}`;
+export const saveHistoryDiaryContent = async (username, goal, content) => {
+  const storageKey = `historyDiaryContent_${username}_${goal}`;
   try {
     await AsyncStorage.setItem(storageKey, content);
     console.log("History diary content saved!");
@@ -67,8 +60,8 @@ export const saveHistoryDiaryContent = async (goal, content) => {
 };
 
 // Loading Diary Content for History
-export const loadHistoryDiaryContent = async (goal) => {
-  const storageKey = `historyDiaryContent_${goal}`;
+export const loadHistoryDiaryContent = async (username, goal) => {
+  const storageKey = `historyDiaryContent_${username}_${goal}`;
   try {
     const savedContent = await AsyncStorage.getItem(storageKey);
     return savedContent !== null ? savedContent : "";
@@ -79,8 +72,8 @@ export const loadHistoryDiaryContent = async (goal) => {
 };
 
 // Saving Image URI for History
-export const saveHistoryImageUri = async (goal, imageUri) => {
-  const storageKey = `historyImageUri_${goal}`;
+export const saveHistoryImageUri = async (username, goal, imageUri) => {
+  const storageKey = `historyImageUri_${username}_${goal}`;
   try {
     await AsyncStorage.setItem(storageKey, imageUri);
     console.log("History image URI saved!");
@@ -90,8 +83,8 @@ export const saveHistoryImageUri = async (goal, imageUri) => {
 };
 
 // Loading Image URI for History
-export const loadHistoryImageUri = async (goal) => {
-  const storageKey = `historyImageUri_${goal}`;
+export const loadHistoryImageUri = async (username, goal) => {
+  const storageKey = `historyImageUri_${username}_${goal}`;
   try {
     const savedUri = await AsyncStorage.getItem(storageKey);
     return savedUri !== null ? savedUri : null;

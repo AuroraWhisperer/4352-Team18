@@ -52,10 +52,10 @@ export default function SignUpScreen2({ navigation }) {
       await updatePetname(petName);
       await updateFamilyName(familyName);
 
-      // await saveUserData(username, {
-      //   petname: petName,
-      //   familyname: familyName,
-      // });
+      await saveUserData(username, {
+        petname: petName,
+        familyname: familyName,
+      });
 
       navigation.navigate("SignUpScreen3");
 
@@ -108,7 +108,7 @@ export default function SignUpScreen2({ navigation }) {
           <View>
             <Text style={[styles.inputText]}>Name your family: </Text>
             <TextInput
-              secureTextEntry={true}
+              // secureTextEntry={true}
               style={[styles.inputButton]}
               placeholder="Enter your family name"
               value={familyName}
