@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useFonts } from "expo-font";
 import {
   StyleSheet,
@@ -15,17 +15,62 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAuth } from "../../context/AuthContext";
 
-export default function SignInScreen1({ navigation }) {
+export default function FamilyCodeScreen({ navigation }) {
   // Load the custom font using the expo-font hook
   const [fontsLoaded] = useFonts({
     "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
   });
 
+  // State to hold family code input
+  const [familyCodeInput, setFamilyCodeInput] = useState("");
+  const { familyCode } = useAuth();
+
   // Display loading state if fonts aren't loaded
   if (!fontsLoaded) {
     return null;
   }
+
+  const handleSubmit = async () => {
+    if (!familyCodeInput) {
+      Alert.alert("Error", "Please enter a family code.");
+      return;
+    }
+
+    try {
+      const allKeys = await AsyncStorage.getAllKeys();
+      const userKeys = allKeys.filter((key) => key.startsWith("user_"));
+
+      let isCodeMatched = false;
+
+      for (let key of userKeys) {
+        const userDataString = await AsyncStorage.getItem(key);
+        if (userDataString) {
+          const userData = JSON.parse(userDataString);
+
+          console.log(
+            `Stored familyCode for ${userData.username}: ${userData.familyCode}`
+          );
+
+          if (userData.familyCode === familyCodeInput) {
+            isCodeMatched = true;
+            Alert.alert("Success", `Logged in as ${userData.username}`);
+            navigation.navigate("HomeScreen");
+            break;
+          }
+        }
+      }
+
+      if (!isCodeMatched) {
+        Alert.alert("Error", "Invalid family code. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error logging in with family code:", error);
+      Alert.alert("Error", "An error occurred. Please try again.");
+    }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -66,18 +111,17 @@ export default function SignInScreen1({ navigation }) {
             <Text style={[styles.inputText]}>Enter family Code: </Text>
             <TextInput
               style={[styles.inputButton]}
+              placeholder="Enter your family code"
+              value={familyCodeInput}
+              onChangeText={setFamilyCodeInput}
             />
           </View>
-          </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
 
         {/* Submit button */}
-        <TouchableOpacity
-          style={[styles.signButton]}
-          onPress={() => navigation.navigate("HomeScreen")}
-        >
+        <TouchableOpacity style={[styles.signButton]} onPress={handleSubmit}>
           <Text style={[styles.signText]}>Submit</Text>
         </TouchableOpacity>
-
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );

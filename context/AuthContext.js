@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   const [petname, setPetname] = useState("Luna");
   const [familyname, setFamilyName] = useState("");
+  const [familyCode, setFamilyCode] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
 
   // Initialize admin accounts in AsyncStorage
@@ -45,7 +46,7 @@ export const AuthProvider = ({ children }) => {
               JSON.stringify(account)
             );
           }
-          console.log("Admin accounts initialized");
+          console.log("Admin accounts is initialized");
         } else {
           console.log("Admin accounts already initialized.");
         }
@@ -105,8 +106,9 @@ export const AuthProvider = ({ children }) => {
   // Save user-specific data to AsyncStorage
   const saveUserData = async (username, data) => {
     try {
-      console.log(`Saving data for ${username}:`, data);
+      console.log(`Attempting to save data for ${username}:`, data);
       await AsyncStorage.setItem(`data_${username}`, JSON.stringify(data));
+      console.log(`Successfully saved data for ${username}`);
     } catch (error) {
       console.error("Failed to save user data:", error);
     }
@@ -149,13 +151,19 @@ export const AuthProvider = ({ children }) => {
 
           const storedData = await AsyncStorage.getItem(`data_${username}`);
           const parsedData = storedData ? JSON.parse(storedData) : {};
-          setPetname(parsedData.petname || "Luna");
 
+          setPetname(parsedData.petname || "Luna");
           setFamilyName(parsedData.familyname || "");
+          setFamilyCode(user.familyCode || parsedData.familyCode || "");
 
           // console.log(
           //   `User login successful. Pet name: ${parsedData.petname || "Luna"}`
           // );
+          console.log(
+            `User login successful. Family code: ${
+              user.familyCode || parsedData.familyCode
+            }`
+          );
           return true;
         }
       }
@@ -174,12 +182,12 @@ export const AuthProvider = ({ children }) => {
     try {
       const userKey = `user_${newUser.username}`;
 
-      const adminUsernames = ["katie", "mikayla", "tom", "hamzah"];
-      if (adminUsernames.includes(newUser.username)) {
-        console.log("Username is reserved for admin accounts");
-        alert("Username already exists, please select another username");
-        return false;
-      }
+      // const adminUsernames = ["katie", "mikayla", "tom", "hamzah"];
+      // if (adminUsernames.includes(newUser.username)) {
+      //   console.log("Username is reserved for admin accounts");
+      //   alert("Username already exists, please select another username");
+      //   return false;
+      // }
 
       const existingUser = await AsyncStorage.getItem(userKey);
       if (existingUser) {
@@ -188,22 +196,41 @@ export const AuthProvider = ({ children }) => {
         return false;
       }
 
+      const familyCode = generateRandomCode();
+      setFamilyCode(familyCode); // Log setFamilyCode call here
+      console.log(
+        `Setting familyCode for new user ${newUser.username}: ${familyCode}`
+      );
+
       // Store the new user data
       const newUserWithDetails = {
         ...newUser,
         petname: "Luna",
-        familyname: { username },
+        familyname: "",
+        familyCode,
       };
 
       await AsyncStorage.setItem(userKey, JSON.stringify(newUserWithDetails));
-      setUsers((prevUsers) => [...prevUsers, newUserWithDetails]);
+      // setUsers((prevUsers) => [...prevUsers, newUserWithDetails]);
 
-      console.log("User registered successfully:", newUserWithDetails);
+      console.log(
+        "User registered successfully with details:",
+        newUserWithDetails
+      );
       return true;
     } catch (error) {
       console.error("Failed to register user:", error);
       return false;
     }
+  };
+
+  // Helper function to generate a random family code
+  const generateRandomCode = () => {
+    const letters = Array.from({ length: 4 }, () =>
+      String.fromCharCode(65 + Math.floor(Math.random() * 26))
+    ).join("");
+    const digits = Math.floor(100 + Math.random() * 900).toString();
+    return `${letters}${digits}`;
   };
 
   // Clear all non-user-specific data from AsyncStorage
@@ -248,6 +275,8 @@ export const AuthProvider = ({ children }) => {
         familyname,
         setFamilyName,
         updateFamilyName,
+        familyCode,
+        setFamilyCode,
         handleLogout,
         resetApp,
       }}

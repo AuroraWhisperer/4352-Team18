@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useFonts } from "expo-font";
 import {
-    StyleSheet,
-    Text,
-    TextInput,
-    View,
-    SafeAreaView,
-    TouchableOpacity,
-    Image,
-    Dimensions,
-  } from "react-native";
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+} from "react-native";
+import { useAuth } from "../../context/AuthContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function SignUpScreen6({ navigation }) {
   // Load custom font using expo-font hook
@@ -19,30 +21,54 @@ export default function SignUpScreen6({ navigation }) {
 
   // Return loading state if fonts are not loaded
   if (!fontsLoaded) {
-    return undefined;
+    return null;
   }
 
-  const [randomCode, setRandomCode] = useState('');
+  const { username, saveUserData, familyCode, setFamilyCode } = useAuth();
 
+  // Generate a random family code
   const generateRandomCode = () => {
-    const letters = Array.from({ length: 4 }, () => 
-      String.fromCharCode(65 + Math.floor(Math.random() * 26)) // Generates a random uppercase letter
-    ).join('');
-  
-    const digits = Math.floor(100 + Math.random() * 900).toString(); // Generates a 3-digit number
-  
+    const letters = Array.from({ length: 4 }, () =>
+      String.fromCharCode(65 + Math.floor(Math.random() * 26))
+    ).join("");
+    const digits = Math.floor(100 + Math.random() * 900).toString();
     return `${letters}${digits}`;
   };
 
   useEffect(() => {
-    // Generate code when component mounts
-    const newCode = generateRandomCode();
-    setRandomCode(newCode);
-  }, []); // Empty dependency array means this runs only once on mount
+    const fetchOrGenerateFamilyCode = async () => {
+      try {
+        const userDataString = await AsyncStorage.getItem(`data_${username}`);
+        const userData = userDataString ? JSON.parse(userDataString) : {};
+
+        if (userData.familyCode) {
+          setFamilyCode(userData.familyCode);
+          console.log(
+            `Using existing familyCode for ${username}: ${userData.familyCode}`
+          );
+        } else {
+          const newCode = generateRandomCode();
+          setFamilyCode(newCode);
+          await saveUserData(username, { ...userData, familyCode: newCode });
+          console.log(
+            `Generated and saved new familyCode for ${username}: ${newCode}`
+          );
+        }
+      } catch (error) {
+        console.error(
+          "Error while generating or retrieving family code:",
+          error
+        );
+      }
+    };
+
+    if (username && !familyCode) {
+      fetchOrGenerateFamilyCode();
+    }
+  }, [username, familyCode]);
 
   return (
     <SafeAreaView style={[styles.container]}>
-
       <View style={[styles.content]}>
         <Text style={[styles.title]}>Welcome to PetConnect!</Text>
         <Image
@@ -54,17 +80,19 @@ export default function SignUpScreen6({ navigation }) {
 
       <View>
         <Text style={[styles.codeTitle]}>Family Code: </Text>
-        
+
         <View style={[styles.codeButton]}>
-        <Text style={[styles.codeText]}>{randomCode}</Text>
+          <Text style={[styles.codeText]}>{familyCode}</Text>
         </View>
       </View>
 
-      <Text style={[styles.shareText]}>Share this code to your family members.</Text>
+      <Text style={[styles.shareText]}>
+        Share this code with your family members.
+      </Text>
 
       <TouchableOpacity
         style={[styles.nextButton]}
-        onPress={() => navigation.navigate("SignInScreen1")}
+        onPress={() => navigation.navigate("StartPage")}
       >
         <Text style={[styles.nextText]}>Go to Sign In</Text>
       </TouchableOpacity>
