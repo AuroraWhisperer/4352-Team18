@@ -177,6 +177,51 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // New function to handle login by family code
+  const handleFamilyCode = async (inputFamilyCode) => {
+    try {
+      const allKeys = await AsyncStorage.getAllKeys();
+      const userKeys = allKeys.filter((key) => key.startsWith("user_"));
+
+      let matchedUser = null;
+      for (let key of userKeys) {
+        const userDataString = await AsyncStorage.getItem(key);
+        if (userDataString) {
+          const userData = JSON.parse(userDataString);
+          if (userData.familyCode === inputFamilyCode) {
+            matchedUser = userData;
+            break;
+          }
+        }
+      }
+
+      if (matchedUser) {
+        const isUser = await handleUserLogin(
+          matchedUser.username,
+          matchedUser.password || ""
+        );
+        if (isUser) {
+          console.log(
+            "Family code login successful and redirected with username:",
+            matchedUser.username
+          );
+          return true;
+        } else {
+          console.log(
+            "Family code login failed, unable to log in with username."
+          );
+          return false;
+        }
+      } else {
+        console.log("Invalid family code");
+        return false;
+      }
+    } catch (error) {
+      console.error("Error logging in with family code:", error);
+      return false;
+    }
+  };
+
   // Register a new user and store them in AsyncStorage
   const registerUser = async (newUser) => {
     try {
@@ -277,6 +322,7 @@ export const AuthProvider = ({ children }) => {
         updateFamilyName,
         familyCode,
         setFamilyCode,
+        handleFamilyCode,
         handleLogout,
         resetApp,
       }}

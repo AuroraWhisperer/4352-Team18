@@ -35,6 +35,15 @@ export default function SignUpScreen2({ navigation }) {
 
   const handleNext = async () => {
     try {
+      if (!petName) {
+        Alert.alert("Error", "Please enter a pet name.");
+        return;
+      }
+
+      if (!familyName) {
+        Alert.alert("Error", "Please enter a family name.");
+        return;
+      }
       if (!username) {
         console.log("No username found. Please register first.");
         return;

@@ -27,6 +27,10 @@ export default function SignUpScreen({ navigation }) {
 
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -53,15 +57,15 @@ export default function SignUpScreen({ navigation }) {
       return;
     }
 
-    // if (password.length < 6) {
-    //   alert("Password must be at least 6 characters long");
-    //   return;
-    // }
+    if (password.length < 6) {
+      alert("Password must be at least 6 characters long");
+      return;
+    }
 
-    // if (!email.includes("@") || !email.includes(".")) {
-    //   alert("Please enter a valid email address, e.g. example@example.com");
-    //   return;
-    // }
+    if (!validateEmail(email)) {
+      Alert.alert("Error", "Please enter a valid email address.");
+      return;
+    }
 
     const newUser = { username, password, email };
     console.log("Attempting to register user:", newUser);

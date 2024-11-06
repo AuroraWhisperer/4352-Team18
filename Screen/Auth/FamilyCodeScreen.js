@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useFonts } from "expo-font";
 import {
   StyleSheet,
@@ -15,7 +15,6 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAuth } from "../../context/AuthContext";
 
 export default function FamilyCodeScreen({ navigation }) {
@@ -26,8 +25,7 @@ export default function FamilyCodeScreen({ navigation }) {
 
   // State to hold family code input
   const [familyCodeInput, setFamilyCodeInput] = useState("");
-  const { familyCode } = useAuth();
-
+  const { handleFamilyCode, currentUser } = useAuth();
   // Display loading state if fonts aren't loaded
   if (!fontsLoaded) {
     return null;
@@ -39,36 +37,12 @@ export default function FamilyCodeScreen({ navigation }) {
       return;
     }
 
-    try {
-      const allKeys = await AsyncStorage.getAllKeys();
-      const userKeys = allKeys.filter((key) => key.startsWith("user_"));
-
-      let isCodeMatched = false;
-
-      for (let key of userKeys) {
-        const userDataString = await AsyncStorage.getItem(key);
-        if (userDataString) {
-          const userData = JSON.parse(userDataString);
-
-          console.log(
-            `Stored familyCode for ${userData.username}: ${userData.familyCode}`
-          );
-
-          if (userData.familyCode === familyCodeInput) {
-            isCodeMatched = true;
-            Alert.alert("Success", `Logged in as ${userData.username}`);
-            navigation.navigate("HomeScreen");
-            break;
-          }
-        }
-      }
-
-      if (!isCodeMatched) {
-        Alert.alert("Error", "Invalid family code. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error logging in with family code:", error);
-      Alert.alert("Error", "An error occurred. Please try again.");
+    const loginSuccess = await handleFamilyCode(familyCodeInput);
+    if (loginSuccess) {
+      Alert.alert("Success", "Logged in successfully!");
+      navigation.navigate("HomeScreen"); // Navigate to HomeScreen on successful login
+    } else {
+      Alert.alert("Error", "Invalid family code. Please try again.");
     }
   };
 
