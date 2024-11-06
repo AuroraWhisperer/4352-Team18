@@ -1,7 +1,7 @@
+import React, { useState, useRef } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { useState } from "react";
 import { useFonts } from "expo-font";
-import DropDownPicker from 'react-native-dropdown-picker';
+import DropDownPicker from "react-native-dropdown-picker";
 import {
   StyleSheet,
   Text,
@@ -15,39 +15,62 @@ import {
   Platform,
   Keyboard,
   TouchableWithoutFeedback,
+  // ScrollView,
 } from "react-native";
-import { useApp } from "../../context/AppContext.js";
+import { useAuth } from "../../context/AuthContext.js";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function SignUpScreen({ navigation }) {
   const [fontsLoaded] = useFonts({
     "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
   });
 
-  const [ username, setUsername ] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
-    {label: '1', value: '1'},
-    {label: '2', value: '2'},
-    {label: '3', value: '3'},
-    {label: '4', value: '4'},
-    {label: '5', value: '5'},
-    {label: '6', value: '6'},
-    {label: '7', value: '7'},
-    {label: '8', value: '8'},
+    { label: "1", value: "1" },
+    { label: "2", value: "2" },
+    { label: "3", value: "3" },
+    { label: "4", value: "4" },
+    { label: "5", value: "5" },
+    { label: "6", value: "6" },
+    { label: "7", value: "7" },
+    { label: "8", value: "8" },
   ]);
 
-  const handleSignUp = async (email, password) => {
-    try {
-      const user = { email, password };
-      await AsyncStorage.setItem("user", JSON.stringify(user));
-      alert("Registration Successful");
-    } catch (error) {
-      console.error(error);
-      alert("Registration Failed");
+  const { registerUser, setUsername, username } = useAuth();
+
+  // Create refs for each input field
+  const passwordRef = useRef();
+  const emailRef = useRef();
+
+  const handleSignUp = async () => {
+    if (username.length < 3) {
+      alert("Username must be at least 3 characters in length");
+      return;
+    }
+
+    // if (password.length < 6) {
+    //   alert("Password must be at least 6 characters long");
+    //   return;
+    // }
+
+    // if (!email.includes("@") || !email.includes(".")) {
+    //   alert("Please enter a valid email address, e.g. example@example.com");
+    //   return;
+    // }
+
+    const newUser = { username, password, email };
+    console.log("Attempting to register user:", newUser);
+
+    const success = await registerUser(newUser);
+    if (success) {
+      setUsername(newUser.username);
+      alert("Successful registration");
+      navigation.navigate("SignUpScreen2");
     }
   };
 
@@ -57,6 +80,7 @@ export default function SignUpScreen({ navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      {/* <ScrollView> */}
       <SafeAreaView style={[styles.container]}>
         <TouchableOpacity
           style={[styles.backContent]}
@@ -67,7 +91,7 @@ export default function SignUpScreen({ navigation }) {
             style={styles.backImage}
           />
         </TouchableOpacity>
-          
+
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           keyboardVerticalOffset={Platform.OS === "ios" ? 20 : 20}
@@ -81,8 +105,7 @@ export default function SignUpScreen({ navigation }) {
             <Text style={[styles.title]}>PetConnect</Text>
           </View>
         </KeyboardAvoidingView>
-        
-          
+
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           keyboardVerticalOffset={Platform.OS === "ios" ? 20 : 20}
@@ -96,33 +119,43 @@ export default function SignUpScreen({ navigation }) {
               value={username}
               onChangeText={setUsername}
               returnKeyType="next"
+              onSubmitEditing={() => {
+                if (!password) passwordRef.current.focus();
+              }}
             />
           </View>
 
           <View>
             <Text style={[styles.inputText]}>Password: </Text>
             <TextInput
+              ref={passwordRef}
               secureTextEntry={true}
               style={[styles.inputButton]}
               placeholder="Enter your password"
               value={password}
               onChangeText={setPassword}
               returnKeyType="next"
+              onSubmitEditing={() => {
+                if (!email) emailRef.current.focus();
+              }}
             />
           </View>
 
           <View>
             <Text style={[styles.inputText]}>Email: </Text>
             <TextInput
-              secureTextEntry={true}
+              // secureTextEntry={true}
+              ref={emailRef}
               style={[styles.inputButton]}
               placeholder="Enter your email"
               value={email}
               onChangeText={setEmail}
-              returnKeyType="go"
+              returnKeyType="next"
+              onSubmitEditing={() => {
+                if (!value) setOpen(true);
+              }}
             />
           </View>
-          
 
           <View>
             <Text style={[styles.inputText]}>The number of children: </Text>
@@ -137,17 +170,13 @@ export default function SignUpScreen({ navigation }) {
               setItems={setItems}
             />
           </View>
-          </KeyboardAvoidingView>
-        
+        </KeyboardAvoidingView>
 
-        <TouchableOpacity
-          style={[styles.nextButton]}
-          onPress={() => navigation.navigate("SignUpScreen2")}
-        >
+        <TouchableOpacity style={[styles.nextButton]} onPress={handleSignUp}>
           <Text style={[styles.nextText]}>Next</Text>
         </TouchableOpacity>
-        
       </SafeAreaView>
+      {/* </ScrollView> */}
     </TouchableWithoutFeedback>
   );
 }
@@ -200,7 +229,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     marginBottom: 25,
     fontFamily: "MarkoOne-Regular",
-    borderColor: '#fff',
+    borderColor: "#fff",
   },
   inputText: {
     fontSize: 17,

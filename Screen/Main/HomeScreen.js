@@ -14,10 +14,12 @@ import HoursDisplay from "../../components/Display/HoursDisplay";
 import GoalsMessage from "../../components/Display/GoalsMessage";
 import HomeScreenCard from "../../components/Goals/HomeScreenCard";
 import { useMain } from "../../context/MainContext";
+import { useAuth } from "../../context/AuthContext";
 import { useNavigation } from "@react-navigation/native";
 
 export default function HomeScreen() {
   const { goals } = useMain();
+  const { petname } = useAuth();
   const lastGoal = goals.length > 0 ? goals[goals.length - 1] : null;
   const navigation = useNavigation();
   const [hasGoals, setHasGoals] = useState(goals.length > 0);
@@ -40,7 +42,10 @@ export default function HomeScreen() {
         >
           <Text style={[styles.menu]}>☰</Text>
         </TouchableOpacity>
-        <Text style={[styles.title]}>Welcome to {"\n"}Luna's home!</Text>
+        <Text style={[styles.title]}>
+          Welcome to {"\n"}
+          {petname}'s home!
+        </Text>
       </View>
 
       {/* Row containing GoalsMessage and TotalDiamonds */}

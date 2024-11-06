@@ -9,8 +9,11 @@ import {
 } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import TotalDiamonds from "../../components/Display/TotalDiamonds";
+import { useAuth } from "../../context/AuthContext";
 
 const PocketHeader = () => {
+  const { petname } = useAuth();
+
   return (
     <SafeAreaView style={styles.headerContainer}>
       <View style={styles.titleContainer}>
@@ -20,7 +23,7 @@ const PocketHeader = () => {
           color="#333"
           style={styles.icon}
         />
-        <Text style={styles.title}>Let's go shopping for Luna!</Text>
+        <Text style={styles.title}>Let's go shopping for {petname}!</Text>
       </View>
 
       <Image

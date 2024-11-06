@@ -25,32 +25,32 @@ export const MainProvider = ({ children }) => {
     setHistoryGoals((prevHistoryGoals) => [...prevHistoryGoals, newGoal]);
   };
 
-  // Load goals from AsyncStorage on component mount
-  useEffect(() => {
-    const loadGoals = async () => {
-      try {
-        const storedGoals = await AsyncStorage.getItem("goals");
-        if (storedGoals) {
-          setGoals(JSON.parse(storedGoals));
-        }
-      } catch (error) {
-        console.error("Failed to load goals from AsyncStorage:", error);
-      }
-    };
-    loadGoals();
-  }, []);
+  // // Load goals from AsyncStorage on component mount
+  // useEffect(() => {
+  //   const loadGoals = async () => {
+  //     try {
+  //       const storedGoals = await AsyncStorage.getItem("goals");
+  //       if (storedGoals) {
+  //         setGoals(JSON.parse(storedGoals));
+  //       }
+  //     } catch (error) {
+  //       console.error("Failed to load goals from AsyncStorage:", error);
+  //     }
+  //   };
+  //   loadGoals();
+  // }, []);
 
-  // Save goals to AsyncStorage whenever goals change
-  useEffect(() => {
-    const saveGoals = async () => {
-      try {
-        await AsyncStorage.setItem("goals", JSON.stringify(goals));
-      } catch (error) {
-        console.error("Failed to save goals to AsyncStorage:", error);
-      }
-    };
-    if (goals.length > 0) saveGoals();
-  }, [goals]);
+  // // Save goals to AsyncStorage whenever goals change
+  // useEffect(() => {
+  //   const saveGoals = async () => {
+  //     try {
+  //       await AsyncStorage.setItem("goals", JSON.stringify(goals));
+  //     } catch (error) {
+  //       console.error("Failed to save goals to AsyncStorage:", error);
+  //     }
+  //   };
+  //   if (goals.length > 0) saveGoals();
+  // }, [goals]);
 
   // Load user-specific data (goals, diamonds, time) from AsyncStorage
   useEffect(() => {
@@ -111,7 +111,8 @@ export const MainProvider = ({ children }) => {
         console.error("Failed to save user data to AsyncStorage:", error);
       }
     };
-    saveUserData();
+
+    if (username) saveUserData();
   }, [goals, historyGoals, totalDiamonds, totalTime, username]);
 
   // Function to add a new goal to history goals

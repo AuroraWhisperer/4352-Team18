@@ -34,23 +34,31 @@ export default function SignInScreen1({ navigation }) {
 
   // Handle sign-in when the button is pressed
   const handleSignIn = async () => {
-    const isAdmin = await handleAdminLogin(username, password);
-    if (isAdmin) {
-      Alert.alert("Login Success", "Welcome, Admin!", [
-        { text: "OK", onPress: () => navigation.navigate("HomeScreen") },
-      ]);
-    } else if (handleUserLogin(username, password)) {
-      Alert.alert("Login Success", "Welcome!", [
-        { text: "OK", onPress: () => navigation.navigate("HomeScreen") },
-      ]);
-    } else {
-      Alert.alert("Login Failed", "Invalid username or password", [
-        {
-          text: "Sign Up",
-          onPress: () => navigation.navigate("StartPage"),
-        },
-        { text: "Try Again" },
-      ]);
+    try {
+      const isAdmin = await handleAdminLogin(username, password);
+      if (isAdmin) {
+        Alert.alert("Login Success", "Welcome, Admin!", [
+          { text: "OK", onPress: () => navigation.navigate("HomeScreen") },
+        ]);
+      } else {
+        const isUser = await handleUserLogin(username, password);
+        if (isUser) {
+          Alert.alert("Login Success", "Welcome!", [
+            { text: "OK", onPress: () => navigation.navigate("HomeScreen") },
+          ]);
+        } else {
+          Alert.alert("Login Failed", "Invalid username or password", [
+            {
+              text: "Sign Up",
+              onPress: () => navigation.navigate("StartPage"),
+            },
+            { text: "Try Again" },
+          ]);
+        }
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      Alert.alert("Login Failed", "An error occurred during login.");
     }
   };
 
@@ -64,7 +72,8 @@ export default function SignInScreen1({ navigation }) {
       <SafeAreaView style={[styles.container]}>
         <TouchableOpacity
           style={[styles.backContent]}
-          onPress={() => navigation.goBack()}
+          // onPress={() => navigation.goBack()}
+          onPress={() => navigation.navigate("StartPage")}
         >
           <Image
             source={require("../../assets/images/backButton.png")}

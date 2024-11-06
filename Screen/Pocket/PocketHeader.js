@@ -7,12 +7,18 @@ import {
   Dimensions,
   SafeAreaView,
 } from "react-native";
+import { useAuth } from "../../context/AuthContext";
 
 // PocketHeader component that displays a welcome message and an image at the top of the screen
 const PocketHeader = () => {
+  const { petname } = useAuth();
+
   return (
     <SafeAreaView style={styles.headerContainer}>
-      <Text style={styles.title}>Welcome to {"\n"}Luna's pocket!</Text>
+      <Text style={styles.title}>
+        Welcome to {"\n"}
+        {petname}'s pocket!
+      </Text>
       <Image
         source={require("../../assets/images/StartScreenImage.png")}
         style={styles.image}

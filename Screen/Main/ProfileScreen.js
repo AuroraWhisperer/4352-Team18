@@ -23,7 +23,7 @@ export default function ProfileScreen({ navigation }) {
   };
 
   // Destructure username from AuthContext to display the user's family name
-  const { username } = useAuth();
+  const { username, familyname, isAdmin } = useAuth();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -47,7 +47,9 @@ export default function ProfileScreen({ navigation }) {
 
       {/* Display user's family name */}
       <View style={[styles.TextWrapper]}>
-        <Text style={[styles.text]}>{username} Family</Text>
+        <Text style={[styles.text]}>
+          {isAdmin ? username : familyname} Family
+        </Text>
       </View>
 
       {/* Card to view history, navigates to the HistoryScreen on press */}

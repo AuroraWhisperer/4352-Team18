@@ -11,9 +11,11 @@ import {
 } from "react-native";
 import Star from "../../components/Display/Star";
 import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "../../context/AuthContext";
 
 export default function PetDetailsScreen() {
   const navigation = useNavigation();
+  const { petname } = useAuth();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -38,9 +40,12 @@ export default function PetDetailsScreen() {
         </View>
 
         {/* Pet information */}
-        <Text style={styles.title}>Welcome to {"\n"}Luna's house!</Text>
+        <Text style={styles.title}>
+          Welcome to {"\n"}
+          {petname}'s house!
+        </Text>
         <View style={styles.infoCard}>
-          <Text style={styles.infoText}>Name: Luna</Text>
+          <Text style={styles.infoText}>Name: {petname}</Text>
           <Text style={styles.infoText}>Gender: Female</Text>
           <Text style={styles.infoText}>Age: 3</Text>
         </View>

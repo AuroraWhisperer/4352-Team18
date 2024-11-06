@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import { useFonts } from "expo-font";
 import {
-    StyleSheet,
-    Text,
-    TextInput,
-    View,
-    SafeAreaView,
-    TouchableOpacity,
-    Image,
-    Dimensions,
-    KeyboardAvoidingView,
-    Platform,
-    Keyboard,
-    TouchableWithoutFeedback,
-  } from "react-native";
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
+import { useAuth } from "../../context/AuthContext";
+import { useMain } from "../../context/MainContext";
 
 export default function SignUpScreen2({ navigation }) {
   // Load custom font using expo-font hook
@@ -21,17 +23,44 @@ export default function SignUpScreen2({ navigation }) {
     "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
   });
 
+  const { username, updatePetname, saveUserData, updateFamilyName } = useAuth();
+
   // Return loading state if fonts are not loaded
   if (!fontsLoaded) {
-    return undefined;
+    return null;
   }
 
-  const [ petName, setPetName ] = useState("");
-  const [ familyName, setFamilyName] = useState("");
+  const [petName, setPetName] = useState("");
+  const [familyName, setFamilyName] = useState("");
+
+  const handleNext = async () => {
+    try {
+      if (!username) {
+        console.log("No username found. Please register first.");
+        return;
+      }
+
+      await updatePetname(petName);
+      await updateFamilyName(familyName);
+
+      // await saveUserData(username, {
+      //   petname: petName,
+      //   familyname: familyName,
+      // });
+
+      navigation.navigate("SignUpScreen3");
+
+      console.log(
+        `Pet name: ${petName}, Family name: ${familyName}, Username: ${username}`
+      );
+    } catch (error) {
+      console.error("Error updating user data:", error);
+    }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <SafeAreaView style={[styles.container]}>
+      <SafeAreaView style={[styles.container]}>
         <TouchableOpacity
           style={[styles.backContent]}
           onPress={() => navigation.navigate("SignUpScreen")}
@@ -42,18 +71,16 @@ export default function SignUpScreen2({ navigation }) {
           />
         </TouchableOpacity>
 
-      <View style={[styles.content]}>
+        <View style={[styles.content]}>
+          <Text style={[styles.title]}>Hello!</Text>
 
-        <Text style={[styles.title]}>Hello!</Text>
+          <Image
+            source={require("../../assets/images/cat2.png")}
+            style={[styles.image]}
+          />
+        </View>
 
-        <Image
-          source={require("../../assets/images/cat2.png")}
-          style={[styles.image]}
-        />
-
-      </View>
-
-      <KeyboardAvoidingView
+        <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           keyboardVerticalOffset={Platform.OS === "ios" ? 20 : 20}
           style={styles.keyboardView}
@@ -80,16 +107,12 @@ export default function SignUpScreen2({ navigation }) {
               returnKeyType="go"
             />
           </View>
-
         </KeyboardAvoidingView>
 
-      <TouchableOpacity
-        style={[styles.nextButton]}
-        onPress={() => navigation.navigate("SignUpScreen3")}
-      >
-        <Text style={[styles.nextText]}>Next</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+        <TouchableOpacity style={[styles.nextButton]} onPress={handleNext}>
+          <Text style={[styles.nextText]}>Next</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
     </TouchableWithoutFeedback>
   );
 }
@@ -141,7 +164,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     marginBottom: 25,
     fontFamily: "MarkoOne-Regular",
-    borderColor: '#fff',
+    borderColor: "#fff",
   },
   inputText: {
     fontSize: 17,

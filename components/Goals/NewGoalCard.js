@@ -10,15 +10,16 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 import { useAuth } from "../../context/AuthContext";
 
 export default function NewGoalCard({ onPress }) {
-
-  const { username } = useAuth();
+  const { username, familyname, isAdmin } = useAuth();
 
   return (
     // Touchable card that triggers the onPress function when pressed
     <TouchableOpacity style={[styles.card]} onPress={onPress}>
       <View style={[styles.iconTextWrapper]}>
         <Icon name="plus-circle" size={24} color="#333" style={styles.icon} />
-        <Text style={[styles.text]}>Add a goal for {username} Family</Text>
+        <Text style={[styles.text]}>
+          Add a goal for {isAdmin ? username : familyname} Family
+        </Text>
       </View>
     </TouchableOpacity>
   );
