@@ -29,7 +29,7 @@ export default function PetDetailsScreen() {
   const { petname } = useAuth();
 
   return (
-    <SafeAreaView style={styles.container}>
+    // <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         {/* Back button to return to previous screen */}
         <TouchableOpacity
@@ -90,7 +90,7 @@ export default function PetDetailsScreen() {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    // </SafeAreaView>
   );
 }
 
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFE9D4",
   },
   scrollContainer: {
+    backgroundColor: "#FFE9D4",
     flexGrow: 1,
     justifyContent: "flex-start",
     alignItems: "center",

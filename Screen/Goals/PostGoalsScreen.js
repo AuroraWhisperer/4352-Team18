@@ -47,7 +47,7 @@ export default function PostGoalsScreen({ navigation, route }) {
   // const currentGoal = goals.find((g) => g.id === goalKey);
 
   const [diaryContent, setDiaryContent] = useState("");
-  const [diamonds, setDiamonds] = useState(cardDiamonds || 10);
+  const [diamonds, setDiamonds] = useState(10);
   const [isFirstSave, setIsFirstSave] = useState(false);
   const [imageUri, setImageUri] = useState(null);
   const [wasPhotoInitiallyAdded, setWasPhotoInitiallyAdded] = useState(false);
@@ -89,6 +89,11 @@ export default function PostGoalsScreen({ navigation, route }) {
       // console.log("Goal ID:", goalId);
       // console.log("Image URI to save:", imageUri);
 
+      if (!imageUri) {
+        Alert.alert("Photo Required", "Please add a photo before saving.");
+        return;
+      }
+
       // Save current diary content and image URI to storage
       await saveDiaryContent(username, goalId, diaryContent);
       await saveHistoryDiaryContent(username, goalId, diaryContent);
@@ -97,7 +102,7 @@ export default function PostGoalsScreen({ navigation, route }) {
       await saveHistoryImageUri(username, goalId, imageUri);
 
       // Add diamonds only on the first save with non-empty content
-      if (isFirstSave && diaryContent.trim() !== "") {
+      if (imageUri && isFirstSave && diaryContent.trim() !== "") {
         addDiamondsToTotal(diamonds);
         setIsFirstSave(false);
       }
@@ -108,7 +113,7 @@ export default function PostGoalsScreen({ navigation, route }) {
         setWasPhotoInitiallyAdded(true);
       }
 
-      if (diaryContent.trim() && imageUri) {
+      if (imageUri) {
         console.log("Deleting goal with ID after save:", goalId);
         navigation.navigate("GoalsTab", { deleteGoalId: goalId });
       } else {
