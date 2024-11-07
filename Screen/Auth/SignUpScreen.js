@@ -86,7 +86,6 @@ export default function SignUpScreen({ navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      {/* <ScrollView> */}
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <TouchableOpacity
           style={[styles.backContent]}
@@ -98,11 +97,6 @@ export default function SignUpScreen({ navigation }) {
           />
         </TouchableOpacity>
 
-        {/* <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-          keyboardVerticalOffset={Platform.OS === "ios" ? 20 : 20}
-          style={styles.keyboardView}
-        > */}
           <View style={[styles.content]}>
             <Image
               source={require("../../assets/images/StartScreenImage.png")}
@@ -110,7 +104,6 @@ export default function SignUpScreen({ navigation }) {
             />
             <Text style={[styles.title]}>PetConnect</Text>
           </View>
-        {/* </KeyboardAvoidingView> */}
 
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
