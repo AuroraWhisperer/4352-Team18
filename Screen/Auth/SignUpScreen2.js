@@ -13,6 +13,7 @@ import {
   Platform,
   Keyboard,
   TouchableWithoutFeedback,
+  Alert,
 } from "react-native";
 import { useAuth } from "../../context/AuthContext";
 import { useMain } from "../../context/MainContext";
