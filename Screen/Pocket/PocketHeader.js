@@ -1,4 +1,5 @@
 import React from "react";
+import { useFonts } from "expo-font";
 import {
   View,
   Text,
@@ -12,6 +13,16 @@ import { useAuth } from "../../context/AuthContext";
 // PocketHeader component that displays a welcome message and an image at the top of the screen
 const PocketHeader = () => {
   const { petname } = useAuth();
+
+  // Load custom font using expo-font hook
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  // Return loading state if fonts are not loaded
+  if (!fontsLoaded) {
+    return undefined;
+  }
 
   return (
     <SafeAreaView style={styles.headerContainer}>
@@ -35,6 +46,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
+    fontFamily: "MarkoOne-Regular",
     fontWeight: "bold",
     marginBottom: 10,
     textAlign: "center",

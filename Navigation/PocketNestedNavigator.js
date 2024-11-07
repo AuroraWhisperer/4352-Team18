@@ -1,4 +1,5 @@
 import React from "react";
+import { useFonts } from "expo-font";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import AccessoriesScreen from "../Screen/Pocket/AccessoriesScreen.js";
 import ClothesScreen from "../Screen/Pocket/ClothesScreen.js";

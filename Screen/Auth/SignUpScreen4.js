@@ -26,6 +26,8 @@ export default function SignUpScreen4({ navigation }) {
   const [preChecked, setPreChecked] = useState(false);
   const [teensChecked, setTeensChecked] = useState(false);
 
+  const nextDisabled = !middleChecked && !preChecked && !teensChecked;
+
   return (
     <SafeAreaView style={[styles.container]}>
         <TouchableOpacity
@@ -68,6 +70,7 @@ export default function SignUpScreen4({ navigation }) {
 
       <TouchableOpacity
         style={[styles.nextButton]}
+        disabled = {nextDisabled}
         onPress={() => navigation.navigate("SignUpScreen5")}
       >
         <Text style={[styles.nextText]}>Next</Text>

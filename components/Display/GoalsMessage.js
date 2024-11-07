@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useFonts } from "expo-font";
 import { Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import { useMain } from "../../context/MainContext";
 import { useNavigation } from "@react-navigation/native";
@@ -6,6 +7,16 @@ import { useNavigation } from "@react-navigation/native";
 export default function GoalsMessage({ onPress }) {
   const { goals } = useMain();
   const navigation = useNavigation();
+
+  // Load custom font using expo-font hook
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  // Return loading state if fonts are not loaded
+  if (!fontsLoaded) {
+    return undefined;
+  }
 
   // Effect hook to watch for changes in the goals array
   useEffect(() => {}, [goals]);
@@ -37,6 +48,7 @@ export default function GoalsMessage({ onPress }) {
 const styles = StyleSheet.create({
   message: {
     fontSize: 16,
+    fontFamily: "MarkoOne-Regular",
     textDecorationLine: "underline",
     fontWeight: "500",
   },

@@ -21,11 +21,22 @@ import {
   saveHistoryImageUri,
   loadHistoryImageUri,
 } from "../../context/diaryStorage";
+import { useFonts } from "expo-font";
 import { useMain } from "../../context/MainContext";
 import { useAuth } from "../../context/AuthContext";
 import ImagePickerComponent from "../../components/Camera/ImagePickerComponent";
 
 export default function PostGoalsScreen({ navigation, route }) {
+  // Load custom font using expo-font hook
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  // Return loading state if fonts are not loaded
+  if (!fontsLoaded) {
+    return undefined;
+  }
+
   // Retrieve goal and diamond count from route params
   const { goal, goalId, cardDiamonds } = route.params;
   const { goals, totalDiamonds, addDiamondsToTotal } = useMain();
@@ -236,6 +247,7 @@ const styles = StyleSheet.create({
   },
   saveButtonText: {
     fontSize: 16,
+    fontFamily: "MarkoOne-Regular",
     fontWeight: "bold",
     color: "#000",
   },
@@ -267,6 +279,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: 18,
+    fontFamily: "MarkoOne-Regular",
     fontWeight: "bold",
     color: "#333",
   },
@@ -285,6 +298,7 @@ const styles = StyleSheet.create({
   },
   diaryText: {
     fontSize: 16,
+    fontFamily: "MarkoOne-Regular",
     fontWeight: "bold",
     color: "#333",
   },

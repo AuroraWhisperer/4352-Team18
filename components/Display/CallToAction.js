@@ -1,4 +1,5 @@
 import React from "react";
+import { useFonts } from "expo-font";
 import {
   View,
   Text,
@@ -10,6 +11,16 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function CallToAction({ screenName }) {
   const navigation = useNavigation();
+
+  // Load custom font using expo-font hook
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  // Return loading state if fonts are not loaded
+  if (!fontsLoaded) {
+    return undefined;
+  }
 
   // Function to return custom message based on the screen name
   const getTextByScreenName = () => {
@@ -57,6 +68,7 @@ const styles = StyleSheet.create({
   },
   callToAction: {
     fontSize: 18,
+    fontFamily: "MarkoOne-Regular",
     fontWeight: "bold",
     color: "#333",
     textAlign: "center",
@@ -70,6 +82,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 16,
+    fontFamily: "MarkoOne-Regular",
     fontWeight: "600",
     color: "#333",
   },

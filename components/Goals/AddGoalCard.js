@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useFonts } from "expo-font";
 import { useMain } from "../../context/MainContext";
 import {
   View,
@@ -13,6 +14,16 @@ import {
 
 export default function AddGoalCard({ onSubmit }) {
   const { goal, setGoal, time, setTime, diamonds, setDiamonds } = useMain();
+
+  // Load custom font using expo-font hook
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  // Return loading state if fonts are not loaded
+  if (!fontsLoaded) {
+    return undefined;
+  }
 
   // Initialize the form fields when the component mounts
   useEffect(() => {

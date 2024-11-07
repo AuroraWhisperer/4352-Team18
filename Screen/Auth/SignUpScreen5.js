@@ -26,6 +26,8 @@ export default function SignUpScreen5({ navigation }) {
   const [femaleChecked, setFemaleChecked] = useState(false);
   const [nonChecked, setNonChecked] = useState(false);
 
+  const nextDisabled = !maleChecked && !femaleChecked && !nonChecked;
+
   return (
     <SafeAreaView style={[styles.container]}>
         <TouchableOpacity
@@ -68,6 +70,7 @@ export default function SignUpScreen5({ navigation }) {
 
       <TouchableOpacity
         style={[styles.nextButton]}
+        disabled = {nextDisabled}
         onPress={() => navigation.navigate("SignUpScreen6")}
       >
         <Text style={[styles.nextText]}>Next</Text>

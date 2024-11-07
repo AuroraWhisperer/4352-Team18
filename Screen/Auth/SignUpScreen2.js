@@ -69,16 +69,7 @@ export default function SignUpScreen2({ navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView style={[styles.container]}>
-        <TouchableOpacity
-          style={[styles.backContent]}
-          onPress={() => navigation.navigate("SignUpScreen")}
-        >
-          <Image
-            source={require("../../assets/images/backButton.png")}
-            style={styles.backImage}
-          />
-        </TouchableOpacity>
+      <KeyboardAvoidingView style={[styles.container]}>
 
         <View style={[styles.content]}>
           <Text style={[styles.title]}>Hello!</Text>
@@ -108,7 +99,6 @@ export default function SignUpScreen2({ navigation }) {
           <View>
             <Text style={[styles.inputText]}>Name your family: </Text>
             <TextInput
-              // secureTextEntry={true}
               style={[styles.inputButton]}
               placeholder="Enter your family name"
               value={familyName}
@@ -121,7 +111,7 @@ export default function SignUpScreen2({ navigation }) {
         <TouchableOpacity style={[styles.nextButton]} onPress={handleNext}>
           <Text style={[styles.nextText]}>Next</Text>
         </TouchableOpacity>
-      </SafeAreaView>
+      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
 }

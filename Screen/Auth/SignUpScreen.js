@@ -15,10 +15,12 @@ import {
   Platform,
   Keyboard,
   TouchableWithoutFeedback,
+  FlatList,
   // ScrollView,
 } from "react-native";
 import { useAuth } from "../../context/AuthContext.js";
 import { ScrollView } from "react-native-gesture-handler";
+// import { KeyboardAvoidingScrollView } from "react-native-keyboard-avoiding-scroll-view";
 
 export default function SignUpScreen({ navigation }) {
   const [fontsLoaded] = useFonts({
@@ -84,8 +86,7 @@ export default function SignUpScreen({ navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      {/* <ScrollView> */}
-      <ScrollView contentContainerStyle={[styles.container]}>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <TouchableOpacity
           style={[styles.backContent]}
           onPress={() => navigation.navigate("StartPage")}
@@ -96,11 +97,6 @@ export default function SignUpScreen({ navigation }) {
           />
         </TouchableOpacity>
 
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-          keyboardVerticalOffset={Platform.OS === "ios" ? 20 : 20}
-          style={styles.keyboardView}
-        >
           <View style={[styles.content]}>
             <Image
               source={require("../../assets/images/StartScreenImage.png")}
@@ -108,12 +104,11 @@ export default function SignUpScreen({ navigation }) {
             />
             <Text style={[styles.title]}>PetConnect</Text>
           </View>
-        </KeyboardAvoidingView>
 
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           keyboardVerticalOffset={Platform.OS === "ios" ? 20 : 20}
-          style={styles.keyboardView}
+          content={styles.keyboardView}
         >
           <View>
             <Text style={[styles.inputText]}>Username: </Text>
@@ -148,7 +143,6 @@ export default function SignUpScreen({ navigation }) {
           <View>
             <Text style={[styles.inputText]}>Email: </Text>
             <TextInput
-              // secureTextEntry={true}
               ref={emailRef}
               style={[styles.inputButton]}
               placeholder="Enter your email"
@@ -160,6 +154,7 @@ export default function SignUpScreen({ navigation }) {
               }}
             />
           </View>
+          
 
           <View>
             <Text style={[styles.inputText]}>The number of children: </Text>
@@ -174,13 +169,13 @@ export default function SignUpScreen({ navigation }) {
               setItems={setItems}
             />
           </View>
-        </KeyboardAvoidingView>
+          </KeyboardAvoidingView>
 
         <TouchableOpacity style={[styles.nextButton]} onPress={handleSignUp}>
           <Text style={[styles.nextText]}>Next</Text>
         </TouchableOpacity>
-      </ScrollView>
-      {/* </ScrollView> */}
+      </KeyboardAvoidingView>
+
     </TouchableWithoutFeedback>
   );
 }
@@ -234,12 +229,14 @@ const styles = StyleSheet.create({
     marginBottom: 25,
     fontFamily: "MarkoOne-Regular",
     borderColor: "#fff",
+    width: "80%",
+    marginLeft: 35,
   },
   inputText: {
     fontSize: 17,
     fontFamily: "MarkoOne-Regular",
     color: "#333",
-    marginRight: 230,
+    marginLeft: 40,
     marginBottom: 8,
     width: "80%",
   },

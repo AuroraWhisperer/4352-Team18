@@ -1,4 +1,5 @@
 import React from "react";
+import { useFonts } from "expo-font";
 import {
   Text,
   StyleSheet,
@@ -12,6 +13,16 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useAuth } from "../../context/AuthContext.js";
 
 export default function ProfileScreen({ navigation }) {
+  // Load custom font using expo-font hook
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  // Return loading state if fonts are not loaded
+  if (!fontsLoaded) {
+    return undefined;
+  }
+
   // Function to navigate to the settings screen
   const handleSettingsPress = () => {
     navigation.navigate("SettingsScreen");
