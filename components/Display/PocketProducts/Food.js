@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useFonts } from "expo-font";
 import { View, FlatList, Image, StyleSheet, Dimensions } from "react-native";
 import { ShopItems } from "../../../context/ShopItems";
 
@@ -25,6 +26,16 @@ export default function Food() {
       </View>
     );
   };
+
+  // Load custom font using expo-font hook
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../../../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  // Return loading state if fonts are not loaded
+  if (!fontsLoaded) {
+    return undefined;
+  }
 
   return (
     <View style={styles.container}>
@@ -65,6 +76,7 @@ const styles = StyleSheet.create({
   },
   productName: {
     fontSize: 14,
+    fontFamily: "MarkoOne-Regular",
     marginTop: 5,
   },
   priceContainer: {
@@ -79,10 +91,12 @@ const styles = StyleSheet.create({
   },
   productPrice: {
     fontSize: 14,
+    fontFamily: "MarkoOne-Regular",
     color: "#333",
   },
   emptyText: {
     fontSize: 16,
+    fontFamily: "MarkoOne-Regular",
     color: "#888",
     textAlign: "center",
     marginTop: 20,

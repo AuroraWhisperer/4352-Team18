@@ -1,4 +1,5 @@
 import React from "react";
+import { useFonts } from "expo-font";
 import {
   View,
   Text,
@@ -11,6 +12,16 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function HistoryGoalCard({ goal, time, diamonds }) {
   const navigation = useNavigation();
+
+  // Load custom font using expo-font hook
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  // Return loading state if fonts are not loaded
+  if (!fontsLoaded) {
+    return undefined;
+  }
 
   return (
     // Touchable component that navigates to HistoryPostScreen when pressed

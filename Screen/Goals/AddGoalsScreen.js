@@ -8,6 +8,7 @@ import {
   Alert,
   TouchableOpacity,
 } from "react-native";
+import { useFonts } from "expo-font";
 import React, { useState } from "react";
 import { useMain } from "../../context/MainContext";
 import TotalDiamonds from "../../components/Display/TotalDiamonds";
@@ -27,6 +28,16 @@ export default function AddGoalsScreen({ navigation }) {
     diamonds,
     setDiamonds,
   } = useMain();
+
+  // Load custom font using expo-font hook
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  // Return loading state if fonts are not loaded
+  if (!fontsLoaded) {
+    return undefined;
+  }
 
   // Function to handle goal submission
   const handleSubmit = () => {
@@ -144,6 +155,7 @@ const styles = StyleSheet.create({
   backButtonText: {
     color: "#fff",
     fontSize: 16,
+    fontFamily: "MarkoOne-Regular",
     fontWeight: "bold",
   },
   content: {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useFonts } from "expo-font";
 import {
   Text,
   StyleSheet,
@@ -17,6 +18,16 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useAuth } from "../../context/AuthContext";
 
 export default function PostGoalsScreen({ navigation, route }) {
+  // Load custom font using expo-font hook
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  // Return loading state if fonts are not loaded
+  if (!fontsLoaded) {
+    return undefined;
+  }
+  
   const { goal } = route.params;
 
   const { username } = useAuth();
@@ -167,6 +178,7 @@ const styles = StyleSheet.create({
   },
   placeholderText: {
     fontSize: 16,
+    fontFamily: "MarkoOne-Regular",
     color: "#888",
   },
   titleContainer: {
@@ -185,6 +197,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: 18,
+    fontFamily: "MarkoOne-Regular",
     fontWeight: "bold",
     color: "#333",
   },
@@ -204,11 +217,13 @@ const styles = StyleSheet.create({
   },
   diaryText: {
     fontSize: 16,
+    fontFamily: "MarkoOne-Regular",
     fontWeight: "bold",
     color: "#333",
   },
   diaryContent: {
     fontSize: 14,
+    fontFamily: "MarkoOne-Regular",
     color: "#555",
     textAlign: "left",
   },

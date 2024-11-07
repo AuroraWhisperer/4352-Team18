@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useFonts } from "expo-font";
 import {
   View,
   Text,
@@ -106,6 +107,16 @@ export default function Toys() {
     );
   };
 
+  // Load custom font using expo-font hook
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../../../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  // Return loading state if fonts are not loaded
+  if (!fontsLoaded) {
+    return undefined;
+  }
+
   // Container for the FlatList
   return (
     <View style={styles.container}>
@@ -157,6 +168,7 @@ const styles = StyleSheet.create({
   },
   productPrice: {
     fontSize: 14,
+    fontFamily: "MarkoOne-Regular",
     color: "#333",
   },
 });

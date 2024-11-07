@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { useFonts } from "expo-font";
 import {
   View,
   Text,
@@ -19,6 +20,16 @@ let openSwipeableRef = null;
 export default function ExistingGoalCard({ goal, time, diamonds, onDelete }) {
   const navigation = useNavigation();
   const swipeableRef = useRef(null);
+
+  // Load custom font using expo-font hook
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  // Return loading state if fonts are not loaded
+  if (!fontsLoaded) {
+    return undefined;
+  }
 
   // Function to delete data related to a specific goal from AsyncStorage
   const deleteRelatedData = async (goal) => {

@@ -1,4 +1,5 @@
 import React from "react";
+import { useFonts } from "expo-font";
 import {
   StyleSheet,
   Text,
@@ -14,6 +15,16 @@ import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../context/AuthContext";
 
 export default function PetDetailsScreen() {
+  // Load custom font using expo-font hook
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  // Return loading state if fonts are not loaded
+  if (!fontsLoaded) {
+    return undefined;
+  }
+
   const navigation = useNavigation();
   const { petname } = useAuth();
 
@@ -116,6 +127,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 26,
+    fontFamily: "MarkoOne-Regular",
     fontWeight: "bold",
     textAlign: "center",
     marginVertical: 20,
@@ -130,10 +142,12 @@ const styles = StyleSheet.create({
   },
   infoText: {
     fontSize: 16,
+    fontFamily: "MarkoOne-Regular",
     marginVertical: 5,
   },
   conditionTitle: {
     fontSize: 22,
+    fontFamily: "MarkoOne-Regular",
     fontWeight: "bold",
     marginTop: 20,
     textAlign: "center",
@@ -155,5 +169,6 @@ const styles = StyleSheet.create({
   conditionText: {
     marginTop: 5,
     fontSize: 18,
+    fontFamily: "MarkoOne-Regular",
   },
 });

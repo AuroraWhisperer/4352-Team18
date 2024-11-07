@@ -12,6 +12,16 @@ import PocketNestedNavigator from "./PocketNestedNavigator";
 const Tab = createMaterialTopTabNavigator();
 
 function TabNavigator() {
+  // Load custom font using expo-font hook
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  // Return loading state if fonts are not loaded
+  if (!fontsLoaded) {
+    return undefined;
+  }
+
   return (
     <Tab.Navigator
       tabBarPosition="bottom"

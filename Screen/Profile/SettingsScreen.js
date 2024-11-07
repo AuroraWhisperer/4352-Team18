@@ -6,11 +6,22 @@ import {
   Alert,
   Dimensions,
 } from "react-native";
+import { useFonts } from "expo-font";
 import React, { useContext } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useAuth } from "../../context/AuthContext";
 
 export default function SettingsScreen({ navigation }) {
+  // Load custom font using expo-font hook
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  // Return loading state if fonts are not loaded
+  if (!fontsLoaded) {
+    return undefined;
+  }
+  
   const { clearAsyncStorage, handleLogout, resetApp } = useAuth();
 
   // Handle logout with a confirmation prompt
@@ -113,5 +124,6 @@ const styles = StyleSheet.create({
     color: "#FFA726",
     fontSize: 16,
     fontWeight: "bold",
+    fontFamily: "MarkoOne-Regular",
   },
 });

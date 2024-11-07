@@ -1,9 +1,20 @@
 import React from "react";
+import { useFonts } from "expo-font";
 import { View, Text, Image, StyleSheet } from "react-native";
 import { useMain } from "../../context/MainContext";
 
 export default function CurrentTaskDiamonds({ style, textStyle, imageStyle }) {
   const { totalDiamonds } = useMain();
+
+  // Load custom font using expo-font hook
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  // Return loading state if fonts are not loaded
+  if (!fontsLoaded) {
+    return undefined;
+  }
 
   // Main container for displaying diamond count with custom styles applied
   return (
@@ -35,6 +46,7 @@ const styles = StyleSheet.create({
     fontFamily: "MarkoOne-Regular",
     marginLeft: 15,
     fontSize: 16,
+    fontFamily: "MarkoOne-Regular",
     marginRight: 5,
     fontWeight: "700",
   },

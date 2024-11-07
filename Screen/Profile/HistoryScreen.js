@@ -6,6 +6,7 @@ import {
   Dimensions,
   FlatList,
 } from "react-native";
+import { useFonts } from "expo-font";
 import React, { useCallback } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useFocusEffect } from "@react-navigation/native";
@@ -13,6 +14,16 @@ import { useMain } from "../../context/MainContext";
 import HistoryGoalCard from "../../components/Goals/HistoryGoalCard";
 
 export default function HistoryScreen({ navigation }) {
+  // Load custom font using expo-font hook
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  // Return loading state if fonts are not loaded
+  if (!fontsLoaded) {
+    return undefined;
+  }
+
   const { historyGoals, loadHistoryGoals } = useMain();
 
   const handleBackPress = () => {
@@ -83,6 +94,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
+    fontFamily: "MarkoOne-Regular",
     fontWeight: "bold",
     color: "#333",
     marginTop: 20,
@@ -99,6 +111,7 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 18,
+    fontFamily: "MarkoOne-Regular",
     color: "#888",
     textAlign: "center",
     marginTop: 20,

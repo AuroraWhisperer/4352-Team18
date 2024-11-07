@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useFonts } from "expo-font";
 import {
   View,
   Text,
@@ -28,6 +29,16 @@ export default function HomeScreen() {
   useEffect(() => {
     setHasGoals(goals.length > 0);
   }, [goals]);
+
+  // Load custom font using expo-font hook
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  // Return loading state if fonts are not loaded
+  if (!fontsLoaded) {
+    return undefined;
+  }
 
   return (
     <SafeAreaView style={[styles.container]}>
@@ -115,9 +126,11 @@ const styles = StyleSheet.create({
   },
   menu: {
     fontSize: 30,
+    fontFamily: "MarkoOne-Regular",
   },
   title: {
     fontSize: 24,
+    fontFamily: "MarkoOne-Regular",
     fontWeight: "bold",
     textAlign: "center",
     flex: 1,
