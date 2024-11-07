@@ -22,19 +22,21 @@ import {
   loadHistoryImageUri,
 } from "../../context/diaryStorage";
 import { useMain } from "../../context/MainContext";
-import { useAuth } from "../../context/AuthContext"; // Import useAuth to get username
+import { useAuth } from "../../context/AuthContext";
 import ImagePickerComponent from "../../components/Camera/ImagePickerComponent";
 
 export default function PostGoalsScreen({ navigation, route }) {
   // Retrieve goal and diamond count from route params
-  const { goal, cardDiamonds } = route.params;
-
+  const { goal, goalId, cardDiamonds } = route.params;
+  const { goals, totalDiamonds, addDiamondsToTotal } = useMain();
   const { username } = useAuth();
 
-  const [currentGoal, setCurrentGoal] = useState(goal);
-  const [diamonds, setDiamonds] = useState(10);
+  const [title, settitle] = useState(goal);
+  // const goalKey = `goal_${username}_${goalId}`;
+  // const currentGoal = goals.find((g) => g.id === goalKey);
+
   const [diaryContent, setDiaryContent] = useState("");
-  const { totalDiamonds, addDiamondsToTotal } = useMain();
+  const [diamonds, setDiamonds] = useState(cardDiamonds || 10);
   const [isFirstSave, setIsFirstSave] = useState(false);
   const [imageUri, setImageUri] = useState(null);
   const [wasPhotoInitiallyAdded, setWasPhotoInitiallyAdded] = useState(false);
@@ -42,8 +44,13 @@ export default function PostGoalsScreen({ navigation, route }) {
   // Load diary content and image URI on component mount
   useEffect(() => {
     const fetchContent = async () => {
-      const content = await loadDiaryContent(username, goal);
-      const uri = await loadImageUri(username, goal);
+      // console.log("Fetching diary content for goalId:", goalKey);
+
+      // if (currentGoal) {
+      const content = await loadDiaryContent(username, goalId);
+      const uri = await loadImageUri(username, goalId);
+
+      console.log("Loaded diary content in PostGoalsScreen:", content);
 
       if (content) {
         setDiaryContent(content);
@@ -56,19 +63,27 @@ export default function PostGoalsScreen({ navigation, route }) {
         setImageUri(uri);
         setWasPhotoInitiallyAdded(true);
       }
+      // }
     };
     fetchContent();
-  }, [username, goal]);
+  }, [
+    username,
+    goalId,
+    //  currentGoal
+  ]);
 
   // Handle saving of diary content and image
   const handleSave = async () => {
     try {
-      // Save current diary content and image URI to storage
-      await saveDiaryContent(username, goal, diaryContent);
-      await saveHistoryDiaryContent(username, goal, diaryContent);
+      // console.log("Goal ID:", goalId);
+      // console.log("Image URI to save:", imageUri);
 
-      await saveImageUri(username, goal, imageUri);
-      await saveHistoryImageUri(username, goal, imageUri);
+      // Save current diary content and image URI to storage
+      await saveDiaryContent(username, goalId, diaryContent);
+      await saveHistoryDiaryContent(username, goalId, diaryContent);
+
+      await saveImageUri(username, goalId, imageUri);
+      await saveHistoryImageUri(username, goalId, imageUri);
 
       // Add diamonds only on the first save with non-empty content
       if (isFirstSave && diaryContent.trim() !== "") {
@@ -82,7 +97,12 @@ export default function PostGoalsScreen({ navigation, route }) {
         setWasPhotoInitiallyAdded(true);
       }
 
-      navigation.goBack();
+      if (diaryContent.trim() && imageUri) {
+        console.log("Deleting goal with ID after save:", goalId);
+        navigation.navigate("GoalsTab", { deleteGoalId: goalId });
+      } else {
+        navigation.goBack();
+      }
     } catch (error) {
       console.error("Failed to save data:", error);
     }
@@ -122,7 +142,7 @@ export default function PostGoalsScreen({ navigation, route }) {
               numberOfLines={1}
               ellipsizeMode="tail"
             >
-              {currentGoal}
+              {title}
             </Text>
           </View>
         </View>

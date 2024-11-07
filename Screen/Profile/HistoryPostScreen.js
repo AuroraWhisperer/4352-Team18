@@ -16,8 +16,8 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import { useAuth } from "../../context/AuthContext";
 
-export default function PostGoalsScreen({ navigation, route }) {
-  const { goal } = route.params;
+export default function HistoryPostScreen({ navigation, route }) {
+  const { goal, goalId } = route.params;
 
   const { username } = useAuth();
 
@@ -27,8 +27,8 @@ export default function PostGoalsScreen({ navigation, route }) {
   // Fetches content from storage when component is focused
   const fetchContent = async () => {
     try {
-      const content = await loadHistoryDiaryContent(username, goal);
-      const uri = await loadHistoryImageUri(username, goal);
+      const content = await loadHistoryDiaryContent(username, goalId);
+      const uri = await loadHistoryImageUri(username, goalId);
 
       if (content) {
         setHistoryDiaryContent(content);

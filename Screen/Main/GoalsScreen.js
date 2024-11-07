@@ -7,23 +7,39 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import TotalDiamonds from "../../components/Display/TotalDiamonds";
 import HoursDisplay from "../../components/Display/HoursDisplay";
 import NewGoalCard from "../../components/Goals/NewGoalCard";
 import ExistingGoalCard from "../../components/Goals/ExistingGoalCard";
 import { useNavigation } from "@react-navigation/native";
 import { useMain } from "../../context/MainContext";
+import { useRoute } from "@react-navigation/native";
 
 export default function GoalsScreen() {
   const navigation = useNavigation();
-  const { goals, setGoals } = useMain();
+  const route = useRoute();
+  const { goals, setGoals, setHistoryGoals } = useMain();
 
   // Function to delete a goal
-  const handleDeleteGoal = (goalText) => {
-    const updatedGoals = goals.filter((goal) => goal.goal !== goalText);
-    setGoals(updatedGoals);
+  const handleDeleteGoal = (id) => {
+    setGoals((prevGoals) => {
+      const updatedGoals = prevGoals.filter((goal) => goal.id !== id);
+      console.log("Filtered goal ID to delete:", id);
+      console.log("Updated goals list after deletion:", updatedGoals);
+      return updatedGoals;
+    });
   };
+
+  useEffect(() => {
+    if (route.params?.deleteGoalId) {
+      const goalId = Array.isArray(route.params.deleteGoalId)
+        ? route.params.deleteGoalId[0]
+        : route.params.deleteGoalId;
+      console.log("Attempting to delete goal with ID:", goalId);
+      handleDeleteGoal(goalId);
+    }
+  }, [route.params?.deleteGoalId]);
 
   return (
     <View style={[styles.container]}>
@@ -45,13 +61,14 @@ export default function GoalsScreen() {
               {goals
                 .slice()
                 .reverse()
-                .map((goal, index) => (
+                .map((goal) => (
                   <ExistingGoalCard
-                    key={[index]}
+                    key={[goal.id]}
+                    goalId={[goal.id]}
                     goal={[goal.goal]}
                     time={[goal.time]}
                     diamonds={[goal.diamonds]}
-                    onDelete={() => handleDeleteGoal(goal.goal)}
+                    onDelete={() => handleDeleteGoal(goal.id)}
                   />
                 ))}
 

@@ -16,14 +16,20 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // Track the currently open swipeable item to close it if another is opened
 let openSwipeableRef = null;
 
-export default function ExistingGoalCard({ goal, time, diamonds, onDelete }) {
+export default function ExistingGoalCard({
+  goalId,
+  goal,
+  time,
+  diamonds,
+  onDelete,
+}) {
   const navigation = useNavigation();
   const swipeableRef = useRef(null);
 
   // Function to delete data related to a specific goal from AsyncStorage
-  const deleteRelatedData = async (goal) => {
-    const diaryKey = `diaryContent_${goal}`;
-    const imageKey = `imageUri_${goal}`;
+  const deleteRelatedData = async (goalId) => {
+    const diaryKey = `diaryContent_${goalId}`;
+    const imageKey = `imageUri_${goalId}`;
     try {
       await AsyncStorage.removeItem(diaryKey);
       await AsyncStorage.removeItem(imageKey);
@@ -77,7 +83,7 @@ export default function ExistingGoalCard({ goal, time, diamonds, onDelete }) {
   // Handle deletion by removing related data and calling the onDelete callback
   const handleDelete = async () => {
     await deleteRelatedData(goal);
-    onDelete();
+    onDelete(goalId);
 
     swipeableRef.current?.close();
   };
@@ -87,6 +93,7 @@ export default function ExistingGoalCard({ goal, time, diamonds, onDelete }) {
     if (openSwipeableRef && openSwipeableRef !== swipeableRef.current) {
       openSwipeableRef.close();
     }
+
     openSwipeableRef = swipeableRef.current;
   };
 
@@ -102,6 +109,8 @@ export default function ExistingGoalCard({ goal, time, diamonds, onDelete }) {
         onPress={() => {
           navigation.navigate("PostGoalsScreen", {
             goal,
+            goalId: goalId,
+            goalName: goal.name,
             cardDiamonds: Number(diamonds[0]),
           });
         }}

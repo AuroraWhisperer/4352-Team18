@@ -29,6 +29,7 @@ export default function HistoryScreen({ navigation }) {
   // Render each history goal card in the FlatList
   const renderGoalCard = ({ item }) => (
     <HistoryGoalCard
+      goalId={[item.id]}
       goal={item.goal}
       time={item.time}
       diamonds={item.diamonds}
@@ -49,7 +50,7 @@ export default function HistoryScreen({ navigation }) {
         {historyGoals && historyGoals.length > 0 ? (
           <FlatList
             data={[...historyGoals].reverse()}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item) => item.id || item.index.toString()}
             renderItem={renderGoalCard}
             contentContainerStyle={styles.listContent}
           />

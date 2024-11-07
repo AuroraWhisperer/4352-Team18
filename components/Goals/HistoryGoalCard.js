@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-export default function HistoryGoalCard({ goal, time, diamonds }) {
+export default function HistoryGoalCard({ goalId, goal, time, diamonds }) {
   const navigation = useNavigation();
 
   return (
@@ -18,6 +18,7 @@ export default function HistoryGoalCard({ goal, time, diamonds }) {
       style={[styles.card]}
       onPress={() => {
         navigation.navigate("HistoryPostScreen", {
+          goalId,
           goal,
           cardDiamonds: Number(diamonds[0]),
         });

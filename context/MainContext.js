@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAuth } from "./AuthContext.js";
+import uuid from "react-native-uuid";
 
 export const MainContext = createContext();
 
@@ -21,8 +22,19 @@ export const MainProvider = ({ children }) => {
 
   // Function to add a new goal to current and history goals
   const addGoal = (newGoal) => {
-    setGoals((prevGoals) => [...prevGoals, newGoal]);
-    setHistoryGoals((prevHistoryGoals) => [...prevHistoryGoals, newGoal]);
+    const goalWithId = {
+      ...newGoal,
+      id: uuid.v4(),
+    };
+
+    console.log("Adding goal:", {
+      // name: newGoal.goal,
+      // id: goalWithId.id,
+      goalWithId,
+    });
+
+    setGoals((prevGoals) => [...prevGoals, goalWithId]);
+    setHistoryGoals((prevHistoryGoals) => [...prevHistoryGoals, goalWithId]);
   };
 
   // // Load goals from AsyncStorage on component mount
@@ -117,7 +129,11 @@ export const MainProvider = ({ children }) => {
 
   // Function to add a new goal to history goals
   const addToHistoryGoals = (newGoal) => {
-    setHistoryGoals((prevHistoryGoals) => [...prevHistoryGoals, newGoal]);
+    const goalWithId = {
+      ...newGoal,
+      id: uuid.v4(),
+    };
+    setHistoryGoals((prevHistoryGoals) => [...prevHistoryGoals, goalWithId]);
   };
 
   // Load history goals from AsyncStorage
