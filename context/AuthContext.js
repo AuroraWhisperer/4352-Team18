@@ -18,6 +18,9 @@ export const AuthProvider = ({ children }) => {
   const [familyCode, setFamilyCode] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
 
+  const [taskCount, setTaskCount] = useState(0);
+  const [level, setLevel] = useState(1);
+
   // Initialize admin accounts in AsyncStorage
   useEffect(() => {
     const initAdminAccounts = async () => {
@@ -58,7 +61,18 @@ export const AuthProvider = ({ children }) => {
     initAdminAccounts();
   }, []);
 
-  // Handle admin login by validating against stored data
+  const loadTaskProgress = async (username) => {
+    try {
+      const storedTaskCount = await AsyncStorage.getItem(`tasks_${username}`);
+      const storedLevel = await AsyncStorage.getItem(`level_${username}`);
+      setTaskCount(storedTaskCount ? parseInt(storedTaskCount) : 0);
+      setLevel(storedLevel ? parseInt(storedLevel) : 1);
+    } catch (error) {
+      console.error("Failed to load task progress:", error);
+    }
+  };
+
+  // Handle admin login by validating stored data
   const handleAdminLogin = async (username, password) => {
     try {
       const prefixedUsername = `admin_${username}`;
@@ -106,7 +120,7 @@ export const AuthProvider = ({ children }) => {
   // Save user-specific data to AsyncStorage
   const saveUserData = async (username, data) => {
     try {
-      console.log(`Attempting to save data for ${username}:`, data);
+      // console.log(`Attempting to save data for ${username}:`, data);
       await AsyncStorage.setItem(`data_${username}`, JSON.stringify(data));
       console.log(`Successfully saved data for ${username}`);
     } catch (error) {

@@ -15,11 +15,13 @@ import ExistingGoalCard from "../../components/Goals/ExistingGoalCard";
 import { useNavigation } from "@react-navigation/native";
 import { useMain } from "../../context/MainContext";
 import { useRoute } from "@react-navigation/native";
+import { useTask } from "../../context/TaskContext";
 
 export default function GoalsScreen() {
   const navigation = useNavigation();
   const route = useRoute();
   const { goals, setGoals, setHistoryGoals } = useMain();
+  const { incrementTaskCount } = useTask();
 
   // Function to delete a goal
   const handleDeleteGoal = (id) => {
@@ -37,7 +39,9 @@ export default function GoalsScreen() {
         ? route.params.deleteGoalId[0]
         : route.params.deleteGoalId;
       console.log("Attempting to delete goal with ID:", goalId);
+
       handleDeleteGoal(goalId);
+      incrementTaskCount();
     }
   }, [route.params?.deleteGoalId]);
 

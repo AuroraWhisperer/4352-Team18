@@ -35,8 +35,13 @@ const Stack = createStackNavigator();
 //       <NavigationContainer>
 //         <Stack.Navigator>
 //           <Stack.Screen
-//             name="ShopScreen"
+//             name="HomeScreen"
 //             component={TabNavigator}
+//             options={{ headerShown: false }}
+//           />
+//           <Stack.Screen
+//             name="PetDetails"
+//             component={PetDetailsScreen}
 //             options={{ headerShown: false }}
 //           />
 //         </Stack.Navigator>
