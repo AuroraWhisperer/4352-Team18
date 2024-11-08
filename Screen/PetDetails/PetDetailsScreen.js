@@ -22,10 +22,12 @@ export default function PetDetailsScreen() {
   const [progress, setProgress] = useState(0);
 
   const navigation = useNavigation();
-  const { petname } = useAuth();
+  const { petname, happiness, health, hunger } = useAuth();
   const { taskCount, level, tasksToLevelUp, incrementTaskCount } = useTask();
 
   const targetProgress = taskCount / tasksToLevelUp;
+
+  const combinedRating = Math.round((happiness + health + hunger) / 3);
 
   useEffect(() => {
     const animateProgress = () => {
@@ -93,36 +95,56 @@ export default function PetDetailsScreen() {
           </View>
         </View>
 
-        {/* <TouchableOpacity
+        <TouchableOpacity
           style={styles.manualTaskButton}
           onPress={incrementTaskCount}
         >
           <Text style={styles.manualTaskText}>Add Task (Manual)</Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
       </View>
 
       <Text style={styles.conditionTitle}>RATING:</Text>
       <View style={styles.starContainer}>
-        <Star filled={true} />
-        <Star filled={true} />
-        <Star filled={true} />
-        <Star filled={false} />
-        <Star filled={false} />
+        {Array(5)
+          .fill()
+          .map((_, index) => (
+            <Star key={index} filled={index < combinedRating} />
+          ))}
       </View>
 
       <Text style={styles.conditionTitle}>CONDITION:</Text>
       <View style={styles.conditionContainer}>
-        <View style={styles.conditionItem}>
-          <Star filled={true} />
+        <View style={styles.conditionItem} key="happy">
           <Text style={styles.conditionText}>HAPPY</Text>
+          <View style={styles.starContainer}>
+            {Array(5)
+              .fill()
+              .map((_, index) => (
+                <Star key={`happy-star-${index}`} filled={index < happiness} />
+              ))}
+          </View>
         </View>
-        <View style={styles.conditionItem}>
-          <Star filled={false} />
+
+        <View style={styles.conditionItem} key="hungry">
           <Text style={styles.conditionText}>HUNGRY</Text>
+          <View style={styles.starContainer}>
+            {Array(5)
+              .fill()
+              .map((_, index) => (
+                <Star key={`hungry-star-${index}`} filled={index < hunger} />
+              ))}
+          </View>
         </View>
-        <View style={styles.conditionItem}>
-          <Star filled={true} />
+
+        <View style={styles.conditionItem} key="healthy">
           <Text style={styles.conditionText}>HEALTHY</Text>
+          <View style={styles.starContainer}>
+            {Array(5)
+              .fill()
+              .map((_, index) => (
+                <Star key={`healthy-star-${index}`} filled={index < health} />
+              ))}
+          </View>
         </View>
       </View>
     </ScrollView>

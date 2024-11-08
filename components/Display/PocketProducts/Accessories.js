@@ -44,7 +44,7 @@ export default function Accessories() {
       <FlatList
         data={filledItems}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.uniqueKey || item.id}
         numColumns={numColumns}
         columnWrapperStyle={styles.row}
         contentContainerStyle={styles.list}

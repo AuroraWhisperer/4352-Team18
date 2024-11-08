@@ -1,13 +1,24 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAuth } from "./AuthContext";
+import { useTask } from "./TaskContext";
+import uuid from "react-native-uuid";
 
 // Create ShopItems context
 export const ShopItems = createContext();
 
 // ShopItemsProvider component to provide shop-related data and functions
 export const ShopItemsProvider = ({ children }) => {
-  const { username } = useAuth();
+  const {
+    username,
+    happiness,
+    setHappiness,
+    health,
+    setHealth,
+    hunger,
+    setHunger,
+    savePetAttributes,
+  } = useAuth();
 
   // State variables for each category of purchased items
   const [purchasedClothesItems, setPurchasedClothesItems] = useState([]);
@@ -18,7 +29,6 @@ export const ShopItemsProvider = ({ children }) => {
   const [purchasedFurnitureItems, setPurchasedFurnitureItems] = useState([]);
   const [purchasedToysItems, setPurchasedToysItems] = useState([]);
 
-  // Load purchased items from AsyncStorage on component mount
   useEffect(() => {
     const loadPurchasedItems = async () => {
       try {
@@ -77,52 +87,115 @@ export const ShopItemsProvider = ({ children }) => {
   const addPurchasedItem = async (item, category) => {
     if (!username) return;
 
+    const itemWithUniqueKey = { ...item, uniqueKey: uuid.v4() };
+
     switch (category) {
       case "clothes":
-        const updatedClothesItems = [...purchasedClothesItems, item];
+        const updatedClothesItems = [
+          ...purchasedClothesItems,
+          itemWithUniqueKey,
+        ];
         setPurchasedClothesItems(updatedClothesItems);
         await AsyncStorage.setItem(
           `purchasedClothesItems_${username}`,
           JSON.stringify(updatedClothesItems)
         );
+
+        setHealth((prev) => {
+          const newHealth = Math.min(prev + 1, 5);
+          savePetAttributes(username, newHealth, happiness, hunger); // Save updated attributes
+          return newHealth;
+        });
         console.log("Updated Clothes Items:", updatedClothesItems);
+        console.log(health);
         break;
+
       case "accessories":
-        const updatedAccessoriesItems = [...purchasedAccessoriesItems, item];
+        const updatedAccessoriesItems = [
+          ...purchasedAccessoriesItems,
+          itemWithUniqueKey,
+        ];
         setPurchasedAccessoriesItems(updatedAccessoriesItems);
         await AsyncStorage.setItem(
           `purchasedAccessoriesItems_${username}`,
           JSON.stringify(updatedAccessoriesItems)
         );
+
+        setHappiness((prev) => {
+          const newHappiness = Math.min(prev + 1, 5);
+          savePetAttributes(username, health, newHappiness, hunger); // Save updated attributes
+          return newHappiness;
+        });
+        setHealth((prev) => {
+          const newHealth = Math.min(prev + 1, 5);
+          savePetAttributes(username, newHealth, happiness, hunger); // Save updated attributes
+          return newHealth;
+        });
         console.log("Updated Accessories Items:", updatedAccessoriesItems);
         break;
+
       case "food":
-        const updatedFoodItems = [...purchasedFoodItems, item];
+        const updatedFoodItems = [...purchasedFoodItems, itemWithUniqueKey];
         setPurchasedFoodItems(updatedFoodItems);
         await AsyncStorage.setItem(
           `purchasedFoodItems_${username}`,
           JSON.stringify(updatedFoodItems)
         );
+
+        setHealth((prev) => {
+          const newHealth = Math.min(prev + 1, 5);
+          savePetAttributes(username, newHealth, happiness, hunger); // Save updated attributes
+          return newHealth;
+        });
+        setHunger((prev) => {
+          const newHunger = Math.min(prev + 1, 5);
+          savePetAttributes(username, health, happiness, newHunger); // Save updated attributes
+          return newHunger;
+        });
         console.log("Updated Food Items:", updatedFoodItems);
         break;
+
       case "furniture":
-        const updatedFurnitureItems = [...purchasedFurnitureItems, item];
+        const updatedFurnitureItems = [
+          ...purchasedFurnitureItems,
+          itemWithUniqueKey,
+        ];
         setPurchasedFurnitureItems(updatedFurnitureItems);
         await AsyncStorage.setItem(
           `purchasedFurnitureItems_${username}`,
           JSON.stringify(updatedFurnitureItems)
         );
+
+        setHealth((prev) => {
+          const newHealth = Math.min(prev + 1, 5);
+          savePetAttributes(username, newHealth, happiness, hunger); // Save updated attributes
+          return newHealth;
+        });
+        setHappiness((prev) => {
+          const newHappiness = Math.min(prev + 1, 5);
+          savePetAttributes(username, health, newHappiness, hunger); // Save updated attributes
+          return newHappiness;
+        });
         console.log("Updated Furniture Items:", updatedFurnitureItems);
         break;
+
       case "toys":
-        const updatedToysItems = [...purchasedToysItems, item];
+        const updatedToysItems = [...purchasedToysItems, itemWithUniqueKey];
         setPurchasedToysItems(updatedToysItems);
         await AsyncStorage.setItem(
           `purchasedToysItems_${username}`,
           JSON.stringify(updatedToysItems)
         );
+
+        setHappiness((prev) => {
+          const newHappiness = Math.min(prev + 1, 5);
+          savePetAttributes(username, health, newHappiness, hunger); // Save updated attributes
+          return newHappiness;
+        });
         console.log("Updated Toys Items:", updatedToysItems);
+        // console.log(happiness);
         break;
+
       default:
         console.log("Unknown category:", category);
         break;

@@ -128,6 +128,7 @@ export const MainProvider = ({ children }) => {
   }, [goals, historyGoals, totalDiamonds, totalTime, username]);
 
   // Function to add a new goal to history goals
+  // Function to add a new goal to history goals with username
   const addToHistoryGoals = (newGoal) => {
     const goalWithId = {
       ...newGoal,
@@ -136,14 +137,16 @@ export const MainProvider = ({ children }) => {
     setHistoryGoals((prevHistoryGoals) => [...prevHistoryGoals, goalWithId]);
   };
 
-  // Load history goals from AsyncStorage
+  // Load user-specific history goals from AsyncStorage
   const loadHistoryGoals = async () => {
     try {
-      const storedHistoryGoals = await AsyncStorage.getItem(
-        `historyGoals_${username}`
-      );
-      if (storedHistoryGoals) {
-        setHistoryGoals(JSON.parse(storedHistoryGoals));
+      if (username) {
+        const storedHistoryGoals = await AsyncStorage.getItem(
+          `historyGoals_${username}`
+        );
+        if (storedHistoryGoals) {
+          setHistoryGoals(JSON.parse(storedHistoryGoals));
+        }
       }
     } catch (error) {
       console.error("Failed to load history goals from AsyncStorage:", error);

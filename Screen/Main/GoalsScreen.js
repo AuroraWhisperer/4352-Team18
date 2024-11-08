@@ -27,8 +27,8 @@ export default function GoalsScreen() {
   const handleDeleteGoal = (id) => {
     setGoals((prevGoals) => {
       const updatedGoals = prevGoals.filter((goal) => goal.id !== id);
-      console.log("Filtered goal ID to delete:", id);
-      console.log("Updated goals list after deletion:", updatedGoals);
+      // console.log("Filtered goal ID to delete:", id);
+      // console.log("Updated goals list after deletion:", updatedGoals);
       return updatedGoals;
     });
   };

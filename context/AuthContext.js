@@ -20,6 +20,9 @@ export const AuthProvider = ({ children }) => {
 
   const [taskCount, setTaskCount] = useState(0);
   const [level, setLevel] = useState(1);
+  const [happiness, setHappiness] = useState(0);
+  const [health, setHealth] = useState(0);
+  const [hunger, setHunger] = useState(5);
 
   // Initialize admin accounts in AsyncStorage
   useEffect(() => {
@@ -61,6 +64,78 @@ export const AuthProvider = ({ children }) => {
     initAdminAccounts();
   }, []);
 
+  useEffect(() => {
+    const loadPetAttributes = async () => {
+      if (!username) {
+        console.log(
+          "Username is not defined. Skipping pet attributes loading."
+        );
+        return;
+      }
+
+      try {
+        const storedHappiness = await AsyncStorage.getItem(
+          `happiness_${username}`
+        );
+        const storedHealth = await AsyncStorage.getItem(`health_${username}`);
+        const storedHunger = await AsyncStorage.getItem(`hunger_${username}`);
+
+        setHappiness(storedHappiness ? parseInt(storedHappiness) : 0);
+        setHealth(storedHealth ? parseInt(storedHealth) : 0);
+        setHunger(storedHunger ? parseInt(storedHunger) : 5);
+
+        // console.log(`Loaded pet attributes for ${username}:`, {
+        //   happiness: storedHappiness,
+        //   health: storedHealth,
+        //   hunger: storedHunger,
+        // });
+      } catch (error) {
+        console.error("Failed to load pet attributes:", error);
+      }
+    };
+
+    loadPetAttributes();
+  }, [username]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const nonZeroAttributes = [];
+      if (happiness > 0) nonZeroAttributes.push("happiness");
+      if (hunger > 0) nonZeroAttributes.push("hunger");
+      if (health > 0) nonZeroAttributes.push("health");
+
+      if (nonZeroAttributes.length > 0) {
+        const randomAttribute =
+          nonZeroAttributes[
+            Math.floor(Math.random() * nonZeroAttributes.length)
+          ];
+
+        if (randomAttribute === "happiness") {
+          setHappiness((prevHappiness) => {
+            const newHappiness = Math.max(0, prevHappiness - 1);
+            savePetAttributes(username);
+            return newHappiness;
+          });
+        } else if (randomAttribute === "hunger") {
+          setHunger((prevHunger) => {
+            const newHunger = Math.max(0, prevHunger - 1);
+            savePetAttributes(username);
+            return newHunger;
+          });
+        } else if (randomAttribute === "health") {
+          setHealth((prevHealth) => {
+            const newHealth = Math.max(0, prevHealth - 1);
+            savePetAttributes(username);
+            return newHealth;
+          });
+        }
+      }
+    }, 6000000);
+
+    return () => clearInterval(interval);
+  }, [username, happiness, hunger, health]);
+
+
   const loadTaskProgress = async (username) => {
     try {
       const storedTaskCount = await AsyncStorage.getItem(`tasks_${username}`);
@@ -83,17 +158,23 @@ export const AuthProvider = ({ children }) => {
         if (admin.username === username && admin.password === password) {
           setUsername(username);
           setCurrentUser(admin);
+          setIsAdmin(true);
 
-        const userData = await AsyncStorage.getItem(`data_${username}`);
-        const parsedData = userData ? JSON.parse(userData) : {};
+          setLevel(1);
 
-        setPetname(parsedData.petname || admin.petname || "Luna");
-        setFamilyName(username);
+          const userData = await AsyncStorage.getItem(`data_${username}`);
+          const parsedData = userData ? JSON.parse(userData) : {};
+
+          setPetname(parsedData.petname || admin.petname || "Luna");
+          setFamilyName(username);
 
           setIsAdmin(true);
-          console.log(
-            `Admin login successful. Pet name: ${parsedData.petname || "Luna"}`
-          );
+          await loadLevelFromStorage(username); // Load level data for admin
+          await loadPetAttributes(username);
+          // console.log(
+          //   `Admin login successful. Pet name: ${parsedData.petname || "Luna"}`
+          // );
+          console.log("目前属性", happiness, hunger, health);
           return true;
         }
       }
@@ -107,9 +188,11 @@ export const AuthProvider = ({ children }) => {
   // Handle user logout, clearing session data
   const handleLogout = async () => {
     try {
+      DevSettings.reload();
       setUsername("");
       setCurrentUser(null);
       setPetname("Luna");
+      setLevel(1);
 
       console.log("Logged out successfully");
     } catch (error) {
@@ -167,21 +250,27 @@ export const AuthProvider = ({ children }) => {
           setCurrentUser(user);
           setIsAdmin(false);
 
+          setLevel(1);
+
           const storedData = await AsyncStorage.getItem(`data_${username}`);
           const parsedData = storedData ? JSON.parse(storedData) : {};
 
-        setPetname(parsedData.petname || user.petname || "Luna");
-        setFamilyName(parsedData.familyname || "");
-        setFamilyCode(user.familyCode || parsedData.familyCode || "");
+          setPetname(parsedData.petname || user.petname || "Luna");
+          setFamilyName(parsedData.familyname || "");
+          setFamilyCode(user.familyCode || parsedData.familyCode || "");
 
-          console.log(
-            `User login successful. Pet name: ${parsedData.petname || "Luna"}`
-          );
+          await loadLevelFromStorage(username); // Load user's level
+          await loadPetAttributes(username);
+
+          // console.log(
+          //   `User login successful. Pet name: ${parsedData.petname || "Luna"}`
+          // );
           // console.log(
           //   `User login successful. Family code: ${
           //     user.familyCode || parsedData.familyCode
           //   }`
           // );
+          console.log("目前属性", happiness, hunger, health);
           return true;
         }
       }
@@ -296,6 +385,40 @@ export const AuthProvider = ({ children }) => {
     return `${letters}${digits}`;
   };
 
+  const saveLevelToStorage = async (newLevel) => {
+    try {
+      if (username) {
+        await AsyncStorage.setItem(
+          `level_${username}`,
+          JSON.stringify(newLevel)
+        );
+        setLevel(newLevel); // Update level state
+        console.log("Level saved successfully for", username);
+      }
+    } catch (error) {
+      console.error("Failed to save level:", error);
+    }
+  };
+
+  const loadLevelFromStorage = async (username) => {
+    try {
+      const storedLevel = await AsyncStorage.getItem(`level_${username}`);
+      if (storedLevel) {
+        setLevel(parseInt(storedLevel, 10));
+        console.log("Loaded level for", username, ":", storedLevel);
+      } else {
+        console.log("No stored level found for", username);
+      }
+    } catch (error) {
+      console.error("Failed to load level:", error);
+    }
+  };
+
+  const updateLevel = (newLevel) => {
+    setLevel(newLevel); // Update level state
+    saveLevelToStorage(newLevel); // Save new level to storage
+  };
+
   // Clear all non-user-specific data from AsyncStorage
   const clearAsyncStorage = async () => {
     try {
@@ -320,6 +443,53 @@ export const AuthProvider = ({ children }) => {
     );
   };
 
+  const savePetAttributes = async (username) => {
+    try {
+      await AsyncStorage.setItem(
+        `happiness_${username}`,
+        JSON.stringify(happiness)
+      );
+      await AsyncStorage.setItem(`health_${username}`, JSON.stringify(health));
+      await AsyncStorage.setItem(`hunger_${username}`, JSON.stringify(hunger));
+      console.log("Pet attributes saved successfully for", username);
+    } catch (error) {
+      console.error("Failed to save pet attributes:", error);
+    }
+  };
+
+  const loadPetAttributes = async (username) => {
+    try {
+      const storedHappiness = await AsyncStorage.getItem(
+        `happiness_${username}`
+      );
+      const storedHealth = await AsyncStorage.getItem(`health_${username}`);
+      const storedHunger = await AsyncStorage.getItem(`hunger_${username}`);
+
+      setHappiness(storedHappiness ? parseInt(storedHappiness) : 0);
+      setHealth(storedHealth ? parseInt(storedHealth) : 0);
+      setHunger(storedHunger ? parseInt(storedHunger) : 5);
+
+      // console.log("Loaded pet attributes for", username);
+    } catch (error) {
+      console.error("Failed to load pet attributes:", error);
+    }
+  };
+
+  const updateHappiness = (newHappiness) => {
+    setHappiness(newHappiness);
+    if (username) savePetAttributes(username);
+  };
+
+  const updateHealth = (newHealth) => {
+    setHealth(newHealth);
+    if (username) savePetAttributes(username);
+  };
+
+  const updateHunger = (newHunger) => {
+    setHunger(newHunger);
+    if (username) savePetAttributes(username);
+  };
+
   return (
     // Provide values and functions to the AuthContext for use across the app
     <AuthContext.Provider
@@ -341,6 +511,20 @@ export const AuthProvider = ({ children }) => {
         familyCode,
         setFamilyCode,
         handleFamilyCode,
+        level,
+        updateLevel,
+        saveLevelToStorage,
+        loadLevelFromStorage,
+        happiness,
+        setHappiness,
+        health,
+        setHealth,
+        hunger,
+        setHunger,
+        updateHappiness,
+        updateHealth,
+        updateHunger,
+        savePetAttributes,
         handleLogout,
         resetApp,
       }}
