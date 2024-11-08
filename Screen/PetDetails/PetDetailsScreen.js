@@ -95,12 +95,12 @@ export default function PetDetailsScreen() {
           </View>
         </View>
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.manualTaskButton}
           onPress={incrementTaskCount}
         >
           <Text style={styles.manualTaskText}>Add Task (Manual)</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
       <Text style={styles.conditionTitle}>RATING:</Text>
