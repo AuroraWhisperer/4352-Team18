@@ -1,22 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useFonts } from "expo-font";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { MainContext } from "../../context/MainContext";
 
-export default function HoursDisplay({ hours = 0 }) {
-  // Load custom font using expo-font hook
+export default function HoursDisplay() {
+
+  const { totalTime } = useContext(MainContext);
+
   const [fontsLoaded] = useFonts({
     "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
   });
 
-  // Display nothing until the font is fully loaded
   if (!fontsLoaded) {
-    return undefined;
+    return null;
   }
 
-  // TouchableOpacity to make the hours display clickable (future functionality potential)
   return (
     <TouchableOpacity style={styles.container}>
-      <Text style={styles.text}>Hours spent today: {hours} hr</Text>
+      <Text style={styles.text}>Hours spent today: {totalTime} hr</Text>
     </TouchableOpacity>
   );
 }

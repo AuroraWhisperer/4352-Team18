@@ -27,50 +27,14 @@ export const MainProvider = ({ children }) => {
       id: uuid.v4(),
     };
 
-    // console.log("Adding goal:", {
-    //   // name: newGoal.goal,
-    //   // id: goalWithId.id,
-    //   goalWithId,
-    // });
-
     setGoals((prevGoals) => [...prevGoals, goalWithId]);
     setHistoryGoals((prevHistoryGoals) => [...prevHistoryGoals, goalWithId]);
   };
 
-  const addTotalTime = (timeToAdd) => {
-    console.log("Adding time:", timeToAdd);
-    setTotalTime((prevTotalTime) => {
-      console.log("Previous totalTime:", prevTotalTime);
-      return prevTotalTime + timeToAdd;
-    });
+  const addTotalTime = () => {
+    setTotalTime((prevTotalTime) => prevTotalTime + time);
+    setTime(0); // Reset time after adding to totalTime
   };
-
-  // // Load goals from AsyncStorage on component mount
-  // useEffect(() => {
-  //   const loadGoals = async () => {
-  //     try {
-  //       const storedGoals = await AsyncStorage.getItem("goals");
-  //       if (storedGoals) {
-  //         setGoals(JSON.parse(storedGoals));
-  //       }
-  //     } catch (error) {
-  //       console.error("Failed to load goals from AsyncStorage:", error);
-  //     }
-  //   };
-  //   loadGoals();
-  // }, []);
-
-  // // Save goals to AsyncStorage whenever goals change
-  // useEffect(() => {
-  //   const saveGoals = async () => {
-  //     try {
-  //       await AsyncStorage.setItem("goals", JSON.stringify(goals));
-  //     } catch (error) {
-  //       console.error("Failed to save goals to AsyncStorage:", error);
-  //     }
-  //   };
-  //   if (goals.length > 0) saveGoals();
-  // }, [goals]);
 
   // Load user-specific data (goals, diamonds, time) from AsyncStorage
   useEffect(() => {
@@ -141,33 +105,7 @@ export const MainProvider = ({ children }) => {
     if (username) saveUserData();
   }, [goals, historyGoals, totalDiamonds, time, totalTime, username]);
 
-  // Function to add a new goal to history goals
-  // Function to add a new goal to history goals with username
-  const addToHistoryGoals = (newGoal) => {
-    const goalWithId = {
-      ...newGoal,
-      id: uuid.v4(),
-    };
-    setHistoryGoals((prevHistoryGoals) => [...prevHistoryGoals, goalWithId]);
-  };
-
-  // Load user-specific history goals from AsyncStorage
-  const loadHistoryGoals = async () => {
-    try {
-      if (username) {
-        const storedHistoryGoals = await AsyncStorage.getItem(
-          `historyGoals_${username}`
-        );
-        if (storedHistoryGoals) {
-          setHistoryGoals(JSON.parse(storedHistoryGoals));
-        }
-      }
-    } catch (error) {
-      console.error("Failed to load history goals from AsyncStorage:", error);
-    }
-  };
-
-  // Add diamonds to the total diamond count
+  // Function to add diamonds to the total diamond count
   const addDiamondsToTotal = (newDiamonds) => {
     const numericDiamonds = Number(newDiamonds);
     setTotalDiamonds((prevTotal) => prevTotal + numericDiamonds);
@@ -178,13 +116,7 @@ export const MainProvider = ({ children }) => {
     setTotalDiamonds((prevTotal) => prevTotal - price);
   };
 
-  // Add time to the total time
-  const addTimeToTotal = (newTime) => {
-    setTotalTime((prevTotal) => prevTotal + newTime);
-  };
-
   return (
-    // Provide values and functions to the MainContext for use across the app
     <MainContext.Provider
       value={{
         goals,
@@ -195,8 +127,6 @@ export const MainProvider = ({ children }) => {
         setGoal,
         historyGoals,
         setHistoryGoals,
-        addToHistoryGoals,
-        loadHistoryGoals,
         diamonds,
         setDiamonds,
         time,
@@ -205,7 +135,6 @@ export const MainProvider = ({ children }) => {
         addDiamondsToTotal,
         reduceDiamondsFromTotal,
         totalTime,
-        addTimeToTotal,
       }}
     >
       {children}

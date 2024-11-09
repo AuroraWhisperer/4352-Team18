@@ -57,7 +57,6 @@ export default function GoalsScreen() {
 
             <View style={[styles.content]}>
               <HoursDisplay
-                hours={0}
                 style={{ marginTop: 40, marginBottom: 30 }}
               />
 

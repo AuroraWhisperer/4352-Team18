@@ -85,7 +85,7 @@ export default function HomeScreen() {
       {/* Main content area including hours display and pet image */}
       <View style={[styles.content]}>
         <View style={[styles.petAndHoursContainer]}>
-          <HoursDisplay hours={0} />
+          <HoursDisplay/>
 
           <View style={[styles.petContainer]}>
             <Image

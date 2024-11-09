@@ -122,6 +122,7 @@ export default function ExistingGoalCard({
             goal,
             goalId: goalId,
             goalName: goal.name,
+            time: Number(time[0]),
             cardDiamonds: Number(diamonds[0]),
           });
         }}

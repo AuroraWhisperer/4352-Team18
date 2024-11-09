@@ -38,8 +38,9 @@ export default function PostGoalsScreen({ navigation, route }) {
   }
 
   // Retrieve goal and diamond count from route params
-  const { goal, goalId, cardDiamonds } = route.params;
-  const { goals, totalDiamonds, addDiamondsToTotal } = useMain();
+  const { goal, goalId, cardDiamonds, time } = route.params;
+  const { goals, totalDiamonds, addDiamondsToTotal, addTotalTime, totalTime } =
+    useMain();
   const { username } = useAuth();
 
   const [title, settitle] = useState(goal);
@@ -114,6 +115,8 @@ export default function PostGoalsScreen({ navigation, route }) {
       }
 
       if (imageUri) {
+        addTotalTime(time);
+        console.log("d", totalDiamonds, "t", totalTime);
         console.log("Deleting goal with ID after save:", goalId);
         navigation.navigate("GoalsTab", { deleteGoalId: goalId });
       } else {
