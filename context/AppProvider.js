@@ -1,16 +1,27 @@
-import React from "react";
+import React, { createContext, useState } from "react";
 import { AuthProvider } from "./AuthContext";
 import { MainProvider } from "./MainContext";
 import { ShopItemsProvider } from "./ShopItems";
 import { TaskProvider } from "./TaskContext";
 
-// AppProvider component to wrap the entire app with multiple context providers
-export const AppProvider = ({ children }) => (
-  <AuthProvider>
-    <MainProvider>
-      <ShopItemsProvider>
-        <TaskProvider>{children}</TaskProvider>
-      </ShopItemsProvider>
-    </MainProvider>
-  </AuthProvider>
-);
+export const AppContext = createContext();
+
+export const AppProvider = ({ children }) => {
+  const [refreshTrigger, setRefreshTrigger] = useState(false);
+
+  const forceRefresh = () => {
+    setRefreshTrigger((prev) => !prev);
+  };
+
+  return (
+    <AppContext.Provider value={{ refreshTrigger, forceRefresh }}>
+      <AuthProvider>
+        <MainProvider>
+          <ShopItemsProvider>
+            <TaskProvider>{children}</TaskProvider>
+          </ShopItemsProvider>
+        </MainProvider>
+      </AuthProvider>
+    </AppContext.Provider>
+  );
+};

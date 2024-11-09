@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   text: {
-    fontSize: 18,
+    fontSize: 14,
     fontFamily: "MarkoOne-Regular",
     fontWeight: "bold",
     color: "#333",

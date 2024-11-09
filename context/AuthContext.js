@@ -135,7 +135,6 @@ export const AuthProvider = ({ children }) => {
     return () => clearInterval(interval);
   }, [username, happiness, hunger, health]);
 
-
   const loadTaskProgress = async (username) => {
     try {
       const storedTaskCount = await AsyncStorage.getItem(`tasks_${username}`);
@@ -186,13 +185,19 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Handle user logout, clearing session data
-  const handleLogout = async () => {
+  const handleLogout = async (navigation) => {
     try {
-      DevSettings.reload();
+      // DevSettings.reload();
+      // navigation.replace("StartScreen");
+      resetApp();
       setUsername("");
       setCurrentUser(null);
       setPetname("Luna");
-      setLevel(1);
+      setLevel(0);
+      setHappiness(0);
+      setHealth(0);
+      setHunger(5);
+      setTaskCount(0);
 
       console.log("Logged out successfully");
     } catch (error) {

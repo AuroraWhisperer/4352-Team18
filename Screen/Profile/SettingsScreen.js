@@ -10,8 +10,10 @@ import { useFonts } from "expo-font";
 import React, { useContext } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useAuth } from "../../context/AuthContext";
+import { useNavigation } from "@react-navigation/native";
+import { AppContext } from "../../context/AppProvider";
 
-export default function SettingsScreen({ navigation }) {
+export default function SettingsScreen({ navigation, onLogout }) {
   // Load custom font using expo-font hook
   const [fontsLoaded] = useFonts({
     "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
@@ -21,8 +23,9 @@ export default function SettingsScreen({ navigation }) {
   if (!fontsLoaded) {
     return undefined;
   }
-  
+
   const { clearAsyncStorage, handleLogout, resetApp } = useAuth();
+  const { forceRefresh } = useContext(AppContext);
 
   // Handle logout with a confirmation prompt
   const handleLogOut = async () => {
@@ -33,6 +36,8 @@ export default function SettingsScreen({ navigation }) {
         onPress: async () => {
           try {
             await handleLogout();
+            forceRefresh();
+            onLogout(); 
             navigation.navigate("StartPage");
           } catch (error) {
             console.error("Failed to log out:", error);
