@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useFonts } from "expo-font";
 import {
   View,
   Text,
@@ -9,26 +10,56 @@ import {
   Alert,
   Image,
 } from "react-native";
-import CurrencyDisplay from "../../components/CurrencyDisplay";
-import HoursDisplay from "../../components/HoursDisplay";
-import GoalsMessage from "../../components/GoalsMessage"; // 引入 GoalsMessage 组件
+import TotalDiamonds from "../../components/Display/TotalDiamonds";
+import HoursDisplay from "../../components/Display/HoursDisplay";
+import GoalsMessage from "../../components/Display/GoalsMessage";
+import HomeScreenCard from "../../components/Goals/HomeScreenCard";
+import { useMain } from "../../context/MainContext";
+import { useAuth } from "../../context/AuthContext";
+import { useNavigation } from "@react-navigation/native";
 
 export default function HomeScreen() {
+  const { goals } = useMain();
+  const { petname } = useAuth();
+  const lastGoal = goals.length > 0 ? goals[goals.length - 1] : null;
+  const navigation = useNavigation();
+  const [hasGoals, setHasGoals] = useState(goals.length > 0);
+
+  // Update `hasGoals` whenever `goals` changes
+  useEffect(() => {
+    setHasGoals(goals.length > 0);
+  }, [goals]);
+
+  // Load custom font using expo-font hook
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  // Return loading state if fonts are not loaded
+  if (!fontsLoaded) {
+    return undefined;
+  }
+
   return (
     <SafeAreaView style={[styles.container]}>
+      {/* Header with menu button and greeting */}
       <View style={[styles.header]}>
         <TouchableOpacity
           style={[styles.menuContainer]}
           onPress={() => {
             console.log("Menu button pressed");
-            Alert.alert("Menu button pressed");
+            navigation.navigate("PetDetails");
           }}
         >
           <Text style={[styles.menu]}>☰</Text>
         </TouchableOpacity>
-        <Text style={[styles.title]}>Welcome to {"\n"}Luna's home!</Text>
+        <Text style={[styles.title]}>
+          Welcome to {"\n"}
+          {petname}'s home!
+        </Text>
       </View>
 
+      {/* Row containing GoalsMessage and TotalDiamonds */}
       <View style={[styles.rowContainer]}>
         <GoalsMessage
           onPress={() => {
@@ -37,12 +68,24 @@ export default function HomeScreen() {
           }}
         />
 
-        <CurrencyDisplay value={100} />
+        <TotalDiamonds value={100} />
       </View>
 
+      {/* Display the last goal card if it exists */}
+      <View style={[styles.existingGoal]}>
+        {lastGoal ? (
+          <HomeScreenCard
+            goal={lastGoal.goal}
+            time={lastGoal.time}
+            diamonds={lastGoal.diamonds}
+          />
+        ) : null}
+      </View>
+
+      {/* Main content area including hours display and pet image */}
       <View style={[styles.content]}>
         <View style={[styles.petAndHoursContainer]}>
-          <HoursDisplay hours={0} />
+          <HoursDisplay/>
 
           <View style={[styles.petContainer]}>
             <Image
@@ -83,9 +126,11 @@ const styles = StyleSheet.create({
   },
   menu: {
     fontSize: 30,
+    fontFamily: "MarkoOne-Regular",
   },
   title: {
     fontSize: 24,
+    fontFamily: "MarkoOne-Regular",
     fontWeight: "bold",
     textAlign: "center",
     flex: 1,
@@ -96,6 +141,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 20,
     paddingHorizontal: 20,
+  },
+  existingGoal: {
+    top: Dimensions.get("window").height * 0.04,
+    justifyContent: "center",
+    alignItems: "center",
   },
   content: {
     flex: 1,

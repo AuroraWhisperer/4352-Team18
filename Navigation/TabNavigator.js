@@ -1,20 +1,32 @@
 import React from "react";
-import { useFonts } from 'expo-font';
+import { useFonts } from "expo-font";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import HomeScreen from "../Screen/HomeScreen";
-import PocketScreen from "../Screen/PocketScreen";
-import GoalsScreen from "../Screen/GoalsScreen";
-import ShopScreen from "../Screen/ShopScreen";
-import ProfileScreen from "../Screen/ProfileScreen";
+import HomeScreen from "../Screen/Main/HomeScreen";
+import PocketScreen from "../Screen/Main/PocketScreen";
+import GoalsScreen from "../Screen/Main/GoalsScreen";
+import ShopScreen from "../Screen/Main/ShopScreen";
+import ProfileScreen from "../Screen/Main/ProfileScreen";
+import PocketNestedNavigator from "./PocketNestedNavigator";
 
 const Tab = createMaterialTopTabNavigator();
 
 function TabNavigator() {
+  // Load custom font using expo-font hook
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  // Return loading state if fonts are not loaded
+  if (!fontsLoaded) {
+    return undefined;
+  }
+
   return (
     <Tab.Navigator
       tabBarPosition="bottom"
       screenOptions={{
+        swipeEnabled: false,
         tabBarStyle: {
           position: "absolute",
           bottom: 0,
@@ -26,7 +38,7 @@ function TabNavigator() {
           borderWidth: 0,
         },
         tabBarLabelStyle: {
-          fontFamily: 'MarkoOne-Regular',
+          fontFamily: "MarkoOne-Regular",
           fontSize: 10,
         },
         tabBarActiveTintColor: "white",
@@ -35,7 +47,7 @@ function TabNavigator() {
       }}
     >
       <Tab.Screen
-        name="Home"
+        name="HomeTab"
         component={HomeScreen}
         options={{
           title: "Home",
@@ -52,10 +64,11 @@ function TabNavigator() {
           tabBarIcon: ({ color }) => (
             <Ionicons name="shield" size={26} color={color} />
           ),
+          tabBarStyle: { backgroundColor: "#9C8B71", height: 80 },
         }}
       />
       <Tab.Screen
-        name="Goals"
+        name="GoalsTab"
         component={GoalsScreen}
         options={{
           title: "Goals",
@@ -65,13 +78,14 @@ function TabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Shop"
+        name="ShopTab"
         component={ShopScreen}
         options={{
           title: "Shop",
           tabBarIcon: ({ color }) => (
             <Ionicons name="basket" size={26} color={color} />
           ),
+          tabBarStyle: { backgroundColor: "#9C8B71", height: 80 },
         }}
       />
       <Tab.Screen

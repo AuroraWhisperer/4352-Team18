@@ -1,18 +1,22 @@
-import { Text, StyleSheet, View } from "react-native";
-import React, { Component } from "react";
+import React from "react";
+import { Text, StyleSheet, View, ScrollView } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import PocketNestedNavigator from "../../Navigation/PocketNestedNavigator";
+import PocketHeader from "../Pocket/PocketHeader";
+//import PocketProducts from "../../components/Display/PocketProducts";
 
-export default function PocketScreen() {
+const PocketScreen = () => {
   return (
-    <View style={[styles.container]}>
-      <Text>PocketScreen</Text>
+    <View style={{ flex: 1 }}>
+      {/* Header for the PocketScreen */}
+      <PocketHeader />
+
+      {/* Nested Tab Navigator for different pocket categories */}
+      <PocketNestedNavigator />
     </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
+const styles = StyleSheet.create({});
+
+export default PocketScreen;

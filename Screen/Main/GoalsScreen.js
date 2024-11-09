@@ -7,42 +7,75 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import React from "react";
-import CurrencyDisplay from "../../components/CurrencyDisplay";
-import HoursDisplay from "../../components/HoursDisplay";
-import NewGoalCard from "../../components/NewGoalCard";
-import ExistingGoalCard from "../../components/ExistingGoalCard";
+import React, { useEffect } from "react";
+import TotalDiamonds from "../../components/Display/TotalDiamonds";
+import HoursDisplay from "../../components/Display/HoursDisplay";
+import NewGoalCard from "../../components/Goals/NewGoalCard";
+import ExistingGoalCard from "../../components/Goals/ExistingGoalCard";
 import { useNavigation } from "@react-navigation/native";
-import { useGoals } from "../../context/GoalContext";
+import { useMain } from "../../context/MainContext";
+import { useRoute } from "@react-navigation/native";
+import { useTask } from "../../context/TaskContext";
 
 export default function GoalsScreen() {
   const navigation = useNavigation();
-  const { goals } = useGoals();
+  const route = useRoute();
+  const { goals, setGoals, setHistoryGoals } = useMain();
+  const { incrementTaskCount } = useTask();
+
+  // Function to delete a goal
+  const handleDeleteGoal = (id) => {
+    setGoals((prevGoals) => {
+      const updatedGoals = prevGoals.filter((goal) => goal.id !== id);
+      // console.log("Filtered goal ID to delete:", id);
+      // console.log("Updated goals list after deletion:", updatedGoals);
+      return updatedGoals;
+    });
+  };
+
+  useEffect(() => {
+    if (route.params?.deleteGoalId) {
+      const goalId = Array.isArray(route.params.deleteGoalId)
+        ? route.params.deleteGoalId[0]
+        : route.params.deleteGoalId;
+      console.log("Attempting to delete goal with ID:", goalId);
+
+      handleDeleteGoal(goalId);
+      incrementTaskCount();
+    }
+  }, [route.params?.deleteGoalId]);
 
   return (
     <View style={[styles.container]}>
       <View style={[styles.contentWrapper]}>
+        {/* Scrollable content area */}
         <View style={[styles.scrollViewWrapper]}>
           <ScrollView contentContainerStyle={[styles.scrollContent]}>
             <View style={[styles.header]}>
-              <CurrencyDisplay value={100} />
+              <TotalDiamonds value={100} />
             </View>
 
             <View style={[styles.content]}>
               <HoursDisplay
-                hours={0}
                 style={{ marginTop: 40, marginBottom: 30 }}
               />
 
-              {goals.map((goal, index) => (
-                <ExistingGoalCard
-                  key={[index]}
-                  goal={[goal.goal]}
-                  time={[goal.time]}
-                  diamonds={[goal.diamonds]}
-                />
-              ))}
+              {/* Display each goal in reverse order */}
+              {goals
+                .slice()
+                .reverse()
+                .map((goal) => (
+                  <ExistingGoalCard
+                    key={[goal.id]}
+                    goalId={[goal.id]}
+                    goal={[goal.goal]}
+                    time={[goal.time]}
+                    diamonds={[goal.diamonds]}
+                    onDelete={() => handleDeleteGoal(goal.id)}
+                  />
+                ))}
 
+              {/* Button to add a new goal */}
               <NewGoalCard
                 onPress={() => navigation.navigate("AddGoalsScreen")}
               />
@@ -51,6 +84,7 @@ export default function GoalsScreen() {
           </ScrollView>
         </View>
 
+        {/* Fixed background image and bottom area */}
         <View style={[styles.fixedBottom]}>
           <Image
             source={require("../../assets/images/GoalScreenBottomImage.png")}

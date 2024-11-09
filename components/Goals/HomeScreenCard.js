@@ -1,27 +1,54 @@
 import React from "react";
-import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
+import { useFonts } from "expo-font";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-export default function ExistingGoalCard({ goal, time, diamonds }) {
+export default function HomeScreenCard({ goal, time, diamonds }) {
+  const navigation = useNavigation();
+
+  // Load custom font using expo-font hook
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  // Return loading state if fonts are not loaded
+  if (!fontsLoaded) {
+    return undefined;
+  }
+
+  // Touchable component that navigates to GoalsTab when pressed, passing goal, time, and diamonds as params
   return (
-    <View style={[styles.card]}>
+    <TouchableOpacity
+      style={[styles.card]}
+      onPress={() => navigation.navigate("GoalsTab", { goal, time, diamonds })}
+    >
+      {/* Left side of the card to display the goal text */}
       <View style={[styles.leftSide]}>
-        <Text style={[styles.goalText]} numberOfLines={3} ellipsizeMode="tail">
+        <Text style={[styles.goalText]} numberOfLines={4} ellipsizeMode="tail">
           {goal}
         </Text>
       </View>
 
+      {/* Right side of the card to display time and diamonds */}
       <View style={[styles.rightSide]}>
         <Text style={[styles.timeText]}>{time} hr</Text>
         <View style={[styles.diamondsContainer]}>
           <Image
-            source={require("../assets/images/diamond.png")} 
+            source={require("../../assets/images/diamond.png")}
             style={[styles.diamondImage]}
             resizeMode="contain"
           />
           <Text style={[styles.diamondsText]}>{diamonds}</Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
@@ -50,7 +77,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   goalText: {
-    fontFamily: 'MarkoOne-Regular',
+    fontFamily: "MarkoOne-Regular",
     fontSize: 18,
     fontWeight: "bold",
     color: "#333",
@@ -58,13 +85,13 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   timeText: {
-    fontFamily: 'MarkoOne-Regular',
+    fontFamily: "MarkoOne-Regular",
     fontSize: 14,
     color: "#777",
     marginBottom: 5,
   },
   diamondsContainer: {
-    marginTop: Dimensions.get("window").height * 0.015,
+    marginTop: Dimensions.get("window").height * 0.005,
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#fff",
@@ -82,7 +109,7 @@ const styles = StyleSheet.create({
     height: 18,
   },
   diamondsText: {
-    fontFamily: 'MarkoOne-Regular',
+    fontFamily: "MarkoOne-Regular",
     fontSize: 16,
     color: "#333",
     marginLeft: 5,

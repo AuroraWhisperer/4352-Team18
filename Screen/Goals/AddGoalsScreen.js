@@ -8,34 +8,61 @@ import {
   Alert,
   TouchableOpacity,
 } from "react-native";
+import { useFonts } from "expo-font";
 import React, { useState } from "react";
-import { useGoals } from "../../context/GoalContext";
-import CurrencyDisplay from "../../components/CurrencyDisplay";
-import HoursDisplay from "../../components/HoursDisplay";
-import AddGoalCard from "../../components/AddGoalCard";
+import { useMain } from "../../context/MainContext";
+import TotalDiamonds from "../../components/Display/TotalDiamonds";
+import HoursDisplay from "../../components/Display/HoursDisplay";
+import AddGoalCard from "../../components/Goals/AddGoalCard";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function AddGoalsScreen({ navigation }) {
-  const { addGoal } = useGoals();
-  const [goal, setGoal] = useState("");
-  const [time, setTime] = useState("");
-  const [diamonds, setDiamonds] = useState("");
+  // Extract states and methods from MainContext
+  const {
+    addGoal,
+    goals,
+    goal,
+    setGoal,
+    time,
+    setTime,
+    diamonds,
+    setDiamonds,
+  } = useMain();
 
+  // Load custom font using expo-font hook
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  // Return loading state if fonts are not loaded
+  if (!fontsLoaded) {
+    return undefined;
+  }
+
+  // Function to handle goal submission
   const handleSubmit = () => {
     console.log("goal:", goal, "time:", time, "diamonds:", diamonds);
+
+    // Check if the goal already exists in the goals list
+    const goalExists = goals.some((g) => g.goal === goal);
+
+    // Validate inputs and display alerts if any field is missing or if the goal is a duplicate
     if (!goal) {
       Alert.alert("Error", "Please fill out the goal field.");
     } else if (!time) {
       Alert.alert("Error", "Please fill out the time field.");
     } else if (!diamonds) {
       Alert.alert("Error", "Please fill out the diamonds field.");
+    } else if (goalExists) {
+      Alert.alert(
+        "Duplicate Goal",
+        "This goal already exists. Please enter a unique goal."
+      );
     } else {
+      // If the goal is unique, add it and navigate back to the GoalsTab
       const newGoal = { goal, time, diamonds };
-
       addGoal(newGoal);
-
-      navigation.navigate("Goals", { newGoal });
-
+      navigation.navigate("GoalsTab", { newGoal });
       console.log("Submitted data: ", newGoal);
     }
   };
@@ -43,6 +70,7 @@ export default function AddGoalsScreen({ navigation }) {
   return (
     <View style={[styles.container]}>
       <ScrollView contentContainerStyle={[styles.scrollContent]}>
+        {/* Header with back button and diamond count */}
         <View style={[styles.header]}>
           <TouchableOpacity
             style={[styles.backButton]}
@@ -57,9 +85,10 @@ export default function AddGoalsScreen({ navigation }) {
             <Text style={[styles.backButtonText]}>Back</Text>
           </TouchableOpacity>
 
-          <CurrencyDisplay value={100} />
+          <TotalDiamonds value={100} />
         </View>
 
+        {/* Main content area with HoursDisplay and AddGoalCard */}
         <View style={[styles.content]}>
           <HoursDisplay hours={0} />
 
@@ -77,6 +106,7 @@ export default function AddGoalsScreen({ navigation }) {
           </View>
         </View>
 
+        {/* Background scenery image at the bottom */}
         <View style={styles.scenery}>
           <Image
             source={require("../../assets/images/GoalScreenBottomImage.png")}
@@ -125,6 +155,7 @@ const styles = StyleSheet.create({
   backButtonText: {
     color: "#fff",
     fontSize: 16,
+    fontFamily: "MarkoOne-Regular",
     fontWeight: "bold",
   },
   content: {
