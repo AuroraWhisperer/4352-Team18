@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import StartScreen from "./Screen/Auth/StartScreen";
@@ -29,30 +29,15 @@ const Stack = createStackNavigator();
 
 // this code is for debug specfic page
 
-// export default function App() {
-//   return (
-//     <AppProvider>
-//       <NavigationContainer>
-//         <Stack.Navigator>
-//           <Stack.Screen
-//             name="HomeScreen"
-//             component={TabNavigator}
-//             options={{ headerShown: false }}
-//           />
-//           <Stack.Screen
-//             name="PetDetails"
-//             component={PetDetailsScreen}
-//             options={{ headerShown: false }}
-//           />
-//         </Stack.Navigator>
-//       </NavigationContainer>
-//     </AppProvider>
-//   );
-// }
-
 export default function App() {
+  const [navKey, setNavKey] = useState(0);
+
+  const changeKey = () => {
+    setNavKey((prevKey) => prevKey + 1);
+  };
+
   return (
-    <NavigationContainer>
+    <NavigationContainer key={navKey}>
       <AppProvider>
         <Stack.Navigator initialRouteName="StartScreen">
           <Stack.Screen
@@ -130,11 +115,9 @@ export default function App() {
             component={PostGoalsScreen}
             options={{ headerShown: false }}
           />
-          <Stack.Screen
-            name="SettingsScreen"
-            component={SettingsScreen}
-            options={{ headerShown: false }}
-          />
+          <Stack.Screen name="SettingsScreen" options={{ headerShown: false }}>
+            {(props) => <SettingsScreen {...props} onLogout={changeKey} />}
+          </Stack.Screen>
           <Stack.Screen
             name="HistoryScreen"
             component={HistoryScreen}

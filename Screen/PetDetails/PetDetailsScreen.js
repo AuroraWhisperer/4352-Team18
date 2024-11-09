@@ -266,12 +266,12 @@ const styles = StyleSheet.create({
   },
   conditionContainer: {
     marginTop: 10,
-    flexDirection: "row",
-    justifyContent: "space-around",
+    alignItems: "center",
     width: "100%",
   },
   conditionItem: {
     alignItems: "center",
+    marginVertical: 10,
   },
   conditionText: {
     marginTop: 5,

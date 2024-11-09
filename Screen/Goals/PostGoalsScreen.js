@@ -116,7 +116,7 @@ export default function PostGoalsScreen({ navigation, route }) {
 
       if (imageUri) {
         addTotalTime(time);
-        console.log("d", totalDiamonds, "t", totalTime);
+        // console.log("d", totalDiamonds, "t", totalTime);
         console.log("Deleting goal with ID after save:", goalId);
         navigation.navigate("GoalsTab", { deleteGoalId: goalId });
       } else {
