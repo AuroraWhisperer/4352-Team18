@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFonts } from "expo-font";
 import DropDownPicker from "react-native-dropdown-picker";
@@ -50,6 +51,14 @@ export default function SignUpScreen({ navigation }) {
 
   const { registerUser, setUsername, username } = useAuth();
 
+  useFocusEffect(
+    useCallback(() => {
+      setUsername("");
+      setPassword("");
+      setEmail("");
+    }, [setUsername])
+  );
+
   // Create refs for each input field
   const passwordRef = useRef();
   const emailRef = useRef();
@@ -98,13 +107,13 @@ export default function SignUpScreen({ navigation }) {
           />
         </TouchableOpacity>
 
-          <View style={[styles.content]}>
-            <Image
-              source={require("../../assets/images/StartScreenImage.png")}
-              style={styles.image}
-            />
-            <Text style={[styles.title]}>PetConnect</Text>
-          </View>
+        <View style={[styles.content]}>
+          <Image
+            source={require("../../assets/images/StartScreenImage.png")}
+            style={styles.image}
+          />
+          <Text style={[styles.title]}>PetConnect</Text>
+        </View>
 
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -149,13 +158,12 @@ export default function SignUpScreen({ navigation }) {
               placeholder="Enter your email"
               value={email}
               onChangeText={setEmail}
-              returnKeyType="next"
+              returnKeyType="done"
               onSubmitEditing={() => {
-                if (!value) setOpen(true);
+                Keyboard.dismiss();
               }}
             />
           </View>
-          
 
           <View>
             <Text style={[styles.inputText]}>The number of children: </Text>
@@ -170,13 +178,12 @@ export default function SignUpScreen({ navigation }) {
               setItems={setItems}
             />
           </View>
-          </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
 
         <TouchableOpacity style={[styles.nextButton]} onPress={handleSignUp}>
           <Text style={[styles.nextText]}>Next</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
-
     </TouchableWithoutFeedback>
   );
 }

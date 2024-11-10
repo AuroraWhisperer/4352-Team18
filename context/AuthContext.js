@@ -173,7 +173,7 @@ export const AuthProvider = ({ children }) => {
           // console.log(
           //   `Admin login successful. Pet name: ${parsedData.petname || "Luna"}`
           // );
-          console.log("目前属性", happiness, hunger, health);
+          // console.log("目前属性", happiness, hunger, health);
           return true;
         }
       }
