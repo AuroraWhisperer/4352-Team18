@@ -4,7 +4,7 @@ import { ShopItems } from "../../context/ShopItems";
 import CallToAction from "../../components/Display/CallToAction";
 import Clothes from "../../components/Display/PocketProducts/Clothes";
 
-export default function ClothesScreen() {
+export default function ClothesScreen_Pocket() {
   // Access purchased clothes from the ShopItems context
   const { purchasedClothesItems } = useContext(ShopItems);
 

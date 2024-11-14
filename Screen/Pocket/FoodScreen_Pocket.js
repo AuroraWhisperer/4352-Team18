@@ -4,7 +4,7 @@ import { ShopItems } from "../../context/ShopItems";
 import CallToAction from "../../components/Display/CallToAction";
 import Food from "../../components/Display/PocketProducts/Food";
 
-export default function FoodScreen() {
+export default function FoodScreen_Pocket() {
   // Access purchased food items from the ShopItems context
   const { purchasedFoodItems } = useContext(ShopItems);
 

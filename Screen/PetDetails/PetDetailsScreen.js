@@ -51,7 +51,7 @@ export default function PetDetailsScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.backContent}
         onPress={() => navigation.goBack()}
       >
@@ -59,7 +59,7 @@ export default function PetDetailsScreen() {
           source={require("../../assets/images/backButton.png")}
           style={styles.backImage}
         />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <View style={styles.imageContainer}>
         <Image

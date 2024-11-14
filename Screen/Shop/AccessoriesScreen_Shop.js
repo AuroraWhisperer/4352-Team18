@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
 import React from "react";
-import Clothes from "../../components/Display/ShopProducts/Clothes";
+import Accessories from "../../components/Display/ShopProducts/Accessories";
 
-export default function ClothesScreen() {
+export default function AccessoriesScreen_Shop() {
   return (
     <SafeAreaView style={styles.container}>
-      <Clothes />
+      <Accessories />
     </SafeAreaView>
   );
 }

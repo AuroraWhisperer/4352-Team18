@@ -19,7 +19,7 @@ export default function CallToAction({ screenName }) {
 
   // Return loading state if fonts are not loaded
   if (!fontsLoaded) {
-    return undefined;
+    return null;
   }
 
   // Function to return custom message based on the screen name
@@ -45,14 +45,37 @@ export default function CallToAction({ screenName }) {
     }
   };
 
+  // Function to navigate to a specific category in ShopTab
+  const navigateToCategory = () => {
+    let targetCategory;
+    switch (screenName) {
+      case "ClothesScreen":
+        targetCategory = "Clothes";
+        break;
+      case "AccessoriesScreen":
+        targetCategory = "Accessories";
+        break;
+      case "FoodScreen":
+        targetCategory = "Food";
+        break;
+      case "ToysScreen":
+        targetCategory = "Toys";
+        break;
+      case "FurnitureScreen":
+        targetCategory = "Furniture";
+        break;
+      default:
+        targetCategory = "Clothes";
+    }
+
+    navigation.navigate("ShopTab", { screen: targetCategory });
+  };
+
   // Centered container to hold call-to-action message and button
   return (
     <View style={styles.centerContent}>
       <Text style={styles.callToAction}>{getTextByScreenName()}</Text>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate("ShopTab")}
-      >
+      <TouchableOpacity style={styles.button} onPress={navigateToCategory}>
         <Text style={styles.buttonText}>Go shopping</Text>
       </TouchableOpacity>
     </View>

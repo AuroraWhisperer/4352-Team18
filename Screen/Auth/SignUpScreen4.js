@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { useFonts } from "expo-font";
-import Checkbox from 'expo-checkbox';
+import Checkbox from "expo-checkbox";
 import {
-    StyleSheet,
-    Text,
-    View,
-    SafeAreaView,
-    TouchableOpacity,
-    Image,
-    Dimensions,
-  } from "react-native";
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+} from "react-native";
 
 export default function SignUpScreen4({ navigation }) {
   // Load custom font using expo-font hook
@@ -30,15 +30,15 @@ export default function SignUpScreen4({ navigation }) {
 
   return (
     <SafeAreaView style={[styles.container]}>
-        <TouchableOpacity
-          style={[styles.backContent]}
-          onPress={() => navigation.navigate("SignUpScreen3")}
-        >
-          <Image
-            source={require("../../assets/images/backButton.png")}
-            style={styles.backImage}
-          />
-        </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.backContent]}
+        onPress={() => navigation.navigate("SignUpScreen3")}
+      >
+        <Image
+          source={require("../../assets/images/backButton.png")}
+          style={styles.backImage}
+        />
+      </TouchableOpacity>
 
       <View style={[styles.content]}>
         <Text style={[styles.title]}>I'm Curious!</Text>
@@ -47,30 +47,54 @@ export default function SignUpScreen4({ navigation }) {
           style={[styles.image]}
         />
         <Text style={[styles.inputText]}>What's your child's age group?</Text>
-        <Text style={[styles.input2Text]}>(You can select multiple if you have more than one child)</Text>
+        <Text style={[styles.input2Text]}>
+          (You can select multiple if you have more than one child)
+        </Text>
       </View>
 
-    <View style={styles.checkboxContainer}>
-      <View style={styles.section}>
-        <Checkbox style={styles.checkbox} value={middleChecked} onValueChange={setMiddleChecked} />
-        <Text style={styles.optionText}>Middle Childhood (6-8 years old)</Text>
-      </View>
+      <View style={styles.checkboxContainer}>
+        <TouchableOpacity
+          style={styles.section}
+          onPress={() => setMiddleChecked(!middleChecked)}
+        >
+          <Checkbox
+            style={styles.checkbox}
+            value={middleChecked}
+            onValueChange={setMiddleChecked}
+          />
+          <Text style={styles.optionText}>
+            Middle Childhood (6-8 years old)
+          </Text>
+        </TouchableOpacity>
 
-      <View style={styles.section}>
-        <Checkbox style={styles.checkbox} value={preChecked} onValueChange={setPreChecked} />
-        <Text style={styles.optionText}>Pre-teens (9-12 years old)</Text>
-      </View>
+        <TouchableOpacity
+          style={styles.section}
+          onPress={() => setPreChecked(!preChecked)}
+        >
+          <Checkbox
+            style={styles.checkbox}
+            value={preChecked}
+            onValueChange={setPreChecked}
+          />
+          <Text style={styles.optionText}>Pre-teens (9-12 years old)</Text>
+        </TouchableOpacity>
 
-      <View style={styles.section}>
-        <Checkbox style={styles.checkbox} value={teensChecked} onValueChange={setTeensChecked} />
-        <Text style={styles.optionText}>Teenagers (13-17 years old)</Text>
+        <TouchableOpacity
+          style={styles.section}
+          onPress={() => setTeensChecked(!teensChecked)}
+        >
+          <Checkbox
+            style={styles.checkbox}
+            value={teensChecked}
+            onValueChange={setTeensChecked}
+          />
+          <Text style={styles.optionText}>Teenagers (13-17 years old)</Text>
+        </TouchableOpacity>
       </View>
-    </View>
-
 
       <TouchableOpacity
         style={[styles.nextButton]}
-        disabled = {nextDisabled}
+        disabled={nextDisabled}
         onPress={() => navigation.navigate("SignUpScreen5")}
       >
         <Text style={[styles.nextText]}>Next</Text>
@@ -121,11 +145,13 @@ const styles = StyleSheet.create({
     marginTop: 25,
     marginBottom: 5,
     width: "80%",
+    textAlign: "center",
   },
   input2Text: {
     fontSize: 12,
     fontFamily: "MarkoOne-Regular",
     marginBottom: 120,
+    textAlign: "center",
   },
   checkboxContainer: {
     flex: 1,
@@ -134,8 +160,9 @@ const styles = StyleSheet.create({
     marginTop: 80,
   },
   section: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
   },
   optionText: {
     fontSize: 16,

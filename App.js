@@ -23,11 +23,28 @@ import HistoryScreen from "./Screen/Profile/HistoryScreen.js";
 import PocketScreen from "./Screen/Main/PocketScreen.js";
 import ShopScreen from "./Screen/Main/ShopScreen.js";
 import HistoryPostScreen from "./Screen/Profile/HistoryPostScreen.js";
+import AboutScreen from "./Screen/Profile/AboutScreen.js";
+import GuidanceScreen from "./Screen/Profile/GuidanceScreen.js";
+import HelpScreen from "./Screen/Profile/HelpScreen.js";
 
 const Stack = createStackNavigator();
 // const Tab = createBottomTabNavigator();
 
 // this code is for debug specfic page
+
+// export default function App() {
+//   return (
+//     <NavigationContainer>
+//       <Stack.Navigator>
+//         <Stack.Screen
+//           name="AboutScreen"
+//           component={AboutScreen}
+//           options={{ headerShown: false }}
+//         />
+//       </Stack.Navigator>
+//     </NavigationContainer>
+//   );
+// }
 
 export default function App() {
   const [navKey, setNavKey] = useState(0);
@@ -108,7 +125,19 @@ export default function App() {
           <Stack.Screen
             name="PetDetails"
             component={PetDetailsScreen}
-            options={{ headerShown: false }}
+            options={{
+              headerShown: true,
+              title: "Pet Details",
+              headerStyle: {
+                backgroundColor: "#FFE9D4",
+              },
+              headerTintColor: "#333",
+              headerTitleStyle: {
+                fontFamily: "MarkoOne-Regular",
+                fontSize: 20,
+              },
+              headerTitleAlign: "center",
+            }}
           />
           <Stack.Screen
             name="PostGoalsScreen"
@@ -133,6 +162,21 @@ export default function App() {
             component={TabNavigator}
             options={{ headerShown: false }}
           /> */}
+          <Stack.Screen
+            name="AboutScreen"
+            component={AboutScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="GuidanceScreen"
+            component={GuidanceScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="HelpScreen"
+            component={HelpScreen}
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
       </AppProvider>
     </NavigationContainer>

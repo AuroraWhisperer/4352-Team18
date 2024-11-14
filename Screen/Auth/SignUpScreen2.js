@@ -24,7 +24,7 @@ export default function SignUpScreen2({ navigation }) {
     "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
   });
 
-  const { username, updatePetname, saveUserData, updateFamilyName } = useAuth();
+  const { username, updatePetname, saveUserData, updateFamilyName, email } = useAuth();
 
   // Return loading state if fonts are not loaded
   if (!fontsLoaded) {
@@ -61,7 +61,8 @@ export default function SignUpScreen2({ navigation }) {
       navigation.navigate("SignUpScreen3");
 
       console.log(
-        `Pet name: ${petName}, Family name: ${familyName}, Username: ${username}`
+        // `Pet name: ${petName}, Family name: ${familyName}, Username: ${username}`
+        `Email: ${email}, Username: ${username}`
       );
     } catch (error) {
       console.error("Error updating user data:", error);

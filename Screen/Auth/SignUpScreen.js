@@ -30,11 +30,6 @@ export default function SignUpScreen({ navigation }) {
   });
 
   const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -49,15 +44,20 @@ export default function SignUpScreen({ navigation }) {
     { label: "8", value: "8" },
   ]);
 
-  const { registerUser, setUsername, username } = useAuth();
+  const { registerUser, setUsername, username, setEmail, email } = useAuth();
 
   useFocusEffect(
     useCallback(() => {
       setUsername("");
       setPassword("");
       setEmail("");
-    }, [setUsername])
+    }, [setUsername, setEmail])
   );
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   // Create refs for each input field
   const passwordRef = useRef();

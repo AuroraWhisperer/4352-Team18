@@ -13,32 +13,34 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useAuth } from "../../context/AuthContext.js";
 
 export default function ProfileScreen({ navigation }) {
-  // Load custom font using expo-font hook
   const [fontsLoaded] = useFonts({
     "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
   });
 
-  // Return loading state if fonts are not loaded
   if (!fontsLoaded) {
     return undefined;
   }
 
-  // Function to navigate to the settings screen
   const handleSettingsPress = () => {
     navigation.navigate("SettingsScreen");
   };
 
-  // Function to navigate to the history screen
   const handleHistoryPress = () => {
     navigation.navigate("HistoryScreen");
   };
 
-  // Destructure username from AuthContext to display the user's family name
-  const { username, familyname, isAdmin } = useAuth();
+  const handleGuidancePress = () => {
+    navigation.navigate("GuidanceScreen");
+  };
+
+  const { username, familyname, email, isAdmin } = useAuth();
+
+  const handleEmailPress = () => {
+    // console.log("Email button pressed");
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Settings button in the top-right corner */}
       <TouchableOpacity
         style={styles.settingsButton}
         onPress={handleSettingsPress}
@@ -46,7 +48,6 @@ export default function ProfileScreen({ navigation }) {
         <Icon name="settings-outline" size={34} color="#333" />
       </TouchableOpacity>
 
-      {/* Main content area with title and image */}
       <View style={styles.content}>
         <Text style={styles.title}>PetConnect</Text>
 
@@ -56,14 +57,28 @@ export default function ProfileScreen({ navigation }) {
         />
       </View>
 
-      {/* Display user's family name */}
-      <View style={[styles.TextWrapper]}>
-        <Text style={[styles.text]}>
+      <View style={styles.TextWrapper}>
+        <Text style={styles.text}>
           {isAdmin ? username : familyname} Family
         </Text>
       </View>
 
-      {/* Card to view history, navigates to the HistoryScreen on press */}
+      <TouchableOpacity style={styles.usernameCard} onPress={handleEmailPress}>
+        <View style={styles.usernameContent}>
+          <Icon
+            name="person-outline"
+            size={24}
+            color="#FFA726"
+            style={styles.icon}
+          />
+          <View>
+            <Text style={styles.usernameText}>Username: {username}</Text>
+            <Text style={styles.emailText}>Email: {email}</Text>
+          </View>
+        </View>
+        <Icon name="chevron-forward-outline" size={24} color="#FFA726" />
+      </TouchableOpacity>
+
       <TouchableOpacity style={styles.historyCard} onPress={handleHistoryPress}>
         <View style={styles.historyContent}>
           <Icon
@@ -72,7 +87,23 @@ export default function ProfileScreen({ navigation }) {
             color="#FFA726"
             style={styles.icon}
           />
-          <Text style={styles.historyText}>View History</Text>
+          <Text style={styles.historyText}>View History Goals</Text>
+        </View>
+        <Icon name="chevron-forward-outline" size={24} color="#FFA726" />
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.guidanceCard}
+        onPress={handleGuidancePress}
+      >
+        <View style={styles.historyContent}>
+          <Icon
+            name="help-circle-outline"
+            size={24}
+            color="#FFA726"
+            style={styles.icon}
+          />
+          <Text style={styles.historyText}>App Guidance</Text>
         </View>
         <Icon name="chevron-forward-outline" size={24} color="#FFA726" />
       </TouchableOpacity>
@@ -122,6 +153,38 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#333",
   },
+  usernameCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    backgroundColor: "#FDF4E7",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#FFA726",
+    top: Dimensions.get("window").height * 0.05,
+    width: "90%",
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+    marginBottom: 30,
+  },
+  usernameContent: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  usernameText: {
+    fontSize: 20,
+    color: "#FFA726",
+    fontWeight: "bold",
+  },
+  emailText: {
+    fontSize: 16,
+    color: "#FFA726", 
+    marginTop: 5,
+  },
   historyCard: {
     flexDirection: "row",
     alignItems: "center",
@@ -133,6 +196,24 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#FFA726",
     top: Dimensions.get("window").height * 0.05,
+    width: "90%",
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+    marginBottom: 10,
+  },
+  guidanceCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    backgroundColor: "#FDF4E7",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#FFA726",
+    top: Dimensions.get("window").height * 0.06,
     width: "90%",
     shadowColor: "#000",
     shadowOpacity: 0.1,
