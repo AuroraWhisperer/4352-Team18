@@ -207,10 +207,15 @@ export const ShopItemsProvider = ({ children }) => {
     <ShopItems.Provider
       value={{
         purchasedClothesItems,
+        setPurchasedClothesItems,
         purchasedAccessoriesItems,
+        setPurchasedAccessoriesItems,
         purchasedFoodItems,
+        setPurchasedFoodItems,
         purchasedFurnitureItems,
+        setPurchasedFurnitureItems,
         purchasedToysItems,
+        setPurchasedToysItems,
         addPurchasedItem,
       }}
     >

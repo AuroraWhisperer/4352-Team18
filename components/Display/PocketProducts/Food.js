@@ -1,29 +1,69 @@
 import React, { useContext } from "react";
 import { useFonts } from "expo-font";
-import { View, FlatList, Image, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  FlatList,
+  Image,
+  Text,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import { ShopItems } from "../../../context/ShopItems";
 
 export default function Food() {
-  const { purchasedFoodItems } = useContext(ShopItems);
+  const { purchasedFoodItems, setPurchasedFoodItems } = useContext(ShopItems);
 
   const numColumns = 3;
   const filledItems = [...purchasedFoodItems];
 
   while (filledItems.length % numColumns !== 0) {
     filledItems.push({
-      id: `empty-${filledItems.length}-${Math.random()}`,
+      uniqueKey: `empty-${filledItems.length}-${Math.random()}`,
       empty: true,
     });
   }
+
+  // Function to handle item click
+  const handleItemPress = (item) => {
+    if (item.empty) return;
+
+    Alert.alert(
+      "Item Clicked",
+      `Do you want to use this item for your pet?`,
+      [
+        {
+          text: "No",
+          onPress: () => console.log("No Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "Yes",
+          onPress: () => {
+            setPurchasedFoodItems((prevItems) =>
+              prevItems.filter((food) => food.uniqueKey !== item.uniqueKey)
+            );
+            console.log(`Yes, using ${item.name}`);
+          },
+        },
+      ],
+      { cancelable: true }
+    );
+  };
 
   const renderItem = ({ item }) => {
     if (item.empty) {
       return <View style={[styles.productContainer, styles.emptyProduct]} />;
     }
     return (
-      <View style={styles.productContainer}>
+      <TouchableOpacity
+        style={styles.productContainer}
+        onPress={() => handleItemPress(item)}
+        activeOpacity={0.7}
+      >
         <Image source={item.image} style={styles.productImage} />
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -42,7 +82,7 @@ export default function Food() {
       <FlatList
         data={filledItems}
         renderItem={renderItem}
-        keyExtractor={(item) => item.uniqueKey || item.id}
+        keyExtractor={(item) => item.uniqueKey}
         numColumns={numColumns}
         columnWrapperStyle={styles.row}
         contentContainerStyle={styles.list}
