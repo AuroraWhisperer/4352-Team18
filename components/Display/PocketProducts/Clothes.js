@@ -11,14 +11,29 @@ import {
   Alert,
 } from "react-native";
 import { ShopItems } from "../../../context/ShopItems";
+import { useAuth } from "../../../context/AuthContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Clothes() {
   const { purchasedClothesItems, setPurchasedClothesItems } =
     useContext(ShopItems);
 
+  const {
+    username,
+    happiness,
+    setHappiness,
+    health,
+    setHealth,
+    hunger,
+    setHunger,
+    savePetAttributes,
+    updateAttributes,
+  } = useAuth();
+
   const numColumns = 3;
   const filledItems = [...purchasedClothesItems];
 
+  // Ensure the grid is filled, adding placeholder items if needed
   while (filledItems.length % numColumns !== 0) {
     filledItems.push({
       uniqueKey: `empty-${filledItems.length}-${Math.random()}`,
@@ -41,13 +56,35 @@ export default function Clothes() {
         },
         {
           text: "Yes",
-          onPress: () => {
-            setPurchasedClothesItems((prevItems) =>
-              prevItems.filter(
-                (clothing) => clothing.uniqueKey !== item.uniqueKey
-              )
+          onPress: async () => {
+            console.log("Using item:", item);
+
+            // Remove the used item from the purchased items list
+            const updatedItems = purchasedClothesItems.filter(
+              (accessory) => accessory.uniqueKey !== item.uniqueKey
             );
-            console.log(`Yes, using ${item.name}`);
+            setPurchasedClothesItems(updatedItems);
+            // console.log("Updated items after removal:", updatedItems);
+
+            // Save updated list to AsyncStorage
+            try {
+              await AsyncStorage.setItem(
+                `purchasedClothesItems_${username}`,
+                JSON.stringify(updatedItems)
+              );
+              console.log("Updated items saved to AsyncStorage.");
+            } catch (error) {
+              console.log("Error saving updated items to AsyncStorage:", error);
+            }
+
+            // Update attributes upon using the item
+            setHealth((prev) => {
+              const newHealth = Math.min(prev + 2, 5);
+              savePetAttributes(username, newHealth, happiness, hunger);
+              return newHealth;
+            });
+
+            console.log(`Finished using ${item.name}`);
           },
         },
       ],

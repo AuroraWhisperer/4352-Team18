@@ -11,10 +11,24 @@ import {
   Alert,
 } from "react-native";
 import { ShopItems } from "../../../context/ShopItems";
+import { useAuth } from "../../../context/AuthContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Furniture() {
   const { purchasedFurnitureItems, setPurchasedFurnitureItems } =
     useContext(ShopItems);
+
+  const {
+    username,
+    happiness,
+    setHappiness,
+    health,
+    setHealth,
+    hunger,
+    setHunger,
+    savePetAttributes,
+    updateAttributes,
+  } = useAuth();
 
   const numColumns = 3;
   const filledItems = [...purchasedFurnitureItems];
@@ -41,12 +55,34 @@ export default function Furniture() {
         },
         {
           text: "Yes",
-          onPress: () => {
-            setPurchasedFurnitureItems((prevItems) =>
-              prevItems.filter(
-                (furniture) => furniture.uniqueKey !== item.uniqueKey
-              )
+          onPress: async () => {
+            console.log("Using item:", item);
+
+            // Remove the used item from the purchased items list
+            const updatedItems = purchasedFurnitureItems.filter(
+              (accessory) => accessory.uniqueKey !== item.uniqueKey
             );
+            setPurchasedFurnitureItems(updatedItems);
+            // console.log("Updated items after removal:", updatedItems);
+
+            // Save updated list to AsyncStorage
+            try {
+              await AsyncStorage.setItem(
+                `purchasedFurnitureItems_${username}`,
+                JSON.stringify(updatedItems)
+              );
+              console.log("Updated items saved to AsyncStorage.");
+            } catch (error) {
+              console.log("Error saving updated items to AsyncStorage:", error);
+            }
+
+            // Update attributes upon using the item
+            setHappiness((prevHappiness) => {
+              const newHappiness = Math.min(prevHappiness + 2, 5);
+              savePetAttributes(username, health, newHappiness, hunger);
+              return newHappiness;
+            });
+
             console.log(`Yes, using ${item.name}`);
           },
         },

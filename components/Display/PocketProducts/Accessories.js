@@ -11,12 +11,26 @@ import {
   Alert,
 } from "react-native";
 import { ShopItems } from "../../../context/ShopItems";
+import { useAuth } from "../../../context/AuthContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Accessories() {
   const { purchasedAccessoriesItems, setPurchasedAccessoriesItems } =
     useContext(ShopItems);
 
-  const numColumns = 3; // Set the number of columns for the grid
+  const {
+    username,
+    happiness,
+    setHappiness,
+    health,
+    setHealth,
+    hunger,
+    setHunger,
+    savePetAttributes,
+    updateAttributes,
+  } = useAuth();
+
+  const numColumns = 3;
   const filledItems = [...purchasedAccessoriesItems];
 
   // Ensure the grid is filled, adding placeholder items if needed
@@ -42,14 +56,35 @@ export default function Accessories() {
         },
         {
           text: "Yes",
-          onPress: () => {
-            // Remove the item based on uniqueKey
-            setPurchasedAccessoriesItems((prevItems) =>
-              prevItems.filter(
-                (accessory) => accessory.uniqueKey !== item.uniqueKey
-              )
+          onPress: async () => {
+            console.log("Using item:", item);
+
+            // Remove the used item from the purchased items list
+            const updatedItems = purchasedAccessoriesItems.filter(
+              (accessory) => accessory.uniqueKey !== item.uniqueKey
             );
-            console.log(`Yes, using ${item.name}`);
+            setPurchasedAccessoriesItems(updatedItems);
+            // console.log("Updated items after removal:", updatedItems);
+
+            // Save updated list to AsyncStorage
+            try {
+              await AsyncStorage.setItem(
+                `purchasedAccessoriesItems_${username}`,
+                JSON.stringify(updatedItems)
+              );
+              console.log("Updated items saved to AsyncStorage.");
+            } catch (error) {
+              console.log("Error saving updated items to AsyncStorage:", error);
+            }
+
+            // Update attributes upon using the item
+            setHappiness((prevHappiness) => {
+              const newHappiness = Math.min(prevHappiness + 1, 5);
+              savePetAttributes(username, health, newHappiness, hunger);
+              return newHappiness;
+            });
+
+            console.log(`Finished using ${item.name}`);
           },
         },
       ],

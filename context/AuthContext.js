@@ -452,7 +452,7 @@ export const AuthProvider = ({ children }) => {
     );
   };
 
-  const savePetAttributes = async (username) => {
+  const savePetAttributes = async (username, health, happiness, hunger) => {
     try {
       await AsyncStorage.setItem(
         `happiness_${username}`,
@@ -484,20 +484,28 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const updateHappiness = (newHappiness) => {
+  const updateAttributes = (newHealth, newHappiness, newHunger) => {
     setHappiness(newHappiness);
-    if (username) savePetAttributes(username);
-  };
-
-  const updateHealth = (newHealth) => {
     setHealth(newHealth);
-    if (username) savePetAttributes(username);
+    setHunger(newHunger);
+
+    if (username) {
+      savePetAttributes(username, newHealth, newHappiness, newHunger);
+    }
   };
 
-  const updateHunger = (newHunger) => {
-    setHunger(newHunger);
-    if (username) savePetAttributes(username);
-  };
+  // const updateHappiness = (newHappiness) => {
+  //   setHappiness(newHappiness);
+  //   if (username) savePetAttributes(username);
+  // };
+  // const updateHealth = (newHealth) => {
+  //   setHealth(newHealth);
+  //   if (username) savePetAttributes(username);
+  // };
+  // const updateHunger = (newHunger) => {
+  //   setHunger(newHunger);
+  //   if (username) savePetAttributes(username);
+  // };
 
   return (
     <AuthContext.Provider
@@ -531,9 +539,10 @@ export const AuthProvider = ({ children }) => {
         setHealth,
         hunger,
         setHunger,
-        updateHappiness,
-        updateHealth,
-        updateHunger,
+        // updateHappiness,
+        // updateHealth,
+        // updateHunger,
+        updateAttributes,
         savePetAttributes,
         handleLogout,
         resetApp,

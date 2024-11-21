@@ -11,9 +11,23 @@ import {
   Alert,
 } from "react-native";
 import { ShopItems } from "../../../context/ShopItems";
+import { useAuth } from "../../../context/AuthContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Food() {
   const { purchasedFoodItems, setPurchasedFoodItems } = useContext(ShopItems);
+
+  const {
+    username,
+    happiness,
+    setHappiness,
+    health,
+    setHealth,
+    hunger,
+    setHunger,
+    savePetAttributes,
+    updateAttributes,
+  } = useAuth();
 
   const numColumns = 3;
   const filledItems = [...purchasedFoodItems];
@@ -40,11 +54,35 @@ export default function Food() {
         },
         {
           text: "Yes",
-          onPress: () => {
-            setPurchasedFoodItems((prevItems) =>
-              prevItems.filter((food) => food.uniqueKey !== item.uniqueKey)
+          onPress: async () => {
+            console.log("Using item:", item);
+
+            // Remove the used item from the purchased items list
+            const updatedItems = purchasedFoodItems.filter(
+              (accessory) => accessory.uniqueKey !== item.uniqueKey
             );
-            console.log(`Yes, using ${item.name}`);
+            setPurchasedFoodItems(updatedItems);
+            // console.log("Updated items after removal:", updatedItems);
+
+            // Save updated list to AsyncStorage
+            try {
+              await AsyncStorage.setItem(
+                `purchasedFoodItems_${username}`,
+                JSON.stringify(updatedItems)
+              );
+              console.log("Updated items saved to AsyncStorage.");
+            } catch (error) {
+              console.log("Error saving updated items to AsyncStorage:", error);
+            }
+
+            // Update attributes upon using the item
+            setHunger((prev) => {
+              const newHunger = Math.min(prev + 1, 5);
+              savePetAttributes(username, health, happiness, newHunger);
+              return setHunger;
+            });
+
+            console.log(`Finished using ${item.name}`);
           },
         },
       ],

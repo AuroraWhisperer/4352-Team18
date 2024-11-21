@@ -18,6 +18,7 @@ export const ShopItemsProvider = ({ children }) => {
     hunger,
     setHunger,
     savePetAttributes,
+    updateAttributes,
   } = useAuth();
 
   // State variables for each category of purchased items
@@ -101,13 +102,13 @@ export const ShopItemsProvider = ({ children }) => {
           JSON.stringify(updatedClothesItems)
         );
 
-        setHealth((prev) => {
-          const newHealth = Math.min(prev + 1, 5);
-          savePetAttributes(username, newHealth, happiness, hunger); // Save updated attributes
-          return newHealth;
-        });
+        // setHealth((prev) => {
+        //   const newHealth = Math.min(prev + 1, 5);
+        //   savePetAttributes(username, newHealth, happiness, hunger); // Save updated attributes
+        //   return newHealth;
+        // });
         console.log("Updated Clothes Items:", updatedClothesItems);
-        console.log(health);
+        // console.log(health);
         break;
 
       case "accessories":
@@ -121,16 +122,18 @@ export const ShopItemsProvider = ({ children }) => {
           JSON.stringify(updatedAccessoriesItems)
         );
 
-        setHappiness((prev) => {
-          const newHappiness = Math.min(prev + 1, 5);
-          savePetAttributes(username, health, newHappiness, hunger); // Save updated attributes
-          return newHappiness;
-        });
-        setHealth((prev) => {
-          const newHealth = Math.min(prev + 1, 5);
-          savePetAttributes(username, newHealth, happiness, hunger); // Save updated attributes
-          return newHealth;
-        });
+        // setHappiness((prevHappiness) => {
+        //   const newHappiness = Math.min(prevHappiness + 1, 5);
+        //   updateAttributes(newHappiness, health, hunger);
+        //   return newHappiness;
+        // });
+
+        // setHealth((prevHealth) => {
+        //   const newHealth = Math.min(prevHealth + 1, 5);
+        //   updateAttributes(happiness, newHealth, hunger);
+        //   return newHealth;
+        // });
+
         console.log("Updated Accessories Items:", updatedAccessoriesItems);
         break;
 
@@ -142,16 +145,16 @@ export const ShopItemsProvider = ({ children }) => {
           JSON.stringify(updatedFoodItems)
         );
 
-        setHealth((prev) => {
-          const newHealth = Math.min(prev + 1, 5);
-          savePetAttributes(username, newHealth, happiness, hunger); // Save updated attributes
-          return newHealth;
-        });
-        setHunger((prev) => {
-          const newHunger = Math.min(prev + 1, 5);
-          savePetAttributes(username, health, happiness, newHunger); // Save updated attributes
-          return newHunger;
-        });
+        // setHealth((prev) => {
+        //   const newHealth = Math.min(prev + 1, 5);
+        //   savePetAttributes(username, newHealth, happiness, hunger); // Save updated attributes
+        //   return newHealth;
+        // });
+        // setHunger((prev) => {
+        //   const newHunger = Math.min(prev + 1, 5);
+        //   savePetAttributes(username, health, happiness, newHunger); // Save updated attributes
+        //   return newHunger;
+        // });
         console.log("Updated Food Items:", updatedFoodItems);
         break;
 
@@ -166,16 +169,16 @@ export const ShopItemsProvider = ({ children }) => {
           JSON.stringify(updatedFurnitureItems)
         );
 
-        setHealth((prev) => {
-          const newHealth = Math.min(prev + 1, 5);
-          savePetAttributes(username, newHealth, happiness, hunger); // Save updated attributes
-          return newHealth;
-        });
-        setHappiness((prev) => {
-          const newHappiness = Math.min(prev + 1, 5);
-          savePetAttributes(username, health, newHappiness, hunger); // Save updated attributes
-          return newHappiness;
-        });
+        // setHealth((prev) => {
+        //   const newHealth = Math.min(prev + 1, 5);
+        //   savePetAttributes(username, newHealth, happiness, hunger); // Save updated attributes
+        //   return newHealth;
+        // });
+        // setHappiness((prev) => {
+        //   const newHappiness = Math.min(prev + 1, 5);
+        //   savePetAttributes(username, health, newHappiness, hunger); // Save updated attributes
+        //   return newHappiness;
+        // });
         console.log("Updated Furniture Items:", updatedFurnitureItems);
         break;
 
@@ -187,11 +190,11 @@ export const ShopItemsProvider = ({ children }) => {
           JSON.stringify(updatedToysItems)
         );
 
-        setHappiness((prev) => {
-          const newHappiness = Math.min(prev + 1, 5);
-          savePetAttributes(username, health, newHappiness, hunger); // Save updated attributes
-          return newHappiness;
-        });
+        // setHappiness((prev) => {
+        //   const newHappiness = Math.min(prev + 1, 5);
+        //   savePetAttributes(username, health, newHappiness, hunger); // Save updated attributes
+        //   return newHappiness;
+        // });
         console.log("Updated Toys Items:", updatedToysItems);
         // console.log(happiness);
         break;

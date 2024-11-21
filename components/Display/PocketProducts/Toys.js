@@ -11,10 +11,23 @@ import {
   Alert,
 } from "react-native";
 import { ShopItems } from "../../../context/ShopItems";
+import { useAuth } from "../../../context/AuthContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Toys() {
-  const { purchasedToysItems, setPurchasedToysItems } =
-    useContext(ShopItems);
+  const { purchasedToysItems, setPurchasedToysItems } = useContext(ShopItems);
+
+  const {
+    username,
+    happiness,
+    setHappiness,
+    health,
+    setHealth,
+    hunger,
+    setHunger,
+    savePetAttributes,
+    updateAttributes,
+  } = useAuth();
 
   const numColumns = 3;
   const filledItems = [...purchasedToysItems];
@@ -41,12 +54,34 @@ export default function Toys() {
         },
         {
           text: "Yes",
-          onPress: () => {
-            setPurchasedToysItems((prevItems) =>
-              prevItems.filter(
-                (furniture) => furniture.uniqueKey !== item.uniqueKey
-              )
+          onPress: async () => {
+            console.log("Using item:", item);
+
+            // Remove the used item from the purchased items list
+            const updatedItems = purchasedToysItems.filter(
+              (accessory) => accessory.uniqueKey !== item.uniqueKey
             );
+            setPurchasedToysItems(updatedItems);
+            // console.log("Updated items after removal:", updatedItems);
+
+            // Save updated list to AsyncStorage
+            try {
+              await AsyncStorage.setItem(
+                `purchasedToysItems_${username}`,
+                JSON.stringify(updatedItems)
+              );
+              console.log("Updated items saved to AsyncStorage.");
+            } catch (error) {
+              console.log("Error saving updated items to AsyncStorage:", error);
+            }
+
+            // Update attributes upon using the item
+            setHappiness((prevHappiness) => {
+              const newHappiness = Math.min(prevHappiness + 1, 5);
+              savePetAttributes(username, health, newHappiness, hunger);
+              return newHappiness;
+            });
+
             console.log(`Yes, using ${item.name}`);
           },
         },
