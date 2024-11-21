@@ -6,8 +6,9 @@ import {
   Image,
   StyleSheet,
   Dimensions,
-  SafeAreaView,
+  // SafeAreaView,
 } from "react-native";
+import SafeAreaView from "react-native-safe-area-view";
 import { useAuth } from "../../context/AuthContext";
 
 // PocketHeader component that displays a welcome message and an image at the top of the screen

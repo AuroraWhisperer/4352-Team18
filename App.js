@@ -1,6 +1,21 @@
+import { LogBox } from "react-native";
+
+LogBox.ignoreLogs([
+  'A props object containing a "key" prop is being spread into JSX',
+  "React keys must be passed directly to JSX without using spread",
+  "TabBarItem",
+]);
+
+import { enableScreens } from "react-native-screens";
+enableScreens();
+
 import React, { useState, useEffect, useContext } from "react";
+import { TouchableOpacity, Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+} from "@react-navigation/stack";
 import StartScreen from "./Screen/Auth/StartScreen";
 import TabNavigator from "./Navigation/TabNavigator";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -32,16 +47,26 @@ const Stack = createStackNavigator();
 
 // this code is for debug specfic page
 
+// import HomeScreen from "./Screen/Main/HomeScreen.js";
 // export default function App() {
 //   return (
 //     <NavigationContainer>
-//       <Stack.Navigator>
-//         <Stack.Screen
-//           name="AboutScreen"
-//           component={AboutScreen}
-//           options={{ headerShown: false }}
-//         />
-//       </Stack.Navigator>
+//       <AppProvider>
+//         <Stack.Navigator>
+//           <Stack.Screen
+//             name="HomeScreen"
+//             component={TabNavigator}
+//             options={{
+//               headerShown: false,
+//             }}
+//           />
+//           {/* <Stack.Screen
+//             name="HomeScreen"
+//             component={HomeScreen}
+//             options={{ headerShown: false }}
+//           /> */}
+//         </Stack.Navigator>
+//       </AppProvider>
 //     </NavigationContainer>
 //   );
 // }
@@ -127,25 +152,40 @@ export default function App() {
             component={PetDetailsScreen}
             options={{
               headerShown: true,
-              title: "Pet Details",
+              headerTitle: "Pet Details", // 自定义标题
               headerStyle: {
-                backgroundColor: "#FFE9D4",
+                backgroundColor: "#FFE9D4", // 标题栏背景颜色
               },
-              headerTintColor: "#333",
-              headerTitleStyle: {
-                fontFamily: "MarkoOne-Regular",
-                fontSize: 20,
-              },
-              headerTitleAlign: "center",
+              headerTintColor: "#FFA07A", // 返回箭头颜色
+              headerBackTitleVisible: false, // 隐藏返回按钮的文字
+              headerLeft: ({ onPress }) => (
+                <TouchableOpacity
+                  onPress={onPress}
+                  style={{
+                    marginLeft: 10, // 自定义左边距
+                  }}
+                >
+                  <Image
+                    source={require("./assets/images/backButton.png")}
+                    style={{
+                      width: 24,
+                      height: 24, // 自定义返回按钮的大小
+                    }}
+                  />
+                </TouchableOpacity>
+              ),
             }}
           />
+
           <Stack.Screen
             name="PostGoalsScreen"
             component={PostGoalsScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen name="SettingsScreen" options={{ headerShown: false }}>
-            {(props) => <SettingsScreen {...props} onLogout={changeKey} />}
+            {(props) => (
+              <SettingsScreen key={props.key} {...props} onLogout={changeKey} />
+            )}
           </Stack.Screen>
           <Stack.Screen
             name="HistoryScreen"
@@ -175,7 +215,18 @@ export default function App() {
           <Stack.Screen
             name="HelpScreen"
             component={HelpScreen}
-            options={{ headerShown: false }}
+            options={{
+              headerTitle: "Help & Support",
+              headerStyle: {
+                backgroundColor: "#F7E4C6",
+                shadowColor: "transparent",
+                elevation: 0,
+              },
+              headerTintColor: "#8B4513",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
           />
         </Stack.Navigator>
       </AppProvider>

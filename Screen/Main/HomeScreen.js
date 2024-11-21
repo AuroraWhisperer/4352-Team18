@@ -6,9 +6,10 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
-  SafeAreaView,
+  // SafeAreaView,
   Alert,
   Image,
+  Pressable,
 } from "react-native";
 import TotalDiamonds from "../../components/Display/TotalDiamonds";
 import HoursDisplay from "../../components/Display/HoursDisplay";
@@ -17,6 +18,9 @@ import HomeScreenCard from "../../components/Goals/HomeScreenCard";
 import { useMain } from "../../context/MainContext";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigation } from "@react-navigation/native";
+import SafeAreaView from "react-native-safe-area-view";
+import { Ionicons } from "@expo/vector-icons";
+// import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
   const { goals } = useMain();
@@ -35,12 +39,24 @@ export default function HomeScreen() {
     "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
   });
 
-  // Return loading state if fonts are not loaded
-  if (!fontsLoaded) {
-    return undefined;
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    if (fontsLoaded) {
+      setIsReady(true);
+    }
+  }, [fontsLoaded]);
+
+  if (!isReady) {
+    return null;
   }
 
+  const handleOptionPress = (screen) => {
+    navigation.navigate(screen);
+  };
+
   return (
+    // <SafeAreaProvider>
     <SafeAreaView style={[styles.container]}>
       {/* Header with menu button and greeting */}
       <View style={[styles.header]}>
@@ -53,10 +69,18 @@ export default function HomeScreen() {
         >
           <Text style={[styles.menu]}>☰</Text>
         </TouchableOpacity>
+
         <Text style={[styles.title]}>
           Welcome to {"\n"}
           {petname}'s home!
         </Text>
+
+        <TouchableOpacity
+          style={styles.helpButton}
+          onPress={() => handleOptionPress("HelpScreen")}
+        >
+          <Ionicons name="help-circle-outline" size={30} color="#007BFF" />
+        </TouchableOpacity>
       </View>
 
       {/* Row containing GoalsMessage and TotalDiamonds */}
@@ -84,21 +108,30 @@ export default function HomeScreen() {
 
       {/* Main content area including hours display and pet image */}
       <View style={[styles.content]}>
-        <View style={[styles.petAndHoursContainer]}>
-          <HoursDisplay/>
+        <View style={styles.overlayContainer}>
+          <HoursDisplay />
+        </View>
 
-          <View style={[styles.petContainer]}>
+        <View style={[styles.petContainer]}>
+          <Pressable
+            onPress={() => navigation.navigate("PetDetails")}
+            style={({ pressed }) => [
+              styles.pet,
+              { opacity: pressed ? 0.6 : 1 },
+            ]}
+          >
             <Image
               source={require("../../assets/images/cat.png")}
-              style={[styles.pet]}
+              style={styles.petImage}
               resizeMode="stretch"
             />
-          </View>
+          </Pressable>
         </View>
 
         <View style={[styles.bottomArea]}></View>
       </View>
     </SafeAreaView>
+    // </SafeAreaProvider>
   );
 }
 
@@ -111,7 +144,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 20,
     marginTop: 20,
@@ -119,7 +152,7 @@ const styles = StyleSheet.create({
   menuContainer: {
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    marginLeft: 30,
+    marginLeft: 18,
     position: "absolute",
     left: 0,
     zIndex: 10,
@@ -127,6 +160,11 @@ const styles = StyleSheet.create({
   menu: {
     fontSize: 30,
     fontFamily: "MarkoOne-Regular",
+  },
+  helpButton: {
+    position: "absolute",
+    right: 0,
+    marginRight: 18,
   },
   title: {
     fontSize: 24,
@@ -140,7 +178,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginTop: 20,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
   },
   existingGoal: {
     top: Dimensions.get("window").height * 0.04,
@@ -150,26 +188,36 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: 30,
-    marginTop: 160,
+    // marginBottom: -Dimensions.get("window").height * 0.09,
     justifyContent: "center",
     alignItems: "center",
   },
-  petAndHoursContainer: {
-    flexDirection: "column",
+  overlayContainer: {
+    position: "absolute",
+    bottom: Dimensions.get("window").width * 0.7,
+    width: "100%",
     alignItems: "center",
-    justifyContent: "center",
+    zIndex: 20,
   },
   petContainer: {
-    justifyContent: "flex-end",
-    zIndex: 1,
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
     alignItems: "center",
+    zIndex: 10,
   },
   pet: {
     width: Dimensions.get("window").width,
-    height: Dimensions.get("window").width * 0.8,
+    height: Dimensions.get("window").width * 0.68,
+    resizeMode: "contain",
+  },
+  petImage: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "contain",
   },
   bottomArea: {
-    height: 200,
+    height: 300,
     backgroundColor: "#9C8B71",
     width: Dimensions.get("window").width * 1.5,
     position: "absolute",

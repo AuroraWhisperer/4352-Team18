@@ -118,7 +118,11 @@ export default function PostGoalsScreen({ navigation, route }) {
         addTotalTime(time);
         // console.log("d", totalDiamonds, "t", totalTime);
         console.log("Deleting goal with ID after save:", goalId);
-        navigation.navigate("GoalsTab", { deleteGoalId: goalId });
+        navigation.navigate("HomeScreen", {
+          screen: "GoalsTab",
+          params: { deleteGoalId: goalId },
+        });
+        // navigation.navigate("GoalsTab", { deleteGoalId: goalId });
       } else {
         navigation.goBack();
       }

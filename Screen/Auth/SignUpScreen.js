@@ -8,7 +8,7 @@ import {
   Text,
   TextInput,
   View,
-  SafeAreaView,
+  // SafeAreaView,
   TouchableOpacity,
   Image,
   Dimensions,
@@ -22,6 +22,8 @@ import {
 } from "react-native";
 import { useAuth } from "../../context/AuthContext.js";
 import { ScrollView } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
+
 // import { KeyboardAvoidingScrollView } from "react-native-keyboard-avoiding-scroll-view";
 
 export default function SignUpScreen({ navigation }) {

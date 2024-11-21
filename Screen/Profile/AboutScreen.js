@@ -1,26 +1,37 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  SafeAreaView,
+} from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
+import FastImage from "react-native-fast-image";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function AboutScreen() {
   const navigation = useNavigation();
 
+  const handleOptionPress = (screen) => {
+    navigation.navigate(screen);
+  };
+
   return (
     <View style={styles.container}>
-
       <Image
-        source={require("../../assets/343c238af301b5c1f9152932ee7d3995.gif")}
+        source={require("../../assets/cuteCat.gif")}
         style={styles.catImage}
         resizeMode="contain"
       />
 
       <View style={styles.overlay}>
-
         <TouchableOpacity
           style={styles.goBackButton}
           onPress={() => navigation.goBack()}
         >
-          <Text style={styles.goBackText}>Go Back</Text>
+          <Ionicons name="arrow-back-circle" size={48} color="#FF8C00" />
         </TouchableOpacity>
 
         <Text style={styles.title}>PetConnect</Text>
@@ -44,7 +55,10 @@ export default function AboutScreen() {
           </Text>
         </View>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => handleOptionPress("HelpScreen")}
+        >
           <Text style={styles.buttonText}>Explore Features</Text>
         </TouchableOpacity>
 
@@ -79,9 +93,9 @@ const styles = StyleSheet.create({
   },
   goBackButton: {
     position: "absolute",
-    top: 40,
-    left: 20,
-    backgroundColor: "#FFF",
+    top: 50,
+    left: 15,
+    // backgroundColor: "#FFF",
     padding: 10,
     borderRadius: 5,
     zIndex: 1,
@@ -116,7 +130,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
-    marginTop: 20,
+    marginTop: 60,
   },
   buttonText: {
     color: "#FFF",

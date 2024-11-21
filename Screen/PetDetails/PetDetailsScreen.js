@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     height: 24,
   },
   imageContainer: {
-    marginTop: Dimensions.get("window").height * 0.1,
+    // marginTop: Dimensions.get("window").height * 0.1,
     marginBottom: Dimensions.get("window").height * 0.03,
   },
   petImage: {

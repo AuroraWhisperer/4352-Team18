@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: "absolute",
-    top: Dimensions.get("window").height * 0.04,
+    top: Dimensions.get("window").height * 0.06,
     left: Dimensions.get("window").width * 0.05,
     zIndex: 1,
     padding: 10,
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
     color: "#333",
-    marginTop: Dimensions.get("window").height * 0.08,
+    marginTop: Dimensions.get("window").height * 0.1,
   },
   optionCard: {
     flexDirection: "row",

@@ -6,11 +6,12 @@ import {
   Image,
   StyleSheet,
   Dimensions,
-  SafeAreaView,
+  // SafeAreaView,
 } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import TotalDiamonds from "../../components/Display/TotalDiamonds";
 import { useAuth } from "../../context/AuthContext";
+import SafeAreaView from "react-native-safe-area-view";
 
 const PocketHeader = () => {
   const { petname } = useAuth();
