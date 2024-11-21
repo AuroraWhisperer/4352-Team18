@@ -152,24 +152,24 @@ export default function App() {
             component={PetDetailsScreen}
             options={{
               headerShown: true,
-              headerTitle: "Pet Details", // 自定义标题
+              headerTitle: "Pet Details",
               headerStyle: {
-                backgroundColor: "#FFE9D4", // 标题栏背景颜色
+                backgroundColor: "#FFE9D4",
               },
-              headerTintColor: "#FFA07A", // 返回箭头颜色
-              headerBackTitleVisible: false, // 隐藏返回按钮的文字
+              headerTintColor: "#FFA07A",
+              headerBackTitleVisible: false,
               headerLeft: ({ onPress }) => (
                 <TouchableOpacity
                   onPress={onPress}
                   style={{
-                    marginLeft: 10, // 自定义左边距
+                    marginLeft: 20,
                   }}
                 >
                   <Image
                     source={require("./assets/images/backButton.png")}
                     style={{
                       width: 24,
-                      height: 24, // 自定义返回按钮的大小
+                      height: 24,
                     }}
                   />
                 </TouchableOpacity>
