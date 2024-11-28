@@ -7,9 +7,20 @@ import {
   ScrollView,
 } from "react-native";
 import React from "react";
+import { useFonts } from "expo-font";
 import Icon from "react-native-vector-icons/Ionicons";
 
 export default function GuidanceScreen({ navigation }) {
+  // Load custom font using expo-font hook
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  // Return loading state if fonts are not loaded
+  if (!fontsLoaded) {
+    return undefined;
+  }
+
   // Sample function for handling each guidance option click
   const handleOptionPress = (screen) => {
     navigation.navigate(screen);
@@ -106,6 +117,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 26,
+    fontFamily: "MarkoOne-Regular",
     fontWeight: "bold",
     marginBottom: 20,
     color: "#333",
@@ -134,6 +146,7 @@ const styles = StyleSheet.create({
   optionText: {
     flex: 1,
     fontSize: 18,
+    fontFamily: "MarkoOne-Regular",
     fontWeight: "500",
     color: "#333",
   },
