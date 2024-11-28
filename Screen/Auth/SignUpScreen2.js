@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     marginRight: 335,
   },
   title: {
-    marginTop: 30,
+    marginTop: 50,
     fontSize: 40,
     fontFamily: "MarkoOne-Regular",
   },
@@ -186,7 +186,8 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     marginTop: 10,
-    marginBottom: 20,
+    //marginBottom: 20,
+    marginBottom: Dimensions.get("window").height * 0.08
   },
   nextText: {
     fontSize: 17,
