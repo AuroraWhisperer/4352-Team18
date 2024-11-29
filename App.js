@@ -19,6 +19,7 @@ import {
 import StartScreen from "./Screen/Auth/StartScreen";
 import TabNavigator from "./Navigation/TabNavigator";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Icon from "react-native-vector-icons/MaterialIcons";
 import AddGoalsScreen from "./Screen/Goals/AddGoalsScreen";
 import { AppProvider } from "./context/AppProvider";
 import SignInScreen1 from "./Screen/Auth/SignInScreen1";
@@ -216,16 +217,29 @@ export default function App() {
             name="HelpScreen"
             component={HelpScreen}
             options={{
+              headerShown: true,
               headerTitle: "Help & Support",
               headerStyle: {
                 backgroundColor: "#F7E4C6",
-                shadowColor: "transparent",
-                elevation: 0,
               },
-              headerTintColor: "#8B4513",
-              headerTitleStyle: {
-                fontWeight: "bold",
-              },
+              headerTintColor: "#FFA07A",
+              headerBackTitleVisible: false,
+              headerLeft: ({ onPress }) => (
+                <TouchableOpacity
+                  onPress={onPress}
+                  style={{
+                    marginLeft: 20,
+                  }}
+                >
+                  <Image
+                    source={require("./assets/images/backButton.png")}
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                  />
+                </TouchableOpacity>
+              ),
             }}
           />
         </Stack.Navigator>

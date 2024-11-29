@@ -71,16 +71,19 @@ export default function SignUpScreen2({ navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView style={[styles.container]}>
-
-        <View style={[styles.content]}>
+      <View style={[styles.container]}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 290 : 290}
+          style={[styles.content]}
+        >
           <Text style={[styles.title]}>Hello!</Text>
 
           <Image
             source={require("../../assets/images/cat2.png")}
             style={[styles.image]}
           />
-        </View>
+        </KeyboardAvoidingView>
 
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -113,7 +116,7 @@ export default function SignUpScreen2({ navigation }) {
         <TouchableOpacity style={[styles.nextButton]} onPress={handleNext}>
           <Text style={[styles.nextText]}>Next</Text>
         </TouchableOpacity>
-      </KeyboardAvoidingView>
+      </View>
     </TouchableWithoutFeedback>
   );
 }
@@ -144,7 +147,7 @@ const styles = StyleSheet.create({
     marginRight: 335,
   },
   title: {
-    marginTop: 50,
+    // marginTop: 20,
     fontSize: 40,
     fontFamily: "MarkoOne-Regular",
   },

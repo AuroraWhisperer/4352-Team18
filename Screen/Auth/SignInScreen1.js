@@ -86,7 +86,7 @@ export default function SignInScreen1({ navigation }) {
         {/* Display logo and title */}
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
-          keyboardVerticalOffset={Platform.OS === "ios" ? 200 : 200}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 300 : 300}
           style={styles.imageKeyboardView}
         >
           <View style={[styles.content]}>
