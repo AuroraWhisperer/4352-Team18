@@ -49,7 +49,6 @@ export default function SignUpScreen({ navigation }) {
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const { registerUser, setUsername, username, setEmail, email } = useAuth();
 
-  // Monitor keyboard visibility
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
@@ -192,7 +191,7 @@ export default function SignUpScreen({ navigation }) {
                 if (isKeyboardVisible) {
                   Keyboard.dismiss();
                 } else {
-                  setOpen(true); // Open DropDownPicker only if the keyboard is hidden
+                  setOpen(true);
                 }
               }}
             >
@@ -206,7 +205,7 @@ export default function SignUpScreen({ navigation }) {
                   setOpen={setOpen}
                   setValue={setValue}
                   setItems={setItems}
-                  disabled={isKeyboardVisible} // Prevent interaction when keyboard is visible
+                  disabled={isKeyboardVisible}
                 />
               </View>
             </TouchableWithoutFeedback>
