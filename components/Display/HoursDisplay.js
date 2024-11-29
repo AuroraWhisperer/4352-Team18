@@ -16,9 +16,9 @@ export default function HoursDisplay() {
   }
 
   return (
-    <TouchableOpacity style={styles.container}>
-      <Text style={styles.text}>Hours spent today: {totalTime} hr</Text>
-    </TouchableOpacity>
+    <View style={styles.container}>
+      <Text style={styles.text}>Hours spent total: {totalTime} hr</Text>
+    </View>
   );
 }
 

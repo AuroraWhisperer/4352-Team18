@@ -63,7 +63,7 @@ export default function ProfileScreen({ navigation }) {
         </Text>
       </View>
 
-      <TouchableOpacity style={styles.usernameCard} onPress={handleEmailPress}>
+      <View style={styles.usernameCard} onPress={handleEmailPress}>
         <View style={styles.usernameContent}>
           <Icon
             name="person-outline"
@@ -76,8 +76,8 @@ export default function ProfileScreen({ navigation }) {
             <Text style={styles.emailText}>Email: {email}</Text>
           </View>
         </View>
-        <Icon name="chevron-forward-outline" size={24} color="#FFA726" />
-      </TouchableOpacity>
+        {/* <Icon name="chevron-forward-outline" size={24} color="#FFA726" /> */}
+      </View>
 
       <TouchableOpacity style={styles.historyCard} onPress={handleHistoryPress}>
         <View style={styles.historyContent}>

@@ -41,7 +41,7 @@ export default function GuidanceScreen({ navigation }) {
       {/* Title */}
       <Text style={styles.title}>Guidance Options</Text>
 
-      {/* Guidance option cards */}
+      {/* // Guidance option cards
       <TouchableOpacity
         style={styles.optionCard}
         onPress={() => handleOptionPress("ProfileScreen")}
@@ -54,7 +54,7 @@ export default function GuidanceScreen({ navigation }) {
         />
         <Text style={styles.optionText}>Profile Setup</Text>
         <Icon name="chevron-forward-outline" size={24} color="#4A90E2" />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <TouchableOpacity
         style={styles.optionCard}
@@ -80,7 +80,7 @@ export default function GuidanceScreen({ navigation }) {
           color="#50E3C2"
           style={styles.icon}
         />
-        <Text style={styles.optionText}>Usage History</Text>
+        <Text style={styles.optionText}> History Goals</Text>
         <Icon name="chevron-forward-outline" size={24} color="#50E3C2" />
       </TouchableOpacity>
 

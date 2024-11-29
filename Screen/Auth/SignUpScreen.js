@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFonts } from "expo-font";
@@ -46,7 +46,25 @@ export default function SignUpScreen({ navigation }) {
     { label: "8", value: "8" },
   ]);
 
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const { registerUser, setUsername, username, setEmail, email } = useAuth();
+
+  // Monitor keyboard visibility
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => setIsKeyboardVisible(true)
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => setIsKeyboardVisible(false)
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
 
   useFocusEffect(
     useCallback(() => {
@@ -169,16 +187,29 @@ export default function SignUpScreen({ navigation }) {
 
           <View>
             <Text style={[styles.inputText]}>The number of children: </Text>
-            <DropDownPicker
-              style={[styles.inputButton]}
-              placeholder="Select a number"
-              open={open}
-              value={value}
-              items={items}
-              setOpen={setOpen}
-              setValue={setValue}
-              setItems={setItems}
-            />
+            <TouchableWithoutFeedback
+              onPress={() => {
+                if (isKeyboardVisible) {
+                  Keyboard.dismiss();
+                } else {
+                  setOpen(true); // Open DropDownPicker only if the keyboard is hidden
+                }
+              }}
+            >
+              <View>
+                <DropDownPicker
+                  style={[styles.inputButton]}
+                  placeholder="Select a number"
+                  open={open}
+                  value={value}
+                  items={items}
+                  setOpen={setOpen}
+                  setValue={setValue}
+                  setItems={setItems}
+                  disabled={isKeyboardVisible} // Prevent interaction when keyboard is visible
+                />
+              </View>
+            </TouchableWithoutFeedback>
           </View>
         </KeyboardAvoidingView>
 
@@ -201,8 +232,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     position: "absolute",
-    top: Dimensions.get("window").height * 0.07,
-    left: Dimensions.get("window").width * 0.08,
+    top: Dimensions.get("window").height * 0.08,
+    left: Dimensions.get("window").width * 0.05,
   },
   content: {
     justifyContent: "center",
@@ -210,8 +241,8 @@ const styles = StyleSheet.create({
     paddingTop: Dimensions.get("window").height * 0.1,
   },
   backImage: {
-    width: Dimensions.get("window").width * 0.04,
-    height: Dimensions.get("window").width * 0.04,
+    width: Dimensions.get("window").width * 0.06,
+    height: Dimensions.get("window").width * 0.06,
     marginRight: 335,
   },
   image: {
@@ -224,7 +255,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontFamily: "MarkoOne-Regular",
     marginTop: 10,
-    marginBottom: 50,
+    marginBottom: 20,
   },
   inputButton: {
     backgroundColor: "#fff",
