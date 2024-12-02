@@ -1,9 +1,25 @@
+import { LogBox } from "react-native";
+
+LogBox.ignoreLogs([
+  'A props object containing a "key" prop is being spread into JSX',
+  "React keys must be passed directly to JSX without using spread",
+  "TabBarItem",
+]);
+
+import { enableScreens } from "react-native-screens";
+enableScreens();
+
 import React, { useState, useEffect, useContext } from "react";
+import { TouchableOpacity, Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+} from "@react-navigation/stack";
 import StartScreen from "./Screen/Auth/StartScreen";
 import TabNavigator from "./Navigation/TabNavigator";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Icon from "react-native-vector-icons/MaterialIcons";
 import AddGoalsScreen from "./Screen/Goals/AddGoalsScreen";
 import { AppProvider } from "./context/AppProvider";
 import SignInScreen1 from "./Screen/Auth/SignInScreen1";
@@ -23,11 +39,38 @@ import HistoryScreen from "./Screen/Profile/HistoryScreen.js";
 import PocketScreen from "./Screen/Main/PocketScreen.js";
 import ShopScreen from "./Screen/Main/ShopScreen.js";
 import HistoryPostScreen from "./Screen/Profile/HistoryPostScreen.js";
+import AboutScreen from "./Screen/Profile/AboutScreen.js";
+import GuidanceScreen from "./Screen/Profile/GuidanceScreen.js";
+import HelpScreen from "./Screen/Profile/HelpScreen.js";
 
 const Stack = createStackNavigator();
 // const Tab = createBottomTabNavigator();
 
 // this code is for debug specfic page
+
+// import HomeScreen from "./Screen/Main/HomeScreen.js";
+// export default function App() {
+//   return (
+//     <NavigationContainer>
+//       <AppProvider>
+//         <Stack.Navigator>
+//           <Stack.Screen
+//             name="HomeScreen"
+//             component={TabNavigator}
+//             options={{
+//               headerShown: false,
+//             }}
+//           />
+//           {/* <Stack.Screen
+//             name="HomeScreen"
+//             component={HomeScreen}
+//             options={{ headerShown: false }}
+//           /> */}
+//         </Stack.Navigator>
+//       </AppProvider>
+//     </NavigationContainer>
+//   );
+// }
 
 export default function App() {
   const [navKey, setNavKey] = useState(0);
@@ -108,15 +151,42 @@ export default function App() {
           <Stack.Screen
             name="PetDetails"
             component={PetDetailsScreen}
-            options={{ headerShown: false }}
+            options={{
+              headerShown: true,
+              headerTitle: "Pet Details",
+              headerStyle: {
+                backgroundColor: "#FFE9D4",
+              },
+              headerTintColor: "#FFA07A",
+              headerBackTitleVisible: false,
+              headerLeft: ({ onPress }) => (
+                <TouchableOpacity
+                  onPress={onPress}
+                  style={{
+                    marginLeft: 20,
+                  }}
+                >
+                  <Image
+                    source={require("./assets/images/backButton.png")}
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                  />
+                </TouchableOpacity>
+              ),
+            }}
           />
+
           <Stack.Screen
             name="PostGoalsScreen"
             component={PostGoalsScreen}
             options={{ headerShown: false }}
           />
           <Stack.Screen name="SettingsScreen" options={{ headerShown: false }}>
-            {(props) => <SettingsScreen {...props} onLogout={changeKey} />}
+            {(props) => (
+              <SettingsScreen key={props.key} {...props} onLogout={changeKey} />
+            )}
           </Stack.Screen>
           <Stack.Screen
             name="HistoryScreen"
@@ -133,6 +203,45 @@ export default function App() {
             component={TabNavigator}
             options={{ headerShown: false }}
           /> */}
+          <Stack.Screen
+            name="AboutScreen"
+            component={AboutScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="GuidanceScreen"
+            component={GuidanceScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="HelpScreen"
+            component={HelpScreen}
+            options={{
+              headerShown: true,
+              headerTitle: "Help & Support",
+              headerStyle: {
+                backgroundColor: "#F7E4C6",
+              },
+              headerTintColor: "#FFA07A",
+              headerBackTitleVisible: false,
+              headerLeft: ({ onPress }) => (
+                <TouchableOpacity
+                  onPress={onPress}
+                  style={{
+                    marginLeft: 20,
+                  }}
+                >
+                  <Image
+                    source={require("./assets/images/backButton.png")}
+                    style={{
+                      width: 24,
+                      height: 24,
+                    }}
+                  />
+                </TouchableOpacity>
+              ),
+            }}
+          />
         </Stack.Navigator>
       </AppProvider>
     </NavigationContainer>

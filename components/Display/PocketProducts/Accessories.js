@@ -1,21 +1,96 @@
 import React, { useContext } from "react";
 import { useFonts } from "expo-font";
-import { View, FlatList, Image, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  FlatList,
+  Image,
+  Text,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import { ShopItems } from "../../../context/ShopItems";
+import { useAuth } from "../../../context/AuthContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Accessories() {
-  const { purchasedAccessoriesItems } = useContext(ShopItems);
+  const { purchasedAccessoriesItems, setPurchasedAccessoriesItems } =
+    useContext(ShopItems);
 
-  const numColumns = 3; // Set the number of columns for the grid
+  const {
+    username,
+    happiness,
+    setHappiness,
+    health,
+    setHealth,
+    hunger,
+    setHunger,
+    savePetAttributes,
+    updateAttributes,
+  } = useAuth();
+
+  const numColumns = 3;
   const filledItems = [...purchasedAccessoriesItems];
 
   // Ensure the grid is filled, adding placeholder items if needed
   while (filledItems.length % numColumns !== 0) {
     filledItems.push({
-      id: `empty-${filledItems.length}-${Math.random()}`,
+      uniqueKey: `empty-${filledItems.length}-${Math.random()}`,
       empty: true,
     });
   }
+
+  // Function to handle item click
+  const handleItemPress = (item) => {
+    if (item.empty) return;
+
+    Alert.alert(
+      "Item Clicked",
+      `Do you want to use this item for your pet?`,
+      [
+        {
+          text: "No",
+          onPress: () => console.log("No Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "Yes",
+          onPress: async () => {
+            console.log("Using item:", item);
+
+            // Remove the used item from the purchased items list
+            const updatedItems = purchasedAccessoriesItems.filter(
+              (accessory) => accessory.uniqueKey !== item.uniqueKey
+            );
+            setPurchasedAccessoriesItems(updatedItems);
+            // console.log("Updated items after removal:", updatedItems);
+
+            // Save updated list to AsyncStorage
+            try {
+              await AsyncStorage.setItem(
+                `purchasedAccessoriesItems_${username}`,
+                JSON.stringify(updatedItems)
+              );
+              console.log("Updated items saved to AsyncStorage.");
+            } catch (error) {
+              console.log("Error saving updated items to AsyncStorage:", error);
+            }
+
+            // Update attributes upon using the item
+            setHappiness((prevHappiness) => {
+              const newHappiness = Math.min(prevHappiness + 1, 5);
+              savePetAttributes(username, health, newHappiness, hunger);
+              return newHappiness;
+            });
+
+            console.log(`Finished using ${item.name}`);
+          },
+        },
+      ],
+      { cancelable: true }
+    );
+  };
 
   // Function to render each item in the grid
   const renderItem = ({ item }) => {
@@ -23,9 +98,13 @@ export default function Accessories() {
       return <View style={[styles.productContainer, styles.emptyProduct]} />;
     }
     return (
-      <View style={styles.productContainer}>
+      <TouchableOpacity
+        style={styles.productContainer}
+        onPress={() => handleItemPress(item)}
+        activeOpacity={0.7}
+      >
         <Image source={item.image} style={styles.productImage} />
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -36,7 +115,7 @@ export default function Accessories() {
 
   // Return loading state if fonts are not loaded
   if (!fontsLoaded) {
-    return undefined;
+    return null;
   }
 
   return (
@@ -44,7 +123,7 @@ export default function Accessories() {
       <FlatList
         data={filledItems}
         renderItem={renderItem}
-        keyExtractor={(item) => item.uniqueKey || item.id}
+        keyExtractor={(item) => item.uniqueKey}
         numColumns={numColumns}
         columnWrapperStyle={styles.row}
         contentContainerStyle={styles.list}

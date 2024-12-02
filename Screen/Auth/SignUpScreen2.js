@@ -24,7 +24,7 @@ export default function SignUpScreen2({ navigation }) {
     "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
   });
 
-  const { username, updatePetname, saveUserData, updateFamilyName } = useAuth();
+  const { username, updatePetname, saveUserData, updateFamilyName, email } = useAuth();
 
   // Return loading state if fonts are not loaded
   if (!fontsLoaded) {
@@ -61,7 +61,8 @@ export default function SignUpScreen2({ navigation }) {
       navigation.navigate("SignUpScreen3");
 
       console.log(
-        `Pet name: ${petName}, Family name: ${familyName}, Username: ${username}`
+        // `Pet name: ${petName}, Family name: ${familyName}, Username: ${username}`
+        `Email: ${email}, Username: ${username}`
       );
     } catch (error) {
       console.error("Error updating user data:", error);
@@ -70,16 +71,19 @@ export default function SignUpScreen2({ navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView style={[styles.container]}>
-
-        <View style={[styles.content]}>
+      <View style={[styles.container]}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 290 : 290}
+          style={[styles.content]}
+        >
           <Text style={[styles.title]}>Hello!</Text>
 
           <Image
             source={require("../../assets/images/cat2.png")}
             style={[styles.image]}
           />
-        </View>
+        </KeyboardAvoidingView>
 
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -112,7 +116,7 @@ export default function SignUpScreen2({ navigation }) {
         <TouchableOpacity style={[styles.nextButton]} onPress={handleNext}>
           <Text style={[styles.nextText]}>Next</Text>
         </TouchableOpacity>
-      </KeyboardAvoidingView>
+      </View>
     </TouchableWithoutFeedback>
   );
 }
@@ -143,7 +147,7 @@ const styles = StyleSheet.create({
     marginRight: 335,
   },
   title: {
-    marginTop: 30,
+    // marginTop: 20,
     fontSize: 40,
     fontFamily: "MarkoOne-Regular",
   },
@@ -185,7 +189,8 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     marginTop: 10,
-    marginBottom: 20,
+    //marginBottom: 20,
+    marginBottom: Dimensions.get("window").height * 0.08
   },
   nextText: {
     fontSize: 17,

@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { useFonts } from "expo-font";
-import Checkbox from 'expo-checkbox';
+import Checkbox from "expo-checkbox";
 import {
-    StyleSheet,
-    Text,
-    View,
-    SafeAreaView,
-    TouchableOpacity,
-    Image,
-    Dimensions,
-  } from "react-native";
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+} from "react-native";
 
 export default function SignUpScreen5({ navigation }) {
   // Load custom font using expo-font hook
@@ -30,15 +30,15 @@ export default function SignUpScreen5({ navigation }) {
 
   return (
     <SafeAreaView style={[styles.container]}>
-        <TouchableOpacity
-          style={[styles.backContent]}
-          onPress={() => navigation.navigate("SignUpScreen4")}
-        >
-          <Image
-            source={require("../../assets/images/backButton.png")}
-            style={styles.backImage}
-          />
-        </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.backContent]}
+        onPress={() => navigation.navigate("SignUpScreen4")}
+      >
+        <Image
+          source={require("../../assets/images/backButton.png")}
+          style={styles.backImage}
+        />
+      </TouchableOpacity>
 
       <View style={[styles.content]}>
         <Text style={[styles.title]}>I'm Curious!</Text>
@@ -47,30 +47,52 @@ export default function SignUpScreen5({ navigation }) {
           style={[styles.image]}
         />
         <Text style={[styles.inputText]}>What's your child's gender?</Text>
-        <Text style={[styles.input2Text]}>(You can select multiple if you have more than one child)</Text>
+        <Text style={[styles.input2Text]}>
+          (You can select multiple if you have more than one child)
+        </Text>
       </View>
 
-    <View style={styles.checkboxContainer}>
-      <View style={styles.section}>
-        <Checkbox style={styles.checkbox} value={maleChecked} onValueChange={setMaleChecked} />
-        <Text style={styles.optionText}>Male</Text>
-      </View>
+      <View style={styles.checkboxContainer}>
+        <TouchableOpacity
+          style={styles.section}
+          onPress={() => setMaleChecked(!maleChecked)}
+        >
+          <Checkbox
+            style={styles.checkbox}
+            value={maleChecked}
+            onValueChange={setMaleChecked}
+          />
+          <Text style={styles.optionText}>Male</Text>
+        </TouchableOpacity>
 
-      <View style={styles.section}>
-        <Checkbox style={styles.checkbox} value={femaleChecked} onValueChange={setFemaleChecked} />
-        <Text style={styles.optionText}>Female</Text>
-      </View>
+        <TouchableOpacity
+          style={styles.section}
+          onPress={() => setFemaleChecked(!femaleChecked)}
+        >
+          <Checkbox
+            style={styles.checkbox}
+            value={femaleChecked}
+            onValueChange={setFemaleChecked}
+          />
+          <Text style={styles.optionText}>Female</Text>
+        </TouchableOpacity>
 
-      <View style={styles.section}>
-        <Checkbox style={styles.checkbox} value={nonChecked} onValueChange={setNonChecked} />
-        <Text style={styles.optionText}>Non-binary</Text>
+        <TouchableOpacity
+          style={styles.section}
+          onPress={() => setNonChecked(!nonChecked)}
+        >
+          <Checkbox
+            style={styles.checkbox}
+            value={nonChecked}
+            onValueChange={setNonChecked}
+          />
+          <Text style={styles.optionText}>Non-binary</Text>
+        </TouchableOpacity>
       </View>
-    </View>
-
 
       <TouchableOpacity
         style={[styles.nextButton]}
-        disabled = {nextDisabled}
+        disabled={nextDisabled}
         onPress={() => navigation.navigate("SignUpScreen6")}
       >
         <Text style={[styles.nextText]}>Next</Text>
@@ -134,8 +156,9 @@ const styles = StyleSheet.create({
     marginTop: 80,
   },
   section: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
   },
   optionText: {
     fontSize: 16,

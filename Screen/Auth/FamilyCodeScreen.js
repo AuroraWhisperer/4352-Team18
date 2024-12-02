@@ -5,7 +5,7 @@ import {
   Text,
   TextInput,
   View,
-  SafeAreaView,
+  // SafeAreaView,
   TouchableOpacity,
   Image,
   Dimensions,
@@ -16,6 +16,8 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { useAuth } from "../../context/AuthContext";
+import { SafeAreaView } from "react-native-safe-area-context";
+
 
 export default function FamilyCodeScreen({ navigation }) {
   // Load the custom font using the expo-font hook

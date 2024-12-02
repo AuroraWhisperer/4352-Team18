@@ -2,7 +2,8 @@
   "expo": {
     "name": "PetConnect",
     "slug": "PetConnect",
-    "version": "1.0.0",
+    "version": "1.1.0",
+    "newArchEnabled": true,
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -13,9 +14,11 @@
     },
     "ios": {
       "supportsTablet": true,
-      "NSCameraUsageDescription": "This app needs access to the camera",
-      "NSPhotoLibraryUsageDescription": "This app needs access to the photo library",
-      "NSPhotoLibraryAddUsageDescription": "This app needs permission to save photos"
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app needs access to the camera",
+        "NSPhotoLibraryUsageDescription": "This app needs access to the photo library",
+        "NSPhotoLibraryAddUsageDescription": "This app needs permission to save photos"
+      }
     },
     "android": {
       "adaptiveIcon": {

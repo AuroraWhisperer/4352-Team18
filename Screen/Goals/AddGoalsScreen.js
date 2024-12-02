@@ -62,7 +62,11 @@ export default function AddGoalsScreen({ navigation }) {
       // If the goal is unique, add it and navigate back to the GoalsTab
       const newGoal = { goal, time, diamonds };
       addGoal(newGoal);
-      navigation.navigate("GoalsTab", { newGoal });
+      navigation.navigate("HomeScreen", {
+        screen: "GoalsTab",
+        params: { newGoal },
+      });
+
       console.log("Submitted data: ", newGoal);
     }
   };

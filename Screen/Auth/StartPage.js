@@ -44,7 +44,7 @@ export default function StartPage({ navigation }) {
       {/* Back button to return to the previous screen */}
       <TouchableOpacity
         style={[styles.backContent]}
-        onPress={() => navigation.goBack()}
+        onPress={() => navigation.navigate("StartScreen")}
       >
         <Image
           source={require("../../assets/images/backButton.png")}
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   backContent: {
     flexDirection: "row",
     alignItems: "center",
-    // justifyContent: "flex-start",
+    //justifyContent: "flex-start",
     position: "absolute",
     top: Dimensions.get("window").height * 0.07,
     left: Dimensions.get("window").width * 0.08,

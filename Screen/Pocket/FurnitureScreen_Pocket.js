@@ -4,7 +4,7 @@ import { ShopItems } from "../../context/ShopItems";
 import CallToAction from "../../components/Display/CallToAction";
 import Furniture from "../../components/Display/PocketProducts/Furniture";
 
-export default function FurnitureScreen() {
+export default function FurnitureScreen_Pocket() {
   // Retrieve purchased furniture items from the ShopItems context
   const { purchasedFurnitureItems } = useContext(ShopItems);
 

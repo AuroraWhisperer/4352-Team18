@@ -3,10 +3,11 @@ import { useFonts } from "expo-font";
 import {
   StyleSheet,
   Text,
-  TextInput,
   View,
   SafeAreaView,
   TouchableOpacity,
+  Clipboard,
+  Alert,
   Image,
   Dimensions,
 } from "react-native";
@@ -33,6 +34,11 @@ export default function SignUpScreen6({ navigation }) {
     ).join("");
     const digits = Math.floor(100 + Math.random() * 900).toString();
     return `${letters}${digits}`;
+  };
+
+  const copyToClipboard = () => {
+    Clipboard.setString(familyCode);
+    Alert.alert('Copied!', 'Family code copied to clipboard.');
   };
 
   useEffect(() => {
@@ -82,7 +88,9 @@ export default function SignUpScreen6({ navigation }) {
         <Text style={[styles.codeTitle]}>Family Code: </Text>
 
         <View style={[styles.codeButton]}>
-          <Text style={[styles.codeText]}>{familyCode}</Text>
+        <TouchableOpacity onPress={copyToClipboard}>
+            <Text style={[styles.codeText]}>{familyCode}</Text>
+        </TouchableOpacity>
         </View>
       </View>
 

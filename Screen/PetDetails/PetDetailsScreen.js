@@ -51,7 +51,7 @@ export default function PetDetailsScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.backContent}
         onPress={() => navigation.goBack()}
       >
@@ -59,7 +59,7 @@ export default function PetDetailsScreen() {
           source={require("../../assets/images/backButton.png")}
           style={styles.backImage}
         />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <View style={styles.imageContainer}>
         <Image
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     height: 24,
   },
   imageContainer: {
-    marginTop: Dimensions.get("window").height * 0.1,
+    // marginTop: Dimensions.get("window").height * 0.1,
     marginBottom: Dimensions.get("window").height * 0.03,
   },
   petImage: {

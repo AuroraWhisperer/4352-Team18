@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
 
   // State variables to manage user information and application data
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
   const [users, setUsers] = useState([]);
   const [petname, setPetname] = useState("Luna");
@@ -166,9 +167,10 @@ export const AuthProvider = ({ children }) => {
 
           setPetname(parsedData.petname || admin.petname || "Luna");
           setFamilyName(username);
+          setEmail("admin@example.com");
 
           setIsAdmin(true);
-          await loadLevelFromStorage(username); // Load level data for admin
+          await loadLevelFromStorage(username);
           await loadPetAttributes(username);
           // console.log(
           //   `Admin login successful. Pet name: ${parsedData.petname || "Luna"}`
@@ -263,8 +265,9 @@ export const AuthProvider = ({ children }) => {
           setPetname(parsedData.petname || user.petname || "Luna");
           setFamilyName(parsedData.familyname || "");
           setFamilyCode(user.familyCode || parsedData.familyCode || "");
+          setEmail(user.email || parsedData.email || "");
 
-          await loadLevelFromStorage(username); // Load user's level
+          await loadLevelFromStorage(username);
           await loadPetAttributes(username);
 
           // console.log(
@@ -275,7 +278,7 @@ export const AuthProvider = ({ children }) => {
           //     user.familyCode || parsedData.familyCode
           //   }`
           // );
-          console.log("目前属性", happiness, hunger, health);
+          // console.log("Current Properties", happiness, hunger, health);
           return true;
         }
       }
@@ -354,7 +357,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       const familyCode = generateRandomCode();
-      setFamilyCode(familyCode); // Log setFamilyCode call here
+      setFamilyCode(familyCode);
       console.log(
         `Setting familyCode for new user ${newUser.username}: ${familyCode}`
       );
@@ -365,6 +368,7 @@ export const AuthProvider = ({ children }) => {
         petname: "Luna",
         familyname: "",
         familyCode,
+        email: newUser.email,
       };
 
       await AsyncStorage.setItem(userKey, JSON.stringify(newUserWithDetails));
@@ -397,7 +401,7 @@ export const AuthProvider = ({ children }) => {
           `level_${username}`,
           JSON.stringify(newLevel)
         );
-        setLevel(newLevel); // Update level state
+        setLevel(newLevel);
         console.log("Level saved successfully for", username);
       }
     } catch (error) {
@@ -420,8 +424,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   const updateLevel = (newLevel) => {
-    setLevel(newLevel); // Update level state
-    saveLevelToStorage(newLevel); // Save new level to storage
+    setLevel(newLevel);
+    saveLevelToStorage(newLevel);
   };
 
   // Clear all non-user-specific data from AsyncStorage
@@ -448,7 +452,7 @@ export const AuthProvider = ({ children }) => {
     );
   };
 
-  const savePetAttributes = async (username) => {
+  const savePetAttributes = async (username, health, happiness, hunger) => {
     try {
       await AsyncStorage.setItem(
         `happiness_${username}`,
@@ -480,27 +484,36 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const updateHappiness = (newHappiness) => {
+  const updateAttributes = (newHealth, newHappiness, newHunger) => {
     setHappiness(newHappiness);
-    if (username) savePetAttributes(username);
-  };
-
-  const updateHealth = (newHealth) => {
     setHealth(newHealth);
-    if (username) savePetAttributes(username);
+    setHunger(newHunger);
+
+    if (username) {
+      savePetAttributes(username, newHealth, newHappiness, newHunger);
+    }
   };
 
-  const updateHunger = (newHunger) => {
-    setHunger(newHunger);
-    if (username) savePetAttributes(username);
-  };
+  // const updateHappiness = (newHappiness) => {
+  //   setHappiness(newHappiness);
+  //   if (username) savePetAttributes(username);
+  // };
+  // const updateHealth = (newHealth) => {
+  //   setHealth(newHealth);
+  //   if (username) savePetAttributes(username);
+  // };
+  // const updateHunger = (newHunger) => {
+  //   setHunger(newHunger);
+  //   if (username) savePetAttributes(username);
+  // };
 
   return (
-    // Provide values and functions to the AuthContext for use across the app
     <AuthContext.Provider
       value={{
         username,
         setUsername,
+        email,
+        setEmail,
         currentUser,
         handleAdminLogin,
         handleUserLogin,
@@ -526,9 +539,10 @@ export const AuthProvider = ({ children }) => {
         setHealth,
         hunger,
         setHunger,
-        updateHappiness,
-        updateHealth,
-        updateHunger,
+        // updateHappiness,
+        // updateHealth,
+        // updateHunger,
+        updateAttributes,
         savePetAttributes,
         handleLogout,
         resetApp,

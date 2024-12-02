@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
 import React from "react";
-import Furniture from "../../components/Display/ShopProducts/Furniture";
+import Food from "../../components/Display/ShopProducts/Food";
 
-export default function FurnitureScreen() {
+export default function FoodScreen_Shop() {
   return (
     <SafeAreaView style={styles.container}>
-      <Furniture />
+      <Food />
     </SafeAreaView>
   );
 }

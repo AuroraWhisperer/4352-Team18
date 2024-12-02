@@ -1,11 +1,11 @@
 import React from "react";
 import { useFonts } from "expo-font";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import AccessoriesScreen from "../Screen/Pocket/AccessoriesScreen.js";
-import ClothesScreen from "../Screen/Pocket/ClothesScreen.js";
-import FoodScreen from "../Screen/Pocket/FoodScreen.js";
-import FurnitureScreen from "../Screen/Pocket/FurnitureScreen.js";
-import ToysScreen from "../Screen/Pocket/ToysScreen.js";
+import AccessoriesScreen_Pocket from "../Screen/Pocket/AccessoriesScreen_Pocket.js";
+import ClothesScreen_Pocket from "../Screen/Pocket/ClothesScreen_Pocket.js";
+import FoodScreen_Pocket from "../Screen/Pocket/FoodScreen_Pocket.js";
+import FurnitureScreen_Pocket from "../Screen/Pocket/FurnitureScreen_Pocket.js";
+import ToysScreen_Pocket from "../Screen/Pocket/ToysScreen_Pocket.js";
 
 const PocketTab = createMaterialTopTabNavigator();
 
@@ -24,27 +24,27 @@ const PocketNestedNavigator = () => (
     {/* Define each screen in the tab navigator with the header hidden */}
     <PocketTab.Screen
       name="Clothes"
-      component={ClothesScreen}
+      component={ClothesScreen_Pocket}
       options={{ headerShown: false }}
     />
     <PocketTab.Screen
       name="Accessories"
-      component={AccessoriesScreen}
+      component={AccessoriesScreen_Pocket}
       options={{ headerShown: false }}
     />
     <PocketTab.Screen
       name="Food"
-      component={FoodScreen}
+      component={FoodScreen_Pocket}
       options={{ headerShown: false }}
     />
     <PocketTab.Screen
       name="Toys"
-      component={ToysScreen}
+      component={ToysScreen_Pocket}
       options={{ headerShown: false }}
     />
     <PocketTab.Screen
       name="Furniture"
-      component={FurnitureScreen}
+      component={FurnitureScreen_Pocket}
       options={{ headerShown: false }}
     />
   </PocketTab.Navigator>

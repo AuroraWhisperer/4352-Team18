@@ -1,4 +1,4 @@
-import React from "react";
+/* import React from "react";
 import { useFonts } from "expo-font";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import HomeScreen from "../Screen/HomeScreen";
@@ -24,11 +24,14 @@ export default function DrawerNavigator() {
           elevation: 0,
         },
 
-        headerTitle: (props) => <CustomHeaderTitle {...props} />,
+        headerTitle: (props) => (
+          <CustomHeaderTitle key={props.key} {...props} />
+        ),
       }}
     >
-      {/* Define the Home screen as part of the drawer */}
+      
       <Drawer.Screen name="Home" component={HomeScreen} />
     </Drawer.Navigator>
   );
 }
+ */

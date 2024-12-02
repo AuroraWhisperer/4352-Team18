@@ -34,7 +34,7 @@ export default function AddGoalCard({ onSubmit }) {
 
   // Handle time input change and calculate diamonds based on time
   const handleTimeChange = (text) => {
-    if (/^\d{0,4}(\.\d{0,2})?$/.test(text)) {
+    if (/^\d{0,3}(\.\d{0,2})?$/.test(text)) {
       setTime(text);
       const timeValue = parseFloat(text);
       if (!isNaN(timeValue)) {
@@ -45,7 +45,7 @@ export default function AddGoalCard({ onSubmit }) {
     } else {
       Alert.alert(
         "Invalid input",
-        "Please enter a valid number with up to 4 digits and 2 decimal places."
+        "Please enter a valid number with up to 3 digits and 2 decimal places."
       );
     }
   };

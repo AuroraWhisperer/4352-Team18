@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
   },
   scrollViewWrapper: {
     height: Dimensions.get("window").height - 131,
+    zIndex: 10,
   },
   scrollContent: {
     flexGrow: 1,
@@ -136,7 +137,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     alignItems: "center",
-    zIndex: -1,
+    zIndex: 0,
     bottom: -45,
   },
   sceneryImage: {

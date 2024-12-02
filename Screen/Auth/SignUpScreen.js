@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFonts } from "expo-font";
@@ -8,7 +8,7 @@ import {
   Text,
   TextInput,
   View,
-  SafeAreaView,
+  // SafeAreaView,
   TouchableOpacity,
   Image,
   Dimensions,
@@ -22,6 +22,8 @@ import {
 } from "react-native";
 import { useAuth } from "../../context/AuthContext.js";
 import { ScrollView } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
+
 // import { KeyboardAvoidingScrollView } from "react-native-keyboard-avoiding-scroll-view";
 
 export default function SignUpScreen({ navigation }) {
@@ -30,11 +32,6 @@ export default function SignUpScreen({ navigation }) {
   });
 
   const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -49,15 +46,37 @@ export default function SignUpScreen({ navigation }) {
     { label: "8", value: "8" },
   ]);
 
-  const { registerUser, setUsername, username } = useAuth();
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+  const { registerUser, setUsername, username, setEmail, email } = useAuth();
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => setIsKeyboardVisible(true)
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => setIsKeyboardVisible(false)
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
 
   useFocusEffect(
     useCallback(() => {
       setUsername("");
       setPassword("");
       setEmail("");
-    }, [setUsername])
+    }, [setUsername, setEmail])
   );
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   // Create refs for each input field
   const passwordRef = useRef();
@@ -167,16 +186,29 @@ export default function SignUpScreen({ navigation }) {
 
           <View>
             <Text style={[styles.inputText]}>The number of children: </Text>
-            <DropDownPicker
-              style={[styles.inputButton]}
-              placeholder="Select a number"
-              open={open}
-              value={value}
-              items={items}
-              setOpen={setOpen}
-              setValue={setValue}
-              setItems={setItems}
-            />
+            <TouchableWithoutFeedback
+              onPress={() => {
+                if (isKeyboardVisible) {
+                  Keyboard.dismiss();
+                } else {
+                  setOpen(true);
+                }
+              }}
+            >
+              <View>
+                <DropDownPicker
+                  style={[styles.inputButton]}
+                  placeholder="Select a number"
+                  open={open}
+                  value={value}
+                  items={items}
+                  setOpen={setOpen}
+                  setValue={setValue}
+                  setItems={setItems}
+                  disabled={isKeyboardVisible}
+                />
+              </View>
+            </TouchableWithoutFeedback>
           </View>
         </KeyboardAvoidingView>
 
@@ -199,8 +231,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     position: "absolute",
-    top: Dimensions.get("window").height * 0.07,
-    left: Dimensions.get("window").width * 0.08,
+    top: Dimensions.get("window").height * 0.08,
+    left: Dimensions.get("window").width * 0.05,
   },
   content: {
     justifyContent: "center",
@@ -208,8 +240,8 @@ const styles = StyleSheet.create({
     paddingTop: Dimensions.get("window").height * 0.1,
   },
   backImage: {
-    width: Dimensions.get("window").width * 0.04,
-    height: Dimensions.get("window").width * 0.04,
+    width: Dimensions.get("window").width * 0.06,
+    height: Dimensions.get("window").width * 0.06,
     marginRight: 335,
   },
   image: {
@@ -222,7 +254,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontFamily: "MarkoOne-Regular",
     marginTop: 10,
-    marginBottom: 50,
+    marginBottom: 20,
   },
   inputButton: {
     backgroundColor: "#fff",

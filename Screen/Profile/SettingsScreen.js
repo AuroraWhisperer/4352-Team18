@@ -24,7 +24,7 @@ export default function SettingsScreen({ navigation, onLogout }) {
     return undefined;
   }
 
-  const { clearAsyncStorage, handleLogout, resetApp } = useAuth();
+  const { clearAsyncStorage, handleLogout, resetApp, email } = useAuth();
   const { forceRefresh } = useContext(AppContext);
 
   // Handle logout with a confirmation prompt
@@ -74,7 +74,7 @@ export default function SettingsScreen({ navigation, onLogout }) {
 
       {/* Clear Cache option */}
       <TouchableOpacity style={styles.actionButton} onPress={handleClearCache}>
-        <Text style={styles.buttonText}>Clear Cache</Text>
+        <Text style={styles.buttonText}>Clear cache and exit</Text>
         <Icon name="chevron-forward-outline" size={24} color="#FFA726" />
       </TouchableOpacity>
 

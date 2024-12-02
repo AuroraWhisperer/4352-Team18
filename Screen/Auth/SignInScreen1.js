@@ -5,7 +5,7 @@ import {
   Text,
   TextInput,
   View,
-  SafeAreaView,
+  // SafeAreaView,
   TouchableOpacity,
   Image,
   Dimensions,
@@ -16,6 +16,8 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { useAuth } from "../../context/AuthContext";
+import { SafeAreaView } from "react-native-safe-area-context";
+
 
 export default function SignInScreen1({ navigation }) {
   // Load the custom font using the expo-font hook
@@ -84,7 +86,7 @@ export default function SignInScreen1({ navigation }) {
         {/* Display logo and title */}
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
-          keyboardVerticalOffset={Platform.OS === "ios" ? 200 : 200}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 300 : 300}
           style={styles.imageKeyboardView}
         >
           <View style={[styles.content]}>
@@ -149,11 +151,6 @@ export default function SignInScreen1({ navigation }) {
         >
           <Text style={[styles.signText]}>Sign In</Text>
         </TouchableOpacity>
-
-        {/* Forgot password link */}
-        <TouchableOpacity style={[styles.forgotPasswordButton]}>
-          <Text style={[styles.forgotPasswordText]}>Forgot password?</Text>
-        </TouchableOpacity>
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
@@ -193,7 +190,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontFamily: "MarkoOne-Regular",
     marginTop: 10,
-    marginBottom: 50,
+    marginBottom: -10,
   },
   inputButton: {
     backgroundColor: "#fff",
@@ -226,20 +223,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 5,
-    marginBottom: 20,
+    marginBottom: Dimensions.get("window").height * 0.18
   },
   signText: {
     fontSize: 17,
     fontFamily: "MarkoOne-Regular",
     color: "#333",
     textAlign: "center",
-  },
-  forgotPasswordButton: {
-    marginBottom: Dimensions.get("window").height * 0.18,
-  },
-  forgotPasswordText: {
-    textDecorationLine: "underline",
-    fontFamily: "MarkoOne-Regular",
   },
   keyboardView: {
     flex: 1,

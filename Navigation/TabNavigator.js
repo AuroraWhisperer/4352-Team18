@@ -1,15 +1,17 @@
 import React from "react";
 import { useFonts } from "expo-font";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
+// import Animated from "react-native-reanimated";
 import HomeScreen from "../Screen/Main/HomeScreen";
 import PocketScreen from "../Screen/Main/PocketScreen";
 import GoalsScreen from "../Screen/Main/GoalsScreen";
 import ShopScreen from "../Screen/Main/ShopScreen";
 import ProfileScreen from "../Screen/Main/ProfileScreen";
 import PocketNestedNavigator from "./PocketNestedNavigator";
+import { Animated, Easing } from "react-native";
 
-const Tab = createMaterialTopTabNavigator();
+const Tab = createBottomTabNavigator();
 
 function TabNavigator() {
   // Load custom font using expo-font hook
@@ -27,6 +29,25 @@ function TabNavigator() {
       tabBarPosition="bottom"
       screenOptions={{
         swipeEnabled: false,
+        headerShown: false,
+        // animationEnabled: false,
+        animation: "fade",
+        transitionSpec: {
+          animation: "timing",
+          config: {
+            duration: 150,
+            easing: Easing.inOut(Easing.ease),
+          },
+        },
+        sceneStyleInterpolator: ({ current }) => ({
+          sceneStyle: {
+            opacity: current.progress.interpolate({
+              inputRange: [-1, 0, 1],
+              outputRange: [0, 1, 0],
+            }),
+          },
+        }),
+        // lazy: true,
         tabBarStyle: {
           position: "absolute",
           bottom: 0,
@@ -36,6 +57,7 @@ function TabNavigator() {
           backgroundColor: "transparent",
           elevation: 0,
           borderWidth: 0,
+          borderTopWidth: 0,
         },
         tabBarLabelStyle: {
           fontFamily: "MarkoOne-Regular",
@@ -54,6 +76,11 @@ function TabNavigator() {
           tabBarIcon: ({ focused, color }) => (
             <Ionicons name="home" size={26} color={color} />
           ),
+          tabBarStyle: {
+            borderTopWidth: 0,
+            backgroundColor: "#9C8B71",
+            height: 80,
+          },
         }}
       />
       <Tab.Screen
@@ -64,7 +91,11 @@ function TabNavigator() {
           tabBarIcon: ({ color }) => (
             <Ionicons name="shield" size={26} color={color} />
           ),
-          tabBarStyle: { backgroundColor: "#9C8B71", height: 80 },
+          tabBarStyle: {
+            borderTopWidth: 0,
+            backgroundColor: "#9C8B71",
+            height: 80,
+          },
         }}
       />
       <Tab.Screen
