@@ -26,6 +26,7 @@ export default function ExistingGoalCard({
 }) {
   const navigation = useNavigation();
   const swipeableRef = useRef(null);
+  const newGoal = { goal, time, diamonds };
 
   // Load custom font using expo-font hook
   const [fontsLoaded] = useFonts({
@@ -120,6 +121,7 @@ export default function ExistingGoalCard({
         onPress={() => {
           navigation.navigate("PostGoalsScreen", {
             goal,
+            newGoal,
             goalId: goalId,
             goalName: goal.name,
             time: Number(time[0]),

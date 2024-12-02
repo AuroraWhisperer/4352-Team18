@@ -1,83 +1,69 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { useFonts } from "expo-font";
 import {
   Text,
   StyleSheet,
   View,
   Dimensions,
   Image,
-  TextInput,
-  TouchableOpacity,
-  Keyboard,
   TouchableWithoutFeedback,
-  Alert,
+  Keyboard,
+  TouchableOpacity,
 } from "react-native";
 import {
-  saveDiaryContent,
-  loadDiaryContent,
-  saveImageUri,
-  loadImageUri,
+  loadHistoryDiaryContent,
+  loadHistoryImageUri,
 } from "../../context/diaryStorage";
-import { useFonts } from "expo-font";
+import { useFocusEffect } from "@react-navigation/native";
 import { useAuth } from "../../context/AuthContext";
-import ImagePickerComponent from "../../components/Camera/ImagePickerComponent";
 
-export default function EditablePostScreen({ navigation, route }) {
+export default function HistoryPostScreen({ navigation, route }) {
+  const { goal, goalId } = route.params;
+
+  // Load custom font using expo-font hook
   const [fontsLoaded] = useFonts({
     "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
   });
 
+  // Return loading state if fonts are not loaded
   if (!fontsLoaded) {
     return undefined;
   }
 
-  const { goal, goalId } = route.params;
   const { username } = useAuth();
 
-  const [diaryContent, setDiaryContent] = useState("");
-  const [imageUri, setImageUri] = useState(null);
+  const [historyDiaryContent, setHistoryDiaryContent] = useState("");
+  const [historyImageUri, setHistoryImageUri] = useState(null);
 
-  useEffect(() => {
-    const fetchContent = async () => {
-      try {
-        const content = await loadDiaryContent(username, goalId);
-        const uri = await loadImageUri(username, goalId);
-
-        if (content) {
-          setDiaryContent(content);
-        }
-
-        if (uri) {
-          setImageUri(uri);
-        }
-      } catch (error) {
-        console.error("Failed to load diary content or image:", error);
-      }
-    };
-
-    fetchContent();
-  }, [username, goalId]);
-
-  const handleSave = async () => {
+  // Fetches content from storage when component is focused
+  const fetchContent = async () => {
     try {
-      if (!imageUri) {
-        Alert.alert("Photo Required", "Please add a photo before saving.");
-        return;
+      const content = await loadHistoryDiaryContent(username, goalId);
+      const uri = await loadHistoryImageUri(username, goalId);
+
+      if (content) {
+        setHistoryDiaryContent(content);
       }
 
-      await saveDiaryContent(username, goalId, diaryContent);
-      await saveImageUri(username, goalId, imageUri);
-
-      Alert.alert("Success", "Diary and photo saved successfully.");
-      navigation.goBack();
+      if (uri) {
+        setHistoryImageUri(uri);
+      }
     } catch (error) {
-      console.error("Failed to save diary or image:", error);
+      console.error("Failed to load history data:", error);
     }
   };
+
+  // useFocusEffect to trigger data fetch when screen is focused
+  useFocusEffect(
+    useCallback(() => {
+      fetchContent();
+    }, [username, goal])
+  );
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-
+        {/* Top navigation with back button */}
         <View style={styles.topNavigation}>
           <TouchableOpacity
             style={styles.backContent}
@@ -88,15 +74,23 @@ export default function EditablePostScreen({ navigation, route }) {
               style={styles.backImage}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-            <Text style={styles.saveButtonText}>Save</Text>
-          </TouchableOpacity>
         </View>
 
+        {/* Image display area */}
         <View style={styles.imagePlaceholderContainer}>
-          <ImagePickerComponent imageUri={imageUri} setImageUri={setImageUri} />
+          {historyImageUri ? (
+            <Image
+              source={{ uri: historyImageUri }}
+              style={styles.imagePlaceholder}
+            />
+          ) : (
+            <View style={styles.placeholderBox}>
+              <Text style={styles.placeholderText}>No Image</Text>
+            </View>
+          )}
         </View>
 
+        {/* Goal title display */}
         <View style={styles.titleContainer}>
           <View style={styles.titleBackground}>
             <Text
@@ -109,19 +103,17 @@ export default function EditablePostScreen({ navigation, route }) {
           </View>
         </View>
 
+        {/* Diary content display */}
         <View style={styles.diaryContainer}>
           <View style={styles.diaryHeader}>
             <Text style={styles.diaryText}>Diary</Text>
           </View>
-          <TextInput
-            style={styles.diaryInput}
-            placeholder="Write something..."
-            multiline={true}
-            value={diaryContent}
-            onChangeText={setDiaryContent}
-          />
+          <Text style={styles.diaryContent}>
+            {historyDiaryContent || "No diary content available."}
+          </Text>
         </View>
 
+        {/* Bottom scenery decoration */}
         <View style={styles.scenery}>
           <Image
             source={require("../../assets/images/GoalScreenBottomImage.png")}
@@ -130,6 +122,7 @@ export default function EditablePostScreen({ navigation, route }) {
           />
         </View>
 
+        {/* Decorative bottom area */}
         <View style={styles.bottomArea}></View>
       </View>
     </TouchableWithoutFeedback>
@@ -161,23 +154,6 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
   },
-  saveButton: {
-    backgroundColor: "#FFF5EC",
-    borderRadius: 20,
-    height: 40,
-    width: 80,
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
-    top: Dimensions.get("window").height * 0.08,
-    right: Dimensions.get("window").width * 0.02,
-  },
-  saveButtonText: {
-    fontSize: 16,
-    fontFamily: "MarkoOne-Regular",
-    fontWeight: "bold",
-    color: "#000",
-  },
   imagePlaceholderContainer: {
     justifyContent: "center",
     alignItems: "center",
@@ -190,11 +166,26 @@ const styles = StyleSheet.create({
     borderColor: "#d3d3d3",
     borderRadius: 10,
   },
+  placeholderBox: {
+    width: Dimensions.get("window").width * 0.37,
+    height: Dimensions.get("window").width * 0.37,
+    backgroundColor: "#FFFFFF",
+    borderWidth: 2,
+    borderColor: "#d3d3d3",
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  placeholderText: {
+    fontSize: 16,
+    fontFamily: "MarkoOne-Regular",
+    color: "#888",
+  },
   titleContainer: {
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: Dimensions.get("window").height * 0.03,
+    marginBottom: Dimensions.get("window").height * 0.02,
   },
   titleBackground: {
     backgroundColor: "#FFF5EC",
@@ -216,6 +207,7 @@ const styles = StyleSheet.create({
     padding: 15,
     width: Dimensions.get("window").width * 0.8,
     alignSelf: "center",
+    // marginTop: Dimensions.get
   },
   diaryHeader: {
     flexDirection: "row",
@@ -229,13 +221,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#333",
   },
-  diaryInput: {
-    borderColor: "#d3d3d3",
-    borderWidth: 1,
-    borderRadius: 5,
-    padding: 10,
-    height: 100,
-    textAlignVertical: "top",
+  diaryContent: {
+    fontSize: 14,
+    fontFamily: "MarkoOne-Regular",
+    color: "#555",
+    textAlign: "left",
   },
   scenery: {
     justifyContent: "flex-end",

@@ -34,7 +34,7 @@ export const MainProvider = ({ children }) => {
     // });
 
     setGoals((prevGoals) => [...prevGoals, goalWithId]);
-    setHistoryGoals((prevHistoryGoals) => [...prevHistoryGoals, goalWithId]);
+    // setHistoryGoals((prevHistoryGoals) => [...prevHistoryGoals, goalWithId]);
   };
 
   const addTotalTime = (timeToAdd) => {
@@ -143,11 +143,18 @@ export const MainProvider = ({ children }) => {
 
   // Function to add a new goal to history goals
   // Function to add a new goal to history goals with username
-  const addToHistoryGoals = (newGoal) => {
+  const addToHistoryGoals = (newGoal, goalId) => {
+    // const goalWithId = {
+    //   ...newGoal,
+    //   id: uuid.v4(),
+    // };
+    // setHistoryGoals((prevHistoryGoals) => [...prevHistoryGoals, goalWithId]);
+
     const goalWithId = {
       ...newGoal,
-      id: uuid.v4(),
+      id: goalId,
     };
+
     setHistoryGoals((prevHistoryGoals) => [...prevHistoryGoals, goalWithId]);
   };
 
