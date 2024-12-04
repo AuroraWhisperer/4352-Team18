@@ -98,7 +98,6 @@ export default function SignUpScreen({ navigation }) {
       return;
     }
 
-    // 弹出确认提示
     Alert.alert(
       "Confirmation",
       "Once you proceed to the next page, you cannot go back. Are you sure?",
