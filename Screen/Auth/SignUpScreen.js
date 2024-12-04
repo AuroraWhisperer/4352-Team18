@@ -74,7 +74,7 @@ export default function SignUpScreen({ navigation }) {
   );
 
   const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
   };
 
@@ -98,15 +98,31 @@ export default function SignUpScreen({ navigation }) {
       return;
     }
 
-    const newUser = { username, password, email };
-    console.log("Attempting to register user:", newUser);
+    // 弹出确认提示
+    Alert.alert(
+      "Confirmation",
+      "Once you proceed to the next page, you cannot go back. Are you sure?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Confirm",
+          onPress: async () => {
+            const newUser = { username, password, email };
+            console.log("Attempting to register user:", newUser);
 
-    const success = await registerUser(newUser);
-    if (success) {
-      setUsername(newUser.username);
-      alert("Successful registration");
-      navigation.navigate("SignUpScreen2");
-    }
+            const success = await registerUser(newUser);
+            if (success) {
+              setUsername(newUser.username);
+              alert("Successful registration!");
+              navigation.navigate("SignUpScreen2");
+            }
+          },
+        },
+      ]
+    );
   };
 
   if (!fontsLoaded) {

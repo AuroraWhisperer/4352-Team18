@@ -45,7 +45,7 @@ export default function HelpScreen() {
       id: "6",
       title: "How To View Your Pet's Details",
       details:
-        "Go to Home page > Click menu (three lines) on top left > Success!\n\nYou can see your pet's profile, rating, and conditions (Happy, Hungry, Healthy).\nYou can also check your level and progress to next level. Level up your pet! :)",
+        "Go to Home page > Click menu (three lines) on top left or Click the cat image > Success!\n\nYou can see your pet's profile, rating, and conditions (Happy, Hungry, Healthy).\nYou can also check your level and progress to next level. Level up your pet! :)",
     },
   ]);
 

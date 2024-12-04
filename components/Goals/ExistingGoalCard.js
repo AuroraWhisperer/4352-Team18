@@ -138,6 +138,7 @@ export default function ExistingGoalCard({
             {goal}
           </Text>
         </View>
+
         <View style={[styles.rightSide]}>
           <Text style={[styles.timeText]}>{time} hr</Text>
           <View style={[styles.diamondsContainer]}>
@@ -146,7 +147,13 @@ export default function ExistingGoalCard({
               style={[styles.diamondImage]}
               resizeMode="contain"
             />
-            <Text style={[styles.diamondsText]}>{diamonds}</Text>
+            <Text
+              style={[styles.diamondsText]}
+              // numberOfLines={1}
+              // ellipsizeMode="clip"
+            >
+              {diamonds}
+            </Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -175,7 +182,7 @@ const styles = StyleSheet.create({
     flex: 3,
   },
   rightSide: {
-    flex: 1,
+    flex: 1.5,
     alignItems: "flex-end",
   },
   goalText: {
@@ -183,7 +190,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "#333",
-    width: Dimensions.get("window").width * 0.5,
+    width: Dimensions.get("window").width * 0.45,
     flexWrap: "wrap",
   },
   timeText: {
