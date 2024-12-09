@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { useAuth } from "../../context/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+// import Clipboard from "@react-native-clipboard/clipboard";
 
 export default function SignUpScreen6({ navigation }) {
   // Load custom font using expo-font hook
@@ -38,7 +39,7 @@ export default function SignUpScreen6({ navigation }) {
 
   const copyToClipboard = () => {
     Clipboard.setString(familyCode);
-    Alert.alert('Copied!', 'Family code copied to clipboard.');
+    Alert.alert("Copied!", "Family code copied to clipboard.");
   };
 
   useEffect(() => {
@@ -88,9 +89,9 @@ export default function SignUpScreen6({ navigation }) {
         <Text style={[styles.codeTitle]}>Family Code: </Text>
 
         <View style={[styles.codeButton]}>
-        <TouchableOpacity onPress={copyToClipboard}>
+          <TouchableOpacity onPress={copyToClipboard}>
             <Text style={[styles.codeText]}>{familyCode}</Text>
-        </TouchableOpacity>
+          </TouchableOpacity>
         </View>
       </View>
 

@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     flex: 3,
   },
   rightSide: {
-    flex: 1,
+    flex: 1.5,
     alignItems: "flex-end",
   },
   goalText: {
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "#333",
-    width: Dimensions.get("window").width * 0.5,
+    width: Dimensions.get("window").width * 0.45,
     flexWrap: "wrap",
   },
   timeText: {

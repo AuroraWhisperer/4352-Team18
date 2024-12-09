@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFonts } from "expo-font";
 import Checkbox from "expo-checkbox";
 import {
@@ -10,6 +10,7 @@ import {
   Image,
   Dimensions,
 } from "react-native";
+import { useAuth } from "../../context/AuthContext.js";
 
 export default function SignUpScreen5({ navigation }) {
   // Load custom font using expo-font hook
@@ -22,11 +23,25 @@ export default function SignUpScreen5({ navigation }) {
     return undefined;
   }
 
-  const [maleChecked, setMaleChecked] = useState(false);
-  const [femaleChecked, setFemaleChecked] = useState(false);
-  const [nonChecked, setNonChecked] = useState(false);
+  const { selectedNumber } = useAuth();
+  const [checkedList, setCheckedList] = useState([]);
 
-  const nextDisabled = !maleChecked && !femaleChecked && !nonChecked;
+  const handleCheckboxChange = (key) => {
+    const currentIndex = checkedList.indexOf(key);
+    const maxSelections = parseInt(selectedNumber, 10);
+
+    if (currentIndex !== -1) {
+      setCheckedList(checkedList.filter((item) => item !== key));
+    } else {
+      if (checkedList.length < maxSelections) {
+        setCheckedList([...checkedList, key]);
+      } else {
+        setCheckedList([...checkedList.slice(1), key]);
+      }
+    }
+  };
+
+  const nextDisabled = checkedList.length === 0;
 
   return (
     <SafeAreaView style={[styles.container]}>
@@ -55,36 +70,36 @@ export default function SignUpScreen5({ navigation }) {
       <View style={styles.checkboxContainer}>
         <TouchableOpacity
           style={styles.section}
-          onPress={() => setMaleChecked(!maleChecked)}
+          onPress={() => handleCheckboxChange("male")}
         >
           <Checkbox
             style={styles.checkbox}
-            value={maleChecked}
-            onValueChange={setMaleChecked}
+            value={checkedList.includes("male")}
+            onValueChange={() => handleCheckboxChange("male")}
           />
           <Text style={styles.optionText}>Male</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.section}
-          onPress={() => setFemaleChecked(!femaleChecked)}
+          onPress={() => handleCheckboxChange("female")}
         >
           <Checkbox
             style={styles.checkbox}
-            value={femaleChecked}
-            onValueChange={setFemaleChecked}
+            value={checkedList.includes("female")}
+            onValueChange={() => handleCheckboxChange("female")}
           />
           <Text style={styles.optionText}>Female</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.section}
-          onPress={() => setNonChecked(!nonChecked)}
+          onPress={() => handleCheckboxChange("nonbinary")}
         >
           <Checkbox
             style={styles.checkbox}
-            value={nonChecked}
-            onValueChange={setNonChecked}
+            value={checkedList.includes("nonbinary")}
+            onValueChange={() => handleCheckboxChange("nonbinary")}
           />
           <Text style={styles.optionText}>Non-binary</Text>
         </TouchableOpacity>
@@ -143,11 +158,13 @@ const styles = StyleSheet.create({
     marginTop: 25,
     marginBottom: 5,
     width: "80%",
+    textAlign: "center",
   },
   input2Text: {
     fontSize: 12,
     fontFamily: "MarkoOne-Regular",
     marginBottom: 120,
+    textAlign: "center",
   },
   checkboxContainer: {
     flex: 1,

@@ -83,7 +83,7 @@ export default function StartPage({ navigation }) {
         style={[styles.signButton]}
         onPress={() => navigation.navigate("SignUpScreen")}
       >
-        <Text style={[styles.signText]}>Sign Up For Family</Text>
+        <Text style={[styles.signText]}>Sign Up</Text>
       </TouchableOpacity>
 
       {/* Button for entering a family code */}

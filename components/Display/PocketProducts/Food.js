@@ -79,7 +79,7 @@ export default function Food() {
             setHunger((prev) => {
               const newHunger = Math.min(prev + 1, 5);
               savePetAttributes(username, health, happiness, newHunger);
-              return setHunger;
+              return newHunger;
             });
 
             console.log(`Finished using ${item.name}`);

@@ -127,6 +127,11 @@ function TabNavigator() {
           tabBarIcon: ({ color }) => (
             <Ionicons name="person" size={26} color={color} />
           ),
+          tabBarStyle: {
+            borderTopWidth: 0,
+            backgroundColor: "#9C8B71",
+            height: 80,
+          },
         }}
       />
     </Tab.Navigator>

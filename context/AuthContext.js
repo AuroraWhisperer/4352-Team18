@@ -25,6 +25,8 @@ export const AuthProvider = ({ children }) => {
   const [health, setHealth] = useState(0);
   const [hunger, setHunger] = useState(5);
 
+  const [selectedNumber, setSelectedNumber] = useState(null);
+
   // Initialize admin accounts in AsyncStorage
   useEffect(() => {
     const initAdminAccounts = async () => {
@@ -194,7 +196,7 @@ export const AuthProvider = ({ children }) => {
       resetApp();
       setUsername("");
       setCurrentUser(null);
-      setPetname("Luna");
+      // setPetname("Luna");
       setLevel(0);
       setHappiness(0);
       setHealth(0);
@@ -208,11 +210,19 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Save user-specific data to AsyncStorage
-  const saveUserData = async (username, data) => {
+  const saveUserData = async (username, newData) => {
     try {
-      // console.log(`Attempting to save data for ${username}:`, data);
-      await AsyncStorage.setItem(`data_${username}`, JSON.stringify(data));
-      console.log(`Successfully saved data for ${username}`);
+      const userKey = `data_${username}`;
+      const existingDataString = await AsyncStorage.getItem(userKey);
+      const existingData = existingDataString
+        ? JSON.parse(existingDataString)
+        : {};
+
+      const updatedData = { ...existingData, ...newData };
+
+      await AsyncStorage.setItem(userKey, JSON.stringify(updatedData));
+
+      console.log(`Data saved for user ${username}:`, updatedData);
     } catch (error) {
       console.error("Failed to save user data:", error);
     }
@@ -263,7 +273,7 @@ export const AuthProvider = ({ children }) => {
           const parsedData = storedData ? JSON.parse(storedData) : {};
 
           setPetname(parsedData.petname || user.petname || "Luna");
-          setFamilyName(parsedData.familyname || "");
+          setFamilyName(user.familyname || parsedData.familyname || "");
           setFamilyCode(user.familyCode || parsedData.familyCode || "");
           setEmail(user.email || parsedData.email || "");
 
@@ -507,6 +517,35 @@ export const AuthProvider = ({ children }) => {
   //   if (username) savePetAttributes(username);
   // };
 
+  const saveSelectedNumber = async (number) => {
+    if (number === null || number === undefined) {
+      console.error("Cannot save null or undefined value.");
+      return;
+    }
+    try {
+      console.log("Saving selected number:", number);
+      await AsyncStorage.setItem("selectedNumber", JSON.stringify(number));
+      setSelectedNumber(number);
+    } catch (error) {
+      console.error("Error saving selected number:", error);
+    }
+  };
+
+  const loadSelectedNumber = async () => {
+    try {
+      const storedNumber = await AsyncStorage.getItem("selectedNumber");
+      if (storedNumber !== null) {
+        const parsedNumber = JSON.parse(storedNumber);
+        console.log("Loaded selected number:", parsedNumber);
+        setSelectedNumber(parsedNumber);
+      } else {
+        console.log("No selected number found in storage.");
+      }
+    } catch (error) {
+      console.error("Error loading selected number:", error);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -546,6 +585,10 @@ export const AuthProvider = ({ children }) => {
         savePetAttributes,
         handleLogout,
         resetApp,
+        selectedNumber,
+        setSelectedNumber,
+        saveSelectedNumber,
+        loadSelectedNumber,
       }}
     >
       {children}

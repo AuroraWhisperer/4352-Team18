@@ -23,6 +23,10 @@ export default function GoalsScreen() {
   const { goals, setGoals, setHistoryGoals } = useMain();
   const { incrementTaskCount } = useTask();
 
+  // console.log("Route Params:", route.params);
+
+  // const newGoal = route.params?.newGoal;
+
   // Function to delete a goal
   const handleDeleteGoal = (id) => {
     setGoals((prevGoals) => {
@@ -56,9 +60,7 @@ export default function GoalsScreen() {
             </View>
 
             <View style={[styles.content]}>
-              <HoursDisplay
-                style={{ marginTop: 40, marginBottom: 30 }}
-              />
+              <HoursDisplay style={{ marginTop: 40, marginBottom: 30 }} />
 
               {/* Display each goal in reverse order */}
               {goals

@@ -34,7 +34,7 @@ export default function SignUpScreen({ navigation }) {
   const [password, setPassword] = useState("");
 
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState(selectedNumber || null);
   const [items, setItems] = useState([
     { label: "1", value: "1" },
     { label: "2", value: "2" },
@@ -47,7 +47,31 @@ export default function SignUpScreen({ navigation }) {
   ]);
 
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
-  const { registerUser, setUsername, username, setEmail, email } = useAuth();
+  const {
+    registerUser,
+    setUsername,
+    username,
+    setEmail,
+    email,
+    saveSelectedNumber,
+    selectedNumber,
+  } = useAuth();
+
+  useEffect(() => {
+    if (selectedNumber) {
+      setValue(selectedNumber);
+    }
+  }, [selectedNumber]);
+
+  const handleValueChange = (newValue) => {
+    // console.log("Selected value from DropDownPicker:", newValue);
+    if (newValue !== null && newValue !== undefined) {
+      setValue(newValue);
+      saveSelectedNumber(newValue);
+    } else {
+      console.error("Invalid value passed to handleValueChange:", newValue);
+    }
+  };
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -70,11 +94,12 @@ export default function SignUpScreen({ navigation }) {
       setUsername("");
       setPassword("");
       setEmail("");
+      setValue(null);
     }, [setUsername, setEmail])
   );
 
   const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
   };
 
@@ -98,15 +123,30 @@ export default function SignUpScreen({ navigation }) {
       return;
     }
 
-    const newUser = { username, password, email };
-    console.log("Attempting to register user:", newUser);
+    Alert.alert(
+      "Confirmation",
+      "Once you proceed to the next page, you cannot go back. Are you sure?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Confirm",
+          onPress: async () => {
+            const newUser = { username, password, email };
+            console.log("Attempting to register user:", newUser);
 
-    const success = await registerUser(newUser);
-    if (success) {
-      setUsername(newUser.username);
-      alert("Successful registration");
-      navigation.navigate("SignUpScreen2");
-    }
+            const success = await registerUser(newUser);
+            if (success) {
+              setUsername(newUser.username);
+              alert("Successful registration!");
+              navigation.navigate("SignUpScreen2");
+            }
+          },
+        },
+      ]
+    );
   };
 
   if (!fontsLoaded) {
@@ -195,7 +235,7 @@ export default function SignUpScreen({ navigation }) {
                 }
               }}
             >
-              <View>
+              <View style={{ zIndex: 1000 }}>
                 <DropDownPicker
                   style={[styles.inputButton]}
                   placeholder="Select a number"
@@ -206,6 +246,13 @@ export default function SignUpScreen({ navigation }) {
                   setValue={setValue}
                   setItems={setItems}
                   disabled={isKeyboardVisible}
+                  onChangeValue={handleValueChange}
+                  dropDownContainerStyle={{
+                    maxHeight: 320,
+                    position: "absolute",
+                    top: -320,
+                  }}
+                  listMode="SCROLLVIEW"
                 />
               </View>
             </TouchableWithoutFeedback>
@@ -271,6 +318,7 @@ const styles = StyleSheet.create({
     borderColor: "#fff",
     width: "80%",
     marginLeft: 35,
+    zIndex: 10,
   },
   inputText: {
     fontSize: 17,
@@ -292,6 +340,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     marginTop: 40,
     marginBottom: 20,
+    zIndex: 0,
   },
   nextText: {
     fontSize: 17,

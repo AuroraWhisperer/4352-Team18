@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFonts } from "expo-font";
 import Checkbox from "expo-checkbox";
 import {
@@ -10,8 +10,11 @@ import {
   Image,
   Dimensions,
 } from "react-native";
+import { useAuth } from "../../context/AuthContext.js";
 
 export default function SignUpScreen4({ navigation }) {
+  const [checkedList, setCheckedList] = useState([]);
+
   // Load custom font using expo-font hook
   const [fontsLoaded] = useFonts({
     "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
@@ -22,14 +25,35 @@ export default function SignUpScreen4({ navigation }) {
     return undefined;
   }
 
-  const [middleChecked, setMiddleChecked] = useState(false);
-  const [preChecked, setPreChecked] = useState(false);
-  const [teensChecked, setTeensChecked] = useState(false);
+  const { selectedNumber } = useAuth();
+  useEffect(() => {
+    console.log("Current selected number is:", selectedNumber);
+  }, [selectedNumber]);
 
-  const nextDisabled = !middleChecked && !preChecked && !teensChecked;
+  // Handle checkbox selection with restriction logic
+  const handleCheckboxChange = (key) => {
+    const currentIndex = checkedList.indexOf(key);
+    const maxSelections = parseInt(selectedNumber, 10);
+
+    if (currentIndex !== -1) {
+      setCheckedList(checkedList.filter((item) => item !== key));
+    } else {
+
+      if (checkedList.length < maxSelections) {
+        setCheckedList([...checkedList, key]);
+      } else {
+
+        setCheckedList([...checkedList.slice(1), key]);
+      }
+    }
+  };
+
+  const nextDisabled = checkedList.length === 0;
 
   return (
     <SafeAreaView style={[styles.container]}>
+      {/* <Text>The selected number is: {selectedNumber}</Text> */}
+
       <TouchableOpacity
         style={[styles.backContent]}
         onPress={() => navigation.navigate("SignUpScreen3")}
@@ -55,12 +79,12 @@ export default function SignUpScreen4({ navigation }) {
       <View style={styles.checkboxContainer}>
         <TouchableOpacity
           style={styles.section}
-          onPress={() => setMiddleChecked(!middleChecked)}
+          onPress={() => handleCheckboxChange("middle")}
         >
           <Checkbox
             style={styles.checkbox}
-            value={middleChecked}
-            onValueChange={setMiddleChecked}
+            value={checkedList.includes("middle")}
+            onValueChange={() => handleCheckboxChange("middle")}
           />
           <Text style={styles.optionText}>
             Middle Childhood (6-8 years old)
@@ -69,24 +93,24 @@ export default function SignUpScreen4({ navigation }) {
 
         <TouchableOpacity
           style={styles.section}
-          onPress={() => setPreChecked(!preChecked)}
+          onPress={() => handleCheckboxChange("preteens")}
         >
           <Checkbox
             style={styles.checkbox}
-            value={preChecked}
-            onValueChange={setPreChecked}
+            value={checkedList.includes("preteens")}
+            onValueChange={() => handleCheckboxChange("preteens")}
           />
           <Text style={styles.optionText}>Pre-teens (9-12 years old)</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.section}
-          onPress={() => setTeensChecked(!teensChecked)}
+          onPress={() => handleCheckboxChange("teens")}
         >
           <Checkbox
             style={styles.checkbox}
-            value={teensChecked}
-            onValueChange={setTeensChecked}
+            value={checkedList.includes("teens")}
+            onValueChange={() => handleCheckboxChange("teens")}
           />
           <Text style={styles.optionText}>Teenagers (13-17 years old)</Text>
         </TouchableOpacity>
