@@ -196,7 +196,7 @@ export const AuthProvider = ({ children }) => {
       resetApp();
       setUsername("");
       setCurrentUser(null);
-      setPetname("Luna");
+      // setPetname("Luna");
       setLevel(0);
       setHappiness(0);
       setHealth(0);
@@ -210,11 +210,19 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Save user-specific data to AsyncStorage
-  const saveUserData = async (username, data) => {
+  const saveUserData = async (username, newData) => {
     try {
-      // console.log(`Attempting to save data for ${username}:`, data);
-      await AsyncStorage.setItem(`data_${username}`, JSON.stringify(data));
-      console.log(`Successfully saved data for ${username}`);
+      const userKey = `data_${username}`;
+      const existingDataString = await AsyncStorage.getItem(userKey);
+      const existingData = existingDataString
+        ? JSON.parse(existingDataString)
+        : {};
+
+      const updatedData = { ...existingData, ...newData };
+
+      await AsyncStorage.setItem(userKey, JSON.stringify(updatedData));
+
+      console.log(`Data saved for user ${username}:`, updatedData);
     } catch (error) {
       console.error("Failed to save user data:", error);
     }
@@ -265,7 +273,7 @@ export const AuthProvider = ({ children }) => {
           const parsedData = storedData ? JSON.parse(storedData) : {};
 
           setPetname(parsedData.petname || user.petname || "Luna");
-          setFamilyName(parsedData.familyname || "");
+          setFamilyName(user.familyname || parsedData.familyname || "");
           setFamilyCode(user.familyCode || parsedData.familyCode || "");
           setEmail(user.email || parsedData.email || "");
 

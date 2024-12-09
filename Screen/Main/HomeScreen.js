@@ -24,7 +24,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 export default function HomeScreen() {
   const { goals } = useMain();
-  const { petname } = useAuth();
+  const { petname, familyname } = useAuth();
   const lastGoal = goals.length > 0 ? goals[goals.length - 1] : null;
   const navigation = useNavigation();
   const [hasGoals, setHasGoals] = useState(goals.length > 0);
@@ -45,6 +45,7 @@ export default function HomeScreen() {
     if (fontsLoaded) {
       setIsReady(true);
     }
+
   }, [fontsLoaded]);
 
   if (!isReady) {
