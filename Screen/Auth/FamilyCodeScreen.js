@@ -18,7 +18,6 @@ import {
 import { useAuth } from "../../context/AuthContext";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-
 export default function FamilyCodeScreen({ navigation }) {
   // Load the custom font using the expo-font hook
   const [fontsLoaded] = useFonts({
@@ -67,13 +66,13 @@ export default function FamilyCodeScreen({ navigation }) {
           keyboardVerticalOffset={Platform.OS === "ios" ? 200 : 200}
           style={styles.imageKeyboardView}
         > */}
-          <View style={[styles.content]}>
-            <Image
-              source={require("../../assets/images/StartScreenImage.png")}
-              style={styles.image}
-            />
-            <Text style={[styles.title]}>PetConnect</Text>
-          </View>
+        <View style={[styles.content]}>
+          <Image
+            source={require("../../assets/images/StartScreenImage.png")}
+            style={styles.image}
+          />
+          <Text style={[styles.title]}>PetConnect</Text>
+        </View>
         {/* </KeyboardAvoidingView> */}
 
         {/* Family Code input fields */}
@@ -82,16 +81,16 @@ export default function FamilyCodeScreen({ navigation }) {
           keyboardVerticalOffset={Platform.OS === "ios" ? 20 : 20}
           style={styles.keyboardView}
         > */}
-          {/* Family Code input */}
-          <View>
-            <Text style={[styles.inputText]}>Enter family Code: </Text>
-            <TextInput
-              style={[styles.inputButton]}
-              placeholder="Enter your family code"
-              value={familyCodeInput}
-              onChangeText={setFamilyCodeInput}
-            />
-          </View>
+        {/* Family Code input */}
+        <View>
+          <Text style={[styles.inputText]}>Enter family Code: </Text>
+          <TextInput
+            style={[styles.inputButton]}
+            placeholder="Enter your family code"
+            value={familyCodeInput}
+            onChangeText={setFamilyCodeInput}
+          />
+        </View>
         {/* </KeyboardAvoidingView> */}
 
         {/* Submit button */}
@@ -158,7 +157,7 @@ const styles = StyleSheet.create({
     color: "#333",
     marginRight: 230,
     marginBottom: 8,
-    width: "80%",
+    width: Dimensions.get("screen"),
   },
   signButton: {
     backgroundColor: "#fff",

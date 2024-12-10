@@ -136,12 +136,12 @@ const styles = StyleSheet.create({
   },
   title: {
     marginTop: 60,
-    fontSize: 48,
+    fontSize: 36,
     fontFamily: "MarkoOne-Regular",
   },
   image: {
-    width: Dimensions.get("window").width * 0.55,
-    height: Dimensions.get("window").width * 0.55,
+    width: Dimensions.get("window").width * 0.45,
+    height: Dimensions.get("window").width * 0.45,
     marginTop: 10,
   },
   inputText: {
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   },
   codeTitle: {
     marginTop: 100,
-    fontSize: 35,
+    fontSize: 30,
     fontFamily: "MarkoOne-Regular",
   },
   codeButton: {

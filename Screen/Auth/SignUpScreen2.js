@@ -24,7 +24,8 @@ export default function SignUpScreen2({ navigation }) {
     "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
   });
 
-  const { username, updatePetname, saveUserData, updateFamilyName, email } = useAuth();
+  const { username, updatePetname, saveUserData, updateFamilyName, email } =
+    useAuth();
 
   // Return loading state if fonts are not loaded
   if (!fontsLoaded) {
@@ -77,12 +78,12 @@ export default function SignUpScreen2({ navigation }) {
           keyboardVerticalOffset={Platform.OS === "ios" ? 290 : 290}
           style={[styles.content]}
         > */}
-          <Text style={[styles.title]}>Hello!</Text>
+        <Text style={[styles.title]}>Hello!</Text>
 
-          <Image
-            source={require("../../assets/images/cat2.png")}
-            style={[styles.image]}
-          />
+        <Image
+          source={require("../../assets/images/cat2.png")}
+          style={[styles.image]}
+        />
         {/* </KeyboardAvoidingView> */}
 
         {/* <KeyboardAvoidingView
@@ -90,27 +91,27 @@ export default function SignUpScreen2({ navigation }) {
           keyboardVerticalOffset={Platform.OS === "ios" ? 20 : 20}
           style={styles.keyboardView}
         > */}
-          <View>
-            <Text style={[styles.inputText]}>Name your pet: </Text>
-            <TextInput
-              style={[styles.inputButton]}
-              placeholder="Enter your pet name"
-              value={petName}
-              onChangeText={setPetName}
-              returnKeyType="next"
-            />
-          </View>
+        <View>
+          <Text style={[styles.inputText]}>Name your pet: </Text>
+          <TextInput
+            style={[styles.inputButton]}
+            placeholder="Enter your pet name"
+            value={petName}
+            onChangeText={setPetName}
+            returnKeyType="next"
+          />
+        </View>
 
-          <View>
-            <Text style={[styles.inputText]}>Name your family: </Text>
-            <TextInput
-              style={[styles.inputButton]}
-              placeholder="Enter your family name"
-              value={familyName}
-              onChangeText={setFamilyName}
-              returnKeyType="go"
-            />
-          </View>
+        <View>
+          <Text style={[styles.inputText]}>Name your family: </Text>
+          <TextInput
+            style={[styles.inputButton]}
+            placeholder="Enter your family name"
+            value={familyName}
+            onChangeText={setFamilyName}
+            returnKeyType="go"
+          />
+        </View>
         {/* </KeyboardAvoidingView> */}
 
         <TouchableOpacity style={[styles.nextButton]} onPress={handleNext}>
@@ -170,14 +171,15 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     fontFamily: "MarkoOne-Regular",
     borderColor: "#fff",
+    width: Dimensions.get("window") * 0.9,
   },
+
   inputText: {
     fontSize: 17,
     fontFamily: "MarkoOne-Regular",
     color: "#333",
-    marginRight: 230,
+    marginRight: "30%",
     marginBottom: 10,
-    width: "80%",
   },
   nextButton: {
     backgroundColor: "#fff",
@@ -190,7 +192,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     marginTop: 30,
-    marginBottom: Dimensions.get("window").height * 0.05
+    marginBottom: Dimensions.get("window").height * 0.05,
   },
   nextText: {
     fontSize: 17,
