@@ -57,8 +57,8 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 5,
-    paddingTop: Dimensions.get("window").height * 0.03,
+    marginBottom: 20,
+    paddingTop: Dimensions.get("window").height * 0.075,
   },
   icon: {
     marginRight: 8,
@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontFamily: "MarkoOne-Regular",
-    fontWeight: "bold",
     textAlign: "center",
   },
   image: {

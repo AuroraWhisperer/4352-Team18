@@ -46,9 +46,7 @@ const styles = StyleSheet.create({
     fontFamily: "MarkoOne-Regular",
     marginLeft: 15,
     fontSize: 16,
-    fontFamily: "MarkoOne-Regular",
     marginRight: 5,
-    fontWeight: "700",
   },
   diamond: {
     width: 20,

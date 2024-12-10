@@ -92,7 +92,6 @@ const styles = StyleSheet.create({
   callToAction: {
     fontSize: 18,
     fontFamily: "MarkoOne-Regular",
-    fontWeight: "bold",
     color: "#333",
     textAlign: "center",
     marginBottom: 10,

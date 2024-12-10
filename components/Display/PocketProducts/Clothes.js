@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { ShopItems } from "../../../context/ShopItems";
 import { useAuth } from "../../../context/AuthContext";
+import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Clothes() {
@@ -29,6 +30,8 @@ export default function Clothes() {
     savePetAttributes,
     updateAttributes,
   } = useAuth();
+
+  const navigation = useNavigation();
 
   const numColumns = 3;
   const filledItems = [...purchasedClothesItems];
@@ -65,6 +68,22 @@ export default function Clothes() {
             );
             setPurchasedClothesItems(updatedItems);
             // console.log("Updated items after removal:", updatedItems);
+
+            Alert.alert(
+              "Success!",
+              'Your pet got healthier! Do you want to go check?',
+              [
+                {
+                  text: "No",
+                  onPress: () => console.log("No Pressed"),
+                  style: "cancel",
+                },
+                {
+                  text: "Yes!",
+                  onPress: () => navigation.navigate("PetDetails"),
+                }
+              ]
+            )
 
             // Save updated list to AsyncStorage
             try {

@@ -29,6 +29,10 @@ export default function GoalsMessage({ onPress }) {
           text: "Add Goal",
           onPress: () => navigation.navigate("GoalsTab"),
         },
+        {
+          text: "Cancel",
+          onPress: () => navigation.navigate("HomeScreen"),
+        },
       ]);
     } else {
       Alert.alert("Upcoming Goals", "You have upcoming goals.");
@@ -50,6 +54,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "MarkoOne-Regular",
     textDecorationLine: "underline",
-    fontWeight: "500",
   },
 });

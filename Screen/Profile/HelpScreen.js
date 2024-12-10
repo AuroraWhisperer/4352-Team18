@@ -7,10 +7,21 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useFonts } from "expo-font";
 import SafeAreaView from "react-native-safe-area-view";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function HelpScreen() {
+  // Load custom font using expo-font hook
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  // Return loading state if fonts are not loaded
+  if (!fontsLoaded) {
+    return undefined;
+  }
+
   const [problems, setProblems] = useState([
     {
       id: "1",
@@ -104,7 +115,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontFamily: "MarkoOne-Regular",
     marginLeft: 10,
     color: "#333",
   },
@@ -124,12 +135,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontFamily: "MarkoOne-Regular",
     color: "#333",
   },
   details: {
     marginTop: 10,
-    fontSize: 16,
+    fontSize: 13,
+    fontFamily: "MarkoOne-Regular",
     color: "#666",
   },
 });

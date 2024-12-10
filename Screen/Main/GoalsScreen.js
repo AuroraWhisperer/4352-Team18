@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
     width: "100%",
-    paddingTop: Dimensions.get("window").height * 0.08,
+    paddingTop: Dimensions.get("window").height * 0.065,
     paddingRight: Dimensions.get("window").width * 0.05,
   },
   content: {

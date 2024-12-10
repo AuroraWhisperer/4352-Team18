@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: "MarkoOne-Regular",
     fontSize: 18,
-    fontWeight: "500",
     textDecorationLine: "underline",
     textAlign: "center",
   },

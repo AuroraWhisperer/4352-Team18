@@ -175,7 +175,6 @@ const styles = StyleSheet.create({
   saveButtonText: {
     fontSize: 16,
     fontFamily: "MarkoOne-Regular",
-    fontWeight: "bold",
     color: "#000",
   },
   imagePlaceholderContainer: {
@@ -207,7 +206,6 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 18,
     fontFamily: "MarkoOne-Regular",
-    fontWeight: "bold",
     color: "#333",
   },
   diaryContainer: {
@@ -226,7 +224,6 @@ const styles = StyleSheet.create({
   diaryText: {
     fontSize: 16,
     fontFamily: "MarkoOne-Regular",
-    fontWeight: "bold",
     color: "#333",
   },
   diaryInput: {
@@ -236,6 +233,7 @@ const styles = StyleSheet.create({
     padding: 10,
     height: 100,
     textAlignVertical: "top",
+    fontFamily: "MarkoOne-Regular",
   },
   scenery: {
     justifyContent: "flex-end",

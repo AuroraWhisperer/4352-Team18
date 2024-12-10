@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
   goalText: {
     fontFamily: "MarkoOne-Regular",
     fontSize: 18,
-    fontWeight: "bold",
     color: "#333",
     width: Dimensions.get("window").width * 0.45,
     flexWrap: "wrap",

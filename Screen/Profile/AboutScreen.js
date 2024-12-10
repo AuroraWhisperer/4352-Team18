@@ -7,6 +7,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import React from "react";
+import { useFonts } from "expo-font";
 import { useNavigation } from "@react-navigation/native";
 import FastImage from "react-native-fast-image";
 import { Ionicons } from "@expo/vector-icons";
@@ -17,6 +18,14 @@ export default function AboutScreen() {
   const handleOptionPress = (screen) => {
     navigation.navigate(screen);
   };
+
+  const [fontsLoaded] = useFonts({
+    "MarkoOne-Regular": require("../../assets/fonts/MarkoOne-Regular.ttf"),
+  });
+
+  if (!fontsLoaded) {
+    return undefined;
+  }
 
   return (
     <View style={styles.container}>
@@ -107,12 +116,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    fontWeight: "bold",
+    fontFamily: "MarkoOne-Regular",
     marginBottom: 10,
     color: "#333",
   },
   description: {
-    fontSize: 16,
+    fontSize: 15,
+    fontFamily: "MarkoOne-Regular",
     textAlign: "center",
     marginBottom: 20,
     color: "#555",
@@ -121,7 +131,8 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   featureItem: {
-    fontSize: 16,
+    fontFamily: "MarkoOne-Regular",
+    fontSize: 15,
     color: "#444",
     marginBottom: 5,
   },
@@ -130,16 +141,17 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
-    marginTop: 60,
+    marginTop: 50,
   },
   buttonText: {
     color: "#FFF",
     fontSize: 18,
-    fontWeight: "bold",
+    fontFamily: "MarkoOne-Regular",
   },
   footer: {
     marginTop: 30,
     fontSize: 12,
+    fontFamily: "MarkoOne-Regular",
     color: "#888",
     textAlign: "center",
   },

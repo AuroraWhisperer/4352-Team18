@@ -72,24 +72,24 @@ export default function SignUpScreen2({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={[styles.container]}>
-        <KeyboardAvoidingView
+        {/* <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           keyboardVerticalOffset={Platform.OS === "ios" ? 290 : 290}
           style={[styles.content]}
-        >
+        > */}
           <Text style={[styles.title]}>Hello!</Text>
 
           <Image
             source={require("../../assets/images/cat2.png")}
             style={[styles.image]}
           />
-        </KeyboardAvoidingView>
+        {/* </KeyboardAvoidingView> */}
 
-        <KeyboardAvoidingView
+        {/* <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           keyboardVerticalOffset={Platform.OS === "ios" ? 20 : 20}
           style={styles.keyboardView}
-        >
+        > */}
           <View>
             <Text style={[styles.inputText]}>Name your pet: </Text>
             <TextInput
@@ -111,7 +111,7 @@ export default function SignUpScreen2({ navigation }) {
               returnKeyType="go"
             />
           </View>
-        </KeyboardAvoidingView>
+        {/* </KeyboardAvoidingView> */}
 
         <TouchableOpacity style={[styles.nextButton]} onPress={handleNext}>
           <Text style={[styles.nextText]}>Next</Text>
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     marginRight: 335,
   },
   title: {
-    // marginTop: 20,
+    marginTop: 100,
     fontSize: 40,
     fontFamily: "MarkoOne-Regular",
   },
@@ -155,6 +155,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width * 0.6,
     height: Dimensions.get("window").width * 0.6,
     marginTop: 25,
+    marginBottom: 30,
   },
   inputButton: {
     backgroundColor: "#fff",
@@ -166,7 +167,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 5,
-    marginBottom: 25,
+    marginBottom: 30,
     fontFamily: "MarkoOne-Regular",
     borderColor: "#fff",
   },
@@ -175,7 +176,7 @@ const styles = StyleSheet.create({
     fontFamily: "MarkoOne-Regular",
     color: "#333",
     marginRight: 230,
-    marginBottom: 8,
+    marginBottom: 10,
     width: "80%",
   },
   nextButton: {
@@ -188,9 +189,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 5,
-    marginTop: 10,
-    //marginBottom: 20,
-    marginBottom: Dimensions.get("window").height * 0.08
+    marginTop: 30,
+    marginBottom: Dimensions.get("window").height * 0.05
   },
   nextText: {
     fontSize: 17,
