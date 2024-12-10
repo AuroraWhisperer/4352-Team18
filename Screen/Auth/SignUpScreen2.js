@@ -171,16 +171,15 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     fontFamily: "MarkoOne-Regular",
     borderColor: "#fff",
-    width: Dimensions.get("window").width * 0.8,
+    width: Dimensions.get("window") * 0.9,
   },
 
   inputText: {
     fontSize: 17,
     fontFamily: "MarkoOne-Regular",
     color: "#333",
-    marginRight: 230,
+    marginRight: 100,
     marginBottom: 10,
-    width: "80%",
   },
   nextButton: {
     backgroundColor: "#fff",

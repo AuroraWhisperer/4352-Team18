@@ -143,12 +143,12 @@ const styles = StyleSheet.create({
   },
   title: {
     marginTop: 120,
-    fontSize: 38,
+    fontSize: 30,
     fontFamily: "MarkoOne-Regular",
   },
   image: {
-    width: Dimensions.get("window").width * 0.55,
-    height: Dimensions.get("window").width * 0.55,
+    width: Dimensions.get("window").width * 0.4,
+    height: Dimensions.get("window").width * 0.4,
     marginTop: 25,
   },
   inputText: {
