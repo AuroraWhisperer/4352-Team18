@@ -48,16 +48,15 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontFamily: "MarkoOne-Regular",
-    fontWeight: "bold",
     marginBottom: 10,
     textAlign: "center",
-    paddingTop: Dimensions.get("window").height * 0.03,
+    paddingTop: Dimensions.get("window").height * 0.06,
   },
   image: {
     width: Dimensions.get("window").width * 0.6,
     height: Dimensions.get("window").width * 0.6,
     borderRadius: 75,
-    marginBottom: Dimensions.get("window").height * 0.02,
+    marginBottom: Dimensions.get("window").height * 0.01,
   },
 });
 

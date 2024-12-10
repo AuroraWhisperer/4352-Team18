@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     marginRight: 335,
   },
   title: {
-    marginTop: 30,
+    marginTop: 120,
     fontSize: 38,
     fontFamily: "MarkoOne-Regular",
   },
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 16,
     marginVertical: 32,
-    marginTop: 80,
+    marginTop: 180,
   },
   section: {
     flexDirection: "row",

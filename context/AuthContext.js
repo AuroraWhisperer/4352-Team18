@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
   const [level, setLevel] = useState(1);
   const [happiness, setHappiness] = useState(0);
   const [health, setHealth] = useState(0);
-  const [hunger, setHunger] = useState(5);
+  const [hunger, setHunger] = useState(0);
 
   const [selectedNumber, setSelectedNumber] = useState(null);
 
@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }) => {
 
         setHappiness(storedHappiness ? parseInt(storedHappiness) : 0);
         setHealth(storedHealth ? parseInt(storedHealth) : 0);
-        setHunger(storedHunger ? parseInt(storedHunger) : 5);
+        setHunger(storedHunger ? parseInt(storedHunger) : 0);
 
         // console.log(`Loaded pet attributes for ${username}:`, {
         //   happiness: storedHappiness,
@@ -486,7 +486,7 @@ export const AuthProvider = ({ children }) => {
 
       setHappiness(storedHappiness ? parseInt(storedHappiness) : 0);
       setHealth(storedHealth ? parseInt(storedHealth) : 0);
-      setHunger(storedHunger ? parseInt(storedHunger) : 5);
+      setHunger(storedHunger ? parseInt(storedHunger) : 0);
 
       // console.log("Loaded pet attributes for", username);
     } catch (error) {

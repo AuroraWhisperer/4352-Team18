@@ -117,11 +117,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#F7E4C6",
     justifyContent: "flex-start",
     alignItems: "center",
-    paddingTop: Dimensions.get("window").height * 0.07,
+    paddingTop: Dimensions.get("window").height * 0.04,
   },
   settingsButton: {
     position: "absolute",
-    top: Dimensions.get("window").height * 0.06,
+    top: Dimensions.get("window").height * 0.045,
     right: Dimensions.get("window").width * 0.06,
     zIndex: 1,
     padding: 15,
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontFamily: "MarkoOne-Regular",
-    marginTop: Dimensions.get("window").height * 0.06,
+    marginTop: Dimensions.get("window").height * 0.055,
     marginBottom: 5,
     textAlign: "center",
   },
@@ -145,12 +145,11 @@ const styles = StyleSheet.create({
   TextWrapper: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: Dimensions.get("window").height * 0.01,
+    marginTop: Dimensions.get("window").height * 0.015,
   },
   text: {
     fontSize: 32,
     fontFamily: "MarkoOne-Regular",
-    fontWeight: "bold",
     color: "#333",
   },
   usernameCard: {
@@ -177,11 +176,12 @@ const styles = StyleSheet.create({
   },
   usernameText: {
     fontSize: 20,
+    fontFamily: "MarkoOne-Regular",
     color: "#FFA726",
-    fontWeight: "bold",
   },
   emailText: {
-    fontSize: 16,
+    fontSize: 15,
+    fontFamily: "MarkoOne-Regular",
     color: "#FFA726", 
     marginTop: 5,
   },
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
   },
   historyText: {
     fontSize: 18,
+    fontFamily: "MarkoOne-Regular",
     color: "#FFA726",
-    fontWeight: "bold",
   },
 });

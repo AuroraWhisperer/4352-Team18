@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { ShopItems } from "../../../context/ShopItems";
 import { useAuth } from "../../../context/AuthContext";
+import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Toys() {
@@ -31,6 +32,7 @@ export default function Toys() {
 
   const numColumns = 3;
   const filledItems = [...purchasedToysItems];
+  const navigation = useNavigation();
 
   while (filledItems.length % numColumns !== 0) {
     filledItems.push({
@@ -63,6 +65,22 @@ export default function Toys() {
             );
             setPurchasedToysItems(updatedItems);
             // console.log("Updated items after removal:", updatedItems);
+
+            Alert.alert(
+              "Success!",
+              'Your pet got happier! Do you want to go check?',
+              [
+                {
+                  text: "No",
+                  onPress: () => console.log("No Pressed"),
+                  style: "cancel",
+                },
+                {
+                  text: "Yes!",
+                  onPress: () => navigation.navigate("PetDetails"),
+                }
+              ]
+            )
 
             // Save updated list to AsyncStorage
             try {

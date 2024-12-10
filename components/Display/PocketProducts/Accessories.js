@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { ShopItems } from "../../../context/ShopItems";
 import { useAuth } from "../../../context/AuthContext";
+import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Accessories() {
@@ -32,6 +33,7 @@ export default function Accessories() {
 
   const numColumns = 3;
   const filledItems = [...purchasedAccessoriesItems];
+  const navigation = useNavigation();
 
   // Ensure the grid is filled, adding placeholder items if needed
   while (filledItems.length % numColumns !== 0) {
@@ -65,6 +67,22 @@ export default function Accessories() {
             );
             setPurchasedAccessoriesItems(updatedItems);
             // console.log("Updated items after removal:", updatedItems);
+
+            Alert.alert(
+              "Success!",
+              'Your pet got happier! Do you want to go check?',
+              [
+                {
+                  text: "No",
+                  onPress: () => console.log("No Pressed"),
+                  style: "cancel",
+                },
+                {
+                  text: "Yes!",
+                  onPress: () => navigation.navigate("PetDetails"),
+                }
+              ]
+            )
 
             // Save updated list to AsyncStorage
             try {

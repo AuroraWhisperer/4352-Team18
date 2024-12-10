@@ -135,14 +135,14 @@ const styles = StyleSheet.create({
     marginRight: 335,
   },
   title: {
-    marginTop: 30,
-    fontSize: 38,
+    marginTop: 60,
+    fontSize: 48,
     fontFamily: "MarkoOne-Regular",
   },
   image: {
     width: Dimensions.get("window").width * 0.55,
     height: Dimensions.get("window").width * 0.55,
-    marginTop: 25,
+    marginTop: 10,
   },
   inputText: {
     fontSize: 18,

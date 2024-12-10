@@ -62,11 +62,11 @@ export default function FamilyCodeScreen({ navigation }) {
         </TouchableOpacity>
 
         {/* Display logo and title */}
-        <KeyboardAvoidingView
+        {/* <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           keyboardVerticalOffset={Platform.OS === "ios" ? 200 : 200}
           style={styles.imageKeyboardView}
-        >
+        > */}
           <View style={[styles.content]}>
             <Image
               source={require("../../assets/images/StartScreenImage.png")}
@@ -74,14 +74,14 @@ export default function FamilyCodeScreen({ navigation }) {
             />
             <Text style={[styles.title]}>PetConnect</Text>
           </View>
-        </KeyboardAvoidingView>
+        {/* </KeyboardAvoidingView> */}
 
         {/* Family Code input fields */}
-        <KeyboardAvoidingView
+        {/* <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           keyboardVerticalOffset={Platform.OS === "ios" ? 20 : 20}
           style={styles.keyboardView}
-        >
+        > */}
           {/* Family Code input */}
           <View>
             <Text style={[styles.inputText]}>Enter family Code: </Text>
@@ -92,7 +92,7 @@ export default function FamilyCodeScreen({ navigation }) {
               onChangeText={setFamilyCodeInput}
             />
           </View>
-        </KeyboardAvoidingView>
+        {/* </KeyboardAvoidingView> */}
 
         {/* Submit button */}
         <TouchableOpacity style={[styles.signButton]} onPress={handleSubmit}>
@@ -130,14 +130,14 @@ const styles = StyleSheet.create({
   image: {
     width: Dimensions.get("window").width * 0.33,
     height: Dimensions.get("window").width * 0.33,
-    marginTop: 40,
+    marginTop: -200,
     marginBottom: 10,
   },
   title: {
     fontSize: 25,
     fontFamily: "MarkoOne-Regular",
     marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 50,
   },
   inputButton: {
     backgroundColor: "#fff",
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 5,
-    marginBottom: 10,
+    marginBottom: 70,
     fontFamily: "MarkoOne-Regular",
   },
   inputText: {
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 5,
-    marginBottom: 150,
+    marginBottom: Dimensions.get("window").width * 0.0001,
   },
   signText: {
     fontSize: 17,

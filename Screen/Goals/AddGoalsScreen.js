@@ -160,7 +160,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontFamily: "MarkoOne-Regular",
-    fontWeight: "bold",
   },
   content: {
     flex: 1,

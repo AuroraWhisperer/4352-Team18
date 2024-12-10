@@ -179,7 +179,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 26,
     fontFamily: "MarkoOne-Regular",
-    fontWeight: "bold",
     textAlign: "center",
     marginVertical: 20,
   },
@@ -207,8 +206,7 @@ const styles = StyleSheet.create({
   conditionTitle: {
     fontSize: 22,
     fontFamily: "MarkoOne-Regular",
-    fontWeight: "bold",
-    marginTop: 20,
+    marginTop: 40,
     textAlign: "center",
   },
   outerProgressContainer: {
@@ -257,7 +255,6 @@ const styles = StyleSheet.create({
   },
   manualTaskText: {
     color: "white",
-    fontWeight: "bold",
   },
   starContainer: {
     flexDirection: "row",

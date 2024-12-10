@@ -20,7 +20,7 @@ const ShopNestedNavigator = () => {
         tabBarActiveTintColor: "black",
         tabBarInactiveTintColor: "gray",
         tabBarIndicatorStyle: { backgroundColor: "black", height: 2 },
-        tabBarLabelStyle: { fontSize: 10 },
+        tabBarLabelStyle: { fontSize: 12, fontFamily: 'MarkoOne-Regular' },
         tabBarStyle: { backgroundColor: "#F7E4C6" },
       }}
     >

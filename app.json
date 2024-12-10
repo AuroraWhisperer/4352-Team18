@@ -5,10 +5,10 @@
     "version": "1.1.0",
     "newArchEnabled": true,
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/images/StartScreenImage.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/images/StartScreenImage.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -22,9 +22,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/images/StartScreenImage.png",
         "backgroundColor": "#ffffff"
       },
+      "icon": "./assets/images/StartScreenImage.png",
       "package": "com.pki801.PetConnect"
     },
     "web": {
@@ -35,7 +36,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "35cc2883-0e5a-4ccb-933a-5fb66d9f4730"
+        "projectId": "d9e1afcd-27ba-4fd7-b246-b0f743ce9a99"
       }
     }
   }

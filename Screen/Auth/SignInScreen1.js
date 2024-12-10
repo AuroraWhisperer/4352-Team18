@@ -84,11 +84,11 @@ export default function SignInScreen1({ navigation }) {
         </TouchableOpacity>
 
         {/* Display logo and title */}
-        <KeyboardAvoidingView
+        {/* <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           keyboardVerticalOffset={Platform.OS === "ios" ? 300 : 300}
           style={styles.imageKeyboardView}
-        >
+        > */}
           <View style={[styles.content]}>
             <Image
               source={require("../../assets/images/StartScreenImage.png")}
@@ -96,14 +96,14 @@ export default function SignInScreen1({ navigation }) {
             />
             <Text style={[styles.title]}>PetConnect</Text>
           </View>
-        </KeyboardAvoidingView>
+        {/* </KeyboardAvoidingView> */}
 
         {/* Username and password input fields */}
-        <KeyboardAvoidingView
+        {/* <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           keyboardVerticalOffset={Platform.OS === "ios" ? 20 : 20}
           style={styles.keyboardView}
-        >
+        > */}
           {/* Username input */}
           <View>
             <Text style={[styles.inputText]}>Username: </Text>
@@ -141,7 +141,7 @@ export default function SignInScreen1({ navigation }) {
               }}
             />
           </View>
-        </KeyboardAvoidingView>
+        {/* </KeyboardAvoidingView> */}
 
         {/* Sign-in button */}
         <TouchableOpacity
@@ -183,14 +183,14 @@ const styles = StyleSheet.create({
   image: {
     width: Dimensions.get("window").width * 0.33,
     height: Dimensions.get("window").width * 0.33,
-    marginTop: 40,
+    marginTop: 0,
     marginBottom: 10,
   },
   title: {
     fontSize: 25,
     fontFamily: "MarkoOne-Regular",
     marginTop: 10,
-    marginBottom: -10,
+    marginBottom: 40,
   },
   inputButton: {
     backgroundColor: "#fff",
@@ -223,7 +223,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 5,
-    marginBottom: Dimensions.get("window").height * 0.18
+    marginTop: 50,
+    marginBottom: Dimensions.get("window").height * 0.1
   },
   signText: {
     fontSize: 17,

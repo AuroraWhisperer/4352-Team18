@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     fontSize: 16,
     marginRight: 5,
-    fontWeight: "700",
   },
   diamond: {
     width: 20,

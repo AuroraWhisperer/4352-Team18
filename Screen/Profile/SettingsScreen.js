@@ -128,7 +128,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#FFA726",
     fontSize: 16,
-    fontWeight: "bold",
     fontFamily: "MarkoOne-Regular",
   },
 });

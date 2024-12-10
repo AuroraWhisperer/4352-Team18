@@ -118,7 +118,7 @@ export default function HomeScreen() {
             onPress={() => navigation.navigate("PetDetails")}
             style={({ pressed }) => [
               styles.pet,
-              { opacity: pressed ? 0.6 : 1 },
+              { opacity: pressed ? 1 : 1 },
             ]}
           >
             <Image
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 20,
-    marginTop: 20,
+    marginTop: 45,
   },
   menuContainer: {
     justifyContent: "flex-start",
@@ -168,9 +168,8 @@ const styles = StyleSheet.create({
     marginRight: 18,
   },
   title: {
-    fontSize: 24,
+    fontSize: 23,
     fontFamily: "MarkoOne-Regular",
-    fontWeight: "bold",
     textAlign: "center",
     flex: 1,
   },
