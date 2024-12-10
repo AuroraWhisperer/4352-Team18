@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontFamily: "MarkoOne-Regular",
     color: "#333",
-    marginRight: 100,
+    marginRight: "30%",
     marginBottom: 10,
   },
   nextButton: {
